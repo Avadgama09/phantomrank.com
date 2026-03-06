@@ -6,21 +6,6 @@ export interface CallToAction {
   ariaLabel?: string;
 }
 
-export interface Feature {
-  title: string;
-  description: string;
-  icon?: string;
-  iconClass?: string;
-}
-
-export type Value = Feature;
-
-export interface Service {
-  title: string;
-  description: string;
-  icon: string;
-}
-
 export interface NavLink {
   text: string;
   href: string;
@@ -42,33 +27,46 @@ export interface HeadlineProps extends Widget {
   titleAs?: string;
 }
 
-export interface HeroProps extends HeadlineProps {
-  description?: string; // override or additional? Hero has description, Headline has subtitle. Hero has actions.
-  actions?: string | CallToAction[];
-  image?: ImageMetadata | string; // Just in case, though checked Hero.astro and it uses slots mostly or props.
+// --- PhantomRank-specific types ---
+
+export type FeatureStatus = "live" | "coming-soon";
+
+export type FeatureCategory =
+  | "Market Intelligence"
+  | "Content Production"
+  | "Prediction";
+
+export interface Feature {
+  name: string;
+  slug: string;
+  category: FeatureCategory;
+  status: FeatureStatus;
+  oneLiner: string;
+  icon: string;
+  iconClass?: string;
 }
 
-export interface FeaturesProps extends HeadlineProps {
-  features?: Feature[];
-  columns?: number; // Values has columns
+export interface Plan {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  isPopular?: boolean;
+  cta: CallToAction;
 }
 
-export interface ContentProps extends HeadlineProps {
-  content?: string;
-  image?: ImageMetadata;
-  imageAlt?: string;
-  items?: Feature[];
-  isReversed?: boolean;
-  isAfterContent?: boolean;
-  description?: string[]; // Adding back description as string array for compatibility
-  actions?: string | CallToAction[];
+export interface FAQ {
+  question: string;
+  answer: string;
 }
 
-export interface ServiceListProps extends HeadlineProps {
-  services?: Service[];
+export interface Stat {
+  label: string;
+  value: string;
 }
 
-export interface ValuesProps extends HeadlineProps {
-  items?: Value[];
-  columns?: 1 | 2 | 3 | 4;
+export interface PageMeta {
+  title: string;
+  description: string;
 }

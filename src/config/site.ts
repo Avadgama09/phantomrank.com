@@ -1,26 +1,35 @@
 import ogImage from "../assets/og-image.png";
 
 export const siteConfig = {
-  name: "Astro Starter Pro",
+  name: "PhantomRank",
   description:
-    "Starter template optimized for SEO and performance. A solid foundation to start your projects with best practices.",
-  url: "https://astrostarterpro.com",
+    "AI Visibility Tracking for brands and marketing agencies in India. Track how your brand is cited in ChatGPT, Perplexity, Gemini, and Claude — mentions, citations, and share of voice across LLMs.",
+  url: "https://phantomrank.com",
   lang: "en",
-  locale: "en_US",
-  author: "Devgelo",
-  twitter: "@Devgelo",
+  locale: "en_IN",
+  author: "PhantomRank",
+  twitter: "@PhantomRank",
   ogImage: ogImage,
-  socialLinks: {
-    twitter: "https://twitter.com",
-    github: "https://github.com/devgelo-labs/astro-starter-pro",
-    discord: "https://discord.com",
-  },
+
   navLinks: [
     { text: "Home", href: "/" },
-    { text: "About", href: "/about" },
-    { text: "Services", href: "/services" },
-    { text: "Blog", href: "/blog" },
-    { text: "Contact", href: "/contact" },
-    { text: "Widgets", href: "/widgets" },
+    { text: "Features", href: "/features" },
+    { text: "Dashboard", href: "/dashboard" },
+    { text: "Methodology", href: "/methodology" },
+    { text: "Pricing", href: "/pricing" },
+    { text: "Resources", href: "/resources" },
   ],
+
+  ctaLink: { text: "Get Access", href: "/signup" },
+
+  footerLinks: [
+    { text: "About Us", href: "/about" },
+    { text: "Terms & Conditions", href: "/terms" },
+    { text: "Privacy Policy", href: "/privacy" },
+  ],
+
+  socialLinks: {
+    twitter: "https://twitter.com/PhantomRank",
+    linkedin: "https://linkedin.com/company/phantomrank",
+  },
 };

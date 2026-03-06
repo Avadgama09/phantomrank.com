@@ -11,6 +11,7 @@ interface Props {
     canonical?: string;
     ignoreTitleTemplate?: boolean;
   };
+  breadcrumbs?: { name: string; href: string }[];
 }
 
 import Seo from "../components/seo/Seo.astro";
@@ -23,7 +24,8 @@ import Analytics from "@vercel/analytics/astro";
 
 import { siteConfig } from "../config/site";
 
-const { title, description, ogImage, canonical, metadata } = Astro.props;
+const { title, description, ogImage, canonical, metadata, breadcrumbs } =
+  Astro.props;
 
 const finalTitle = metadata?.title || title;
 const finalDescription = metadata?.description || description;
@@ -43,6 +45,12 @@ const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
       ignoreTitleTemplate={finalIgnoreTitleTemplate}
     />
     <Schema type="WebSite" data={{}} />
+    <Schema type="Organization" data={{}} />
+    {
+      breadcrumbs && breadcrumbs.length > 0 && (
+        <Schema type="BreadcrumbList" data={{ breadcrumbs }} />
+      )
+    }
     <slot name="head" />
     <script is:inline>
       const getTheme = () => {
@@ -91,7 +99,7 @@ const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
       </div>
 
       <Navbar />
-      <main id="main-content" class="relative z-10 grow pt-[72px]">
+      <main id="main-content" class="relative z-10 grow pt-18">
         <slot />
       </main>
       <Footer />
@@ -102,7 +110,7 @@ const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
       const setupObserver = () => {
         const observerOptions = {
           root: null,
-          rootMargin: "0px 0px -50px 0px", // Triggers slightly before the element fully enters
+          rootMargin: "0px 0px -50px 0px",
           threshold: 0.1,
         };
 
@@ -121,9 +129,7 @@ const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
         revealElements.forEach((el) => observer.observe(el));
       };
 
-      // Run on initial load
       setupObserver();
-      // Also run on Astro view-transitions if enabled
       document.addEventListener("astro:page-load", setupObserver);
     </script>
   </body>

@@ -1,19 +1,26 @@
 ---
 import { siteConfig } from "../../config/site";
+import type { FAQ } from "../../types/types";
+
+interface BreadcrumbItem {
+  name: string;
+  href: string;
+}
 
 interface Props {
-  type: "WebSite" | "BlogPosting" | "BreadcrumbList";
-  data: {
-    title?: string;
-    description?: string;
-    image?: string;
-    pubDate?: Date;
-    author?: string;
-    url?: string;
+  type:
+    | "WebSite"
+    | "Organization"
+    | "SoftwareApplication"
+    | "FAQPage"
+    | "BreadcrumbList";
+  data?: {
+    faqs?: FAQ[];
+    breadcrumbs?: BreadcrumbItem[];
   };
 }
 
-const { type, data } = Astro.props;
+const { type, data = {} } = Astro.props;
 
 let schema = {};
 
@@ -24,39 +31,61 @@ if (type === "WebSite") {
     name: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
-    author: {
-      "@type": "Person",
-      name: siteConfig.author,
-    },
-    sameAs: [siteConfig.socialLinks.twitter, siteConfig.socialLinks.github],
   };
-} else if (type === "BlogPosting") {
+} else if (type === "Organization") {
   schema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: data.title,
-    description: data.description,
-    image: data.image,
-    datePublished: data.pubDate,
-    author: {
-      "@type": "Person",
-      name: data.author,
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: new URL("/favicon.svg", siteConfig.url).toString(),
+    description: siteConfig.description,
+    sameAs: Object.values(siteConfig.socialLinks),
+  };
+} else if (type === "SoftwareApplication") {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "INR",
+      lowPrice: "0",
+      highPrice: "29999",
+      offerCount: "5",
     },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": data.url,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      logo: {
-        "@type": "ImageObject",
-        // Placeholder, ideally should be a real logo URL
-        url: new URL("/favicon.svg", siteConfig.url).toString(),
+  };
+} else if (type === "FAQPage" && data.faqs?.length) {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: data.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
       },
-    },
+    })),
+  };
+} else if (type === "BreadcrumbList" && data.breadcrumbs?.length) {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: data.breadcrumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: new URL(crumb.href, siteConfig.url).toString(),
+    })),
   };
 }
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+{Object.keys(schema).length > 0 && (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+)}
