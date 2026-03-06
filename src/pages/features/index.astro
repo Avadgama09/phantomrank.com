@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Features from "../../components/sections/Features.astro";
+import CTA from "../../components/sections/CTA.astro";
+import { pageMeta } from "../../utils/data";
+
+const meta = pageMeta.features;
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Features", href: "/features" },
+  ]}
+>
+  <Features variant="full" />
+  <CTA />
+</Layout>

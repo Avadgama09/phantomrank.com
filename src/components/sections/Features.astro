@@ -1,0 +1,166 @@
+---
+import { features } from "../../utils/data";
+import type { FeatureCategory } from "../../types/types";
+
+interface Props {
+  variant?: "preview" | "full";
+}
+
+const { variant = "preview" } = Astro.props;
+
+const liveFeatures = features.filter((f) => f.status === "live");
+const comingSoonFeatures = features.filter((f) => f.status === "coming-soon");
+
+const categories: FeatureCategory[] = [
+  "Market Intelligence",
+  "Content Production",
+  "Prediction",
+];
+
+const isPreview = variant === "preview";
+---
+
+<section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+  <div class="text-center mb-16">
+    <div
+      class="reveal inline-flex items-center gap-2 px-3 py-1 text-primary text-lg font-semibold"
+    >
+      {isPreview ? "Features" : "All Features"}
+    </div>
+    <h2
+      class="reveal text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
+    >
+      {isPreview
+        ? "Everything you need to track AI visibility"
+        : "The PhantomRank platform"}
+    </h2>
+    <p class="reveal text-xl text-muted-foreground max-w-2xl mx-auto">
+      {isPreview
+        ? "Three live tools today. A full AI visibility platform coming soon."
+        : "Market intelligence, content production, and predictive tools — purpose-built for agencies managing AI visibility."}
+    </p>
+  </div>
+
+  {/* ── Live Features ── */}
+  <div class="mb-16">
+    {!isPreview && (
+      <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-primary mb-8 text-center">
+        Available Now
+      </h3>
+    )}
+    <div class="grid gap-6 md:grid-cols-3">
+      {liveFeatures.map((feature) => (
+        <a
+          href={`/features/${feature.slug}`}
+          class="reveal bg-card p-8 rounded-2xl border border-border shadow-sm transition-all hover:border-primary/50 group"
+        >
+          <div
+            class={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${feature.iconClass}`}
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              {feature.icon === "lucide:radar" && (
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.348 14.652a3.75 3.75 0 010-5.304m5.304 0a3.75 3.75 0 010 5.304m-7.425 2.121a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.808 3.808 9.981 0 13.789M12 12h.008v.008H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              )}
+              {feature.icon === "lucide:bar-chart-3" && (
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 3v18h18M7 16v-3m4 3v-7m4 7V9m4 7v-5"
+                />
+              )}
+              {feature.icon === "lucide:messages-square" && (
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M20 12c0 1.657-1.343 3-3 3h-1l-4 4V15H7c-1.657 0-3-1.343-3-3V7c0-1.657 1.343-3 3-3h10c1.657 0 3 1.343 3 3v5z"
+                />
+              )}
+            </svg>
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <h3 class="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+              {feature.name}
+            </h3>
+            <span class="inline-flex items-center rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-400">
+              Live
+            </span>
+          </div>
+          <p class="text-muted-foreground">{feature.oneLiner}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  {/* ── Coming Soon Features (full variant only shows all, preview shows count) ── */}
+  {isPreview ? (
+    <div class="reveal text-center">
+      <p class="text-muted-foreground mb-4">
+        Plus {comingSoonFeatures.length} more features coming soon — including
+        trend prediction, AI-native content production, and predictive budget
+        optimisation.
+      </p>
+      <a
+        href="/features"
+        class="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+      >
+        View all features
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+          />
+        </svg>
+      </a>
+    </div>
+  ) : (
+    <>
+      {categories.map((category) => {
+        const categoryFeatures = comingSoonFeatures.filter(
+          (f) => f.category === category,
+        );
+        return categoryFeatures.length > 0 ? (
+          <div class="mb-12">
+            <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6 text-center">
+              {category} — Coming Soon
+            </h3>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {categoryFeatures.map((feature) => (
+                <a
+                  href={`/features/${feature.slug}`}
+                  class="reveal bg-card p-8 rounded-2xl border border-border shadow-sm transition-all hover:border-primary/50 opacity-75 hover:opacity-100 group"
+                >
+                  <div class="flex items-center gap-2 mb-2">
+                    <h3 class="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {feature.name}
+                    </h3>
+                    <span class="inline-flex items-center rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-400">
+                      Soon
+                    </span>
+                  </div>
+                  <p class="text-muted-foreground">{feature.oneLiner}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null;
+      })}
+    </>
+  )}
+</section>

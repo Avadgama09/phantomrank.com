@@ -1,6 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { pageMeta } from "../utils/data";
+import Schema from "../components/seo/Schema.astro";
+import Hero from "../components/sections/Hero.astro";
+import Problem from "../components/sections/Problem.astro";
+import HowItWorks from "../components/sections/HowItWorks.astro";
+import Features from "../components/sections/Features.astro";
+import SocialProof from "../components/sections/SocialProof.astro";
+import FAQ from "../components/sections/FAQ.astro";
+import CTA from "../components/sections/CTA.astro";
+import { pageMeta, faqs } from "../utils/data";
 
 const meta = pageMeta.home;
 ---
@@ -12,28 +20,16 @@ const meta = pageMeta.home;
     ignoreTitleTemplate: true,
   }}
 >
-  <section class="mx-auto max-w-7xl px-4 py-32 sm:px-6 lg:px-8 text-center">
-    <h1
-      class="text-4xl font-bold tracking-tight sm:text-6xl bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
-    >
-      PhantomRank
-    </h1>
-    <p class="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-      {meta.description}
-    </p>
-    <div class="mt-10 flex items-center justify-center gap-4">
-      <a
-        href="/signup"
-        class="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary/80"
-      >
-        Get Access
-      </a>
-      <a
-        href="/features"
-        class="rounded-full bg-foreground/10 px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-foreground/20"
-      >
-        View Features
-      </a>
-    </div>
-  </section>
+  <Fragment slot="head">
+    <Schema type="SoftwareApplication" data={{}} />
+    <Schema type="FAQPage" data={{ faqs }} />
+  </Fragment>
+
+  <Hero />
+  <Problem />
+  <HowItWorks />
+  <Features variant="preview" />
+  <SocialProof />
+  <FAQ />
+  <CTA />
 </Layout>

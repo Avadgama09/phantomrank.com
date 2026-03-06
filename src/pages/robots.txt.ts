@@ -4,6 +4,22 @@ import { siteConfig } from "../config/site";
 const robotsTxt = `
 User-agent: *
 Allow: /
+Disallow: /signup
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
 
 Sitemap: ${new URL("sitemap-index.xml", siteConfig.url).href}
 `.trim();

@@ -1,0 +1,27 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PricingSection from "../components/sections/Pricing.astro";
+import FAQ from "../components/sections/FAQ.astro";
+import CTA from "../components/sections/CTA.astro";
+import Schema from "../components/seo/Schema.astro";
+import { pageMeta, faqs } from "../utils/data";
+
+const meta = pageMeta.pricing;
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Pricing", href: "/pricing" },
+  ]}
+>
+  <Fragment slot="head">
+    <Schema type="FAQPage" data={{ faqs }} />
+  </Fragment>
+
+  <PricingSection variant="full" />
+  <FAQ />
+  <CTA />
+</Layout>

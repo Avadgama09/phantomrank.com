@@ -1,0 +1,188 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { pageMeta } from "../utils/data";
+
+const meta = pageMeta.terms;
+const lastUpdated = "6 March 2026";
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Terms & Conditions", href: "/terms" },
+  ]}
+>
+  <article class="relative mx-auto max-w-3xl px-4 py-24 sm:px-6 lg:px-8">
+    <div class="mb-12">
+      <h1
+        class="reveal text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
+      >
+        Terms &amp; Conditions
+      </h1>
+      <p class="reveal text-sm text-muted-foreground">
+        Last updated: {lastUpdated}
+      </p>
+    </div>
+
+    <div class="prose-custom space-y-8">
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          1. Agreement to Terms
+        </h2>
+        <p class="text-muted-foreground">
+          By accessing or using PhantomRank ("the Service"), operated by
+          PhantomRank ("we," "us," or "our"), you agree to be bound by these
+          Terms and Conditions. If you do not agree, do not use the Service.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          2. Description of Service
+        </h2>
+        <p class="text-muted-foreground">
+          PhantomRank is an AI visibility tracking platform that monitors how
+          brands are mentioned and cited inside AI-generated answers across
+          large language models. The Service is provided on a subscription
+          basis with free and paid tiers.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          3. Account Registration
+        </h2>
+        <p class="text-muted-foreground">
+          You must provide accurate, complete information when creating an
+          account. You are responsible for maintaining the security of your
+          account credentials and for all activity under your account.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          4. Acceptable Use
+        </h2>
+        <p class="text-muted-foreground mb-3">
+          You agree not to:
+        </p>
+        <ul class="space-y-2 text-muted-foreground">
+          <li class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground"></span>
+            Use the Service to manipulate or spam AI engine outputs
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground"></span>
+            Reverse-engineer, decompile, or attempt to extract source code
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground"></span>
+            Share account credentials with unauthorised third parties
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground"></span>
+            Resell or redistribute data obtained from the Service without written consent
+          </li>
+        </ul>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          5. Payments and Billing
+        </h2>
+        <p class="text-muted-foreground">
+          Paid plans are billed monthly in Indian Rupees (INR). You may upgrade,
+          downgrade, or cancel at any time. Downgrades and cancellations take
+          effect at the end of the current billing cycle. We do not offer
+          refunds for partial billing periods.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          6. Data and Accuracy
+        </h2>
+        <p class="text-muted-foreground">
+          PhantomRank provides AI visibility data on a best-effort basis. AI
+          engines change their outputs frequently, and we do not guarantee the
+          completeness or accuracy of any scan results. The Service is a
+          measurement tool, not a guarantee of AI rankings or placements.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          7. Intellectual Property
+        </h2>
+        <p class="text-muted-foreground">
+          All content, branding, and technology within PhantomRank remain our
+          property. Your data remains yours. We claim no ownership over the
+          brand names, content, or information you submit for tracking.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          8. Limitation of Liability
+        </h2>
+        <p class="text-muted-foreground">
+          To the maximum extent permitted by law, PhantomRank shall not be
+          liable for any indirect, incidental, or consequential damages arising
+          from your use of the Service. Our total liability shall not exceed
+          the fees paid by you in the twelve months preceding the claim.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          9. Termination
+        </h2>
+        <p class="text-muted-foreground">
+          We reserve the right to suspend or terminate your account if you
+          violate these Terms. You may delete your account at any time by
+          contacting us. Upon termination, your right to access the Service
+          ceases immediately.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          10. Changes to Terms
+        </h2>
+        <p class="text-muted-foreground">
+          We may update these Terms from time to time. We will notify you of
+          material changes via email or through the Service. Continued use
+          after changes constitutes acceptance of the revised Terms.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          11. Governing Law
+        </h2>
+        <p class="text-muted-foreground">
+          These Terms are governed by the laws of India. Any disputes shall
+          be subject to the exclusive jurisdiction of the courts in Mumbai,
+          Maharashtra.
+        </p>
+      </section>
+
+      <section class="reveal">
+        <h2 class="text-xl font-semibold text-foreground mb-3">
+          12. Contact
+        </h2>
+        <p class="text-muted-foreground">
+          For questions about these Terms, contact us at
+          <a
+            href="mailto:legal@phantomrank.com"
+            class="text-primary hover:text-primary/80"
+          >
+            legal@phantomrank.com
+          </a>.
+        </p>
+      </section>
+    </div>
+  </article>
+</Layout>
