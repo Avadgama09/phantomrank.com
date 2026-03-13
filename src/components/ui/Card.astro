@@ -1,18 +1,25 @@
 ---
+// src/components/ui/CardGlass.astro
 interface Props {
   class?: string;
   href?: string;
 }
 
 const { class: className, href, ...rest } = Astro.props;
-
 const Tag = href ? "a" : "div";
 ---
 
 <Tag
   href={href}
   class:list={[
-    "bg-card p-8 rounded-2xl border border-border shadow-sm transition-all hover:border-primary/50",
+    "relative p-8 rounded-2xl transition-all duration-300",
+    "bg-white/60 dark:bg-white/5",
+    "backdrop-blur-xl",
+    "border border-white/40 dark:border-white/10",
+    "shadow-lg shadow-black/5 dark:shadow-black/20",
+    "hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-primary/5",
+    "hover:border-primary/30 dark:hover:border-primary/20",
+    "hover:-translate-y-1",
     className,
   ]}
   {...rest}

@@ -1,0 +1,93 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import FeatureDetail from "../../components/sections/FeatureDetail.astro";
+import CTA from "../../components/sections/CTA.astro";
+import { features } from "../../utils/features";
+
+const feature = features.find((f) => f.slug === "community-manager")!;
+
+const insight = "AI models like ChatGPT and Perplexity pull heavily from Reddit when generating answers. The conversations happening in subreddits — product comparisons, complaints, recommendations — directly shape what AI tells buyers. If your client's brand is being praised, criticized, or ignored in Reddit threads, that signal feeds into AI search results. Community Manager lets you see exactly what's being said, by whom, and how it affects your client's position in the AI conversation.";
+
+const outputs = [
+  "Reddit thread discovery with subreddit tags, dates, snippets, and direct links — paginated with deduplication across pages",
+  "Per-thread AI analysis with summary, main topics, sentiment breakdown (positive/neutral/negative percentages with visual bar), thread score, upvote ratio, author count, and reply depth",
+  "Pain Points tab extracting specific complaints and frustrations from threads — with severity ratings (low/medium/high), frequency counts, and verbatim quotes pulled directly from comments",
+  "Competitor Mentions tab showing which brands are discussed in each thread, how often they appear, community sentiment toward each, and exact context quotes",
+  "Purchase Signals detection identifying four buyer intent types: Intent to Buy, Recently Bought, Considering Switch, and Seeking Alternative — with attributed quotes and usernames",
+  "Consensus vs. Controversy breakdown showing what the community agrees on vs. what's debated",
+  "Question Clusters revealing what questions people are asking most frequently, grouped by theme",
+  "Top Contributors list identifying the most active voices in each thread",
+  "Verbatim Highlights — the most impactful direct quotes from the discussion",
+  "Exportable per-thread analysis as CSV or JSON for client reporting",
+];
+
+const howItWorks = [
+  "Enter Topic — Type any brand name, product, or category (e.g., 'Notion', 'project management tool', 'Fujifilm Instax Wide Evo'). Works for both broad categories and specific products.",
+  "Choose Research Angle — Select from two intent systems. Category-Level Research has 10 angles: broad mentions, main subject threads, recommendations, brand discussions, purchase drivers, negative sentiment, cost pain points, comparisons, fresh threads (last 18 months), and niche competitor mentions. Product-Level Research has 10 angles: exact mentions, comment threads, title mentions, purchase intent, negative/positive sentiment, head-to-head comparisons, running costs, features/connectivity, and recent posts (last 6 months).",
+  "Browse Results — View paginated Reddit threads matching your search. Each thread shows the title, subreddit, date, snippet, and a direct link. Results are deduplicated across pages.",
+  "Analyse Any Thread — Click 'Analyse' on any thread to run deep AI analysis. PhantomRank reads the full thread and extracts sentiment, pain points, competitor mentions, purchase signals, question clusters, consensus/controversy topics, top contributors, and verbatim highlights.",
+  "Export & Report — Download per-thread analysis as CSV or JSON. Use pain points for content strategy, competitor mentions for positioning, and purchase signals for retargeting opportunities.",
+];
+
+const useCases = [
+  {
+    scenario: "Content strategy from real conversations",
+    outcome: "Find the exact pain points and questions your client's audience is asking on Reddit. Build blog posts, landing pages, and FAQs that address these themes — so AI starts citing your client as the answer.",
+  },
+  {
+    scenario: "Competitive intelligence gathering",
+    outcome: "See which competitors are mentioned most, what sentiment they carry, and in what context. Identify weaknesses in competitor perception that your client can exploit in positioning.",
+  },
+  {
+    scenario: "Crisis and reputation monitoring",
+    outcome: "Use the Negative Sentiment angle to surface complaints, frustrations, and returns threads. Catch reputation issues early and build response strategies before they feed into AI answers.",
+  },
+  {
+    scenario: "Purchase intent lead generation",
+    outcome: "Detect threads where users express Intent to Buy, Considering Switch, or Seeking Alternative signals. These are real buyers your client's sales or marketing team can engage directly.",
+  },
+  {
+    scenario: "Validate product-market fit",
+    outcome: "Run both Category-Level and Product-Level searches to see how users talk about the problem space vs. the specific product. Identify gaps between what buyers want and what your client offers.",
+  },
+  {
+    scenario: "AI citation source mapping",
+    outcome: "Reddit threads are a primary source for AI-generated answers. Identify which threads AI is likely pulling from so your client can engage in, respond to, or create content that references those conversations.",
+  },
+];
+
+const includes = [
+  "10 Category-Level research angles (broad mentions, recommendations, comparisons, purchase drivers, etc.)",
+  "10 Product-Level research angles (exact mentions, purchase intent, head-to-head, sentiment, etc.)",
+  "Paginated Reddit thread discovery with deduplication",
+  "Per-thread deep AI analysis (sentiment, pain points, competitors, signals)",
+  "4 purchase signal types (Intent to Buy, Recently Bought, Considering Switch, Seeking Alternative)",
+  "Pain point extraction with severity ratings and verbatim quotes",
+  "Competitor mention tracking with sentiment and context",
+  "Question cluster detection grouped by theme and frequency",
+  "Consensus vs. Controversy analysis",
+  "Top contributor identification",
+  "Per-thread CSV and JSON exports",
+  "Auto-saved search form (picks up where you left off)",
+];
+---
+
+<Layout
+  title="Community Manager — Reddit Intelligence & Brand Monitoring for Agencies | PhantomRank"
+  description="Scan Reddit for brand mentions, competitor comparisons, pain points, and purchase signals. Deep AI analysis of any thread with sentiment, competitors, and verbatim quotes. Built for marketing agencies."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Features", href: "/features" },
+    { name: "Community Manager", href: "/features/community-manager" },
+  ]}
+>
+  <FeatureDetail
+    feature={feature}
+    insight={insight}
+    outputs={outputs}
+    howItWorks={howItWorks}
+    useCases={useCases}
+    includes={includes}
+  />
+  <CTA />
+</Layout>

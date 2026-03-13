@@ -1,0 +1,91 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import FeatureDetail from "../../components/sections/FeatureDetail.astro";
+import CTA from "../../components/sections/CTA.astro";
+import { features } from "../../utils/features";
+
+const feature = features.find((f) => f.slug === "ai-visibility-tracker")!;
+
+const insight = "Every time someone asks ChatGPT, Perplexity, or Gemini for a recommendation, brands either get cited — or they don't exist in the conversation. Traditional SEO tools can't tell you which. Your client's Google ranking has no correlation with whether AI recommends them. Without tracking citations, mentions, and share of voice across answer engines, every content strategy is a guess.";
+
+const outputs = [
+  "AI Visibility Score (0–100) measuring how often your client's brand gets cited and mentioned across answer engines",
+  "AI Discovery Funnel showing the full pipeline: queries sent → discovered in search → reviewed by AI → cited in answer",
+  "Trust Gap detection — queries where AI found your client's content but chose not to cite it",
+  "Visibility by Platform breakdown showing citation rates per AI engine (Perplexity live, ChatGPT/Gemini/Claude coming soon)",
+  "Visibility Breakdown across four categories: Fully Visible, Cited Only, Trust Gap, and Not Found",
+  "Competitor Analysis showing which competitors appear in answers when your client doesn't",
+  "Auto-generated Key Insights with specific, actionable recommendations based on the data",
+  "Exportable CSV report with per-prompt results — ready to drop into client decks",
+];
+
+const howItWorks = [
+  "Brief Builder — Enter brand name, website, industry, up to 3 competitors, customer type (B2B/B2C/D2C), target buyer roles, up to 5 use cases, and up to 5 differentiators. Choose between Organic prompts (discover where you should appear) or Brand-centric prompts (measure current visibility). Auto-saves your progress.",
+  "Prompt Generation — PhantomRank generates 45 strategic prompts across 9 funnel-aligned intent types: Category Awareness, Recommendation, Problem-Solution, Comparison/Versus, Brand-Direct, Use-Case Specific, Local/Regional, Alternatives/Substitutes, and Trust Validation. Choose from 6 query styles: Conversational, Question-Formal, Command, Keyword-Dense, Context-Heavy, or Comparison.",
+  "Review & Customize — View all generated prompts grouped by intent category. Select, deselect, edit, delete, or add your own custom prompts to any category. Full control over exactly what gets analyzed.",
+  "Run Analysis — Select AI platforms (Perplexity live; ChatGPT, Gemini, Claude, Copilot coming soon), confirm your prompt set, and launch. Real-time progress tracking shows queries processed and estimated time remaining.",
+  "Results Dashboard — Three-tab analysis: Overview (visibility score, platform breakdown, discovery funnel, visibility categories, auto-generated insights), Detailed Results (per-prompt citation status, search rank, context snippets, source URLs), and Competitor Analysis (which brands appear when yours doesn't). Export everything to CSV or schedule weekly tracking.",
+];
+
+const useCases = [
+  {
+    scenario: "Pitch a new SEO client",
+    outcome: "Run a visibility audit before the first call. Show them exactly where they're invisible in AI search — and where competitors are winning. Close the retainer with data they've never seen before.",
+  },
+  {
+    scenario: "Monthly client reporting",
+    outcome: "Replace vague AI updates with hard numbers: citation count, mention rate, trust gaps, and competitor comparisons. Export CSV reports directly into client decks.",
+  },
+  {
+    scenario: "Content strategy prioritization",
+    outcome: "Use Trust Gap detection to find queries where AI found your client's content but didn't cite it. These are the highest-ROI content fixes — the content exists, it just needs optimization.",
+  },
+  {
+    scenario: "Competitive intelligence briefing",
+    outcome: "See which competitors appear in AI answers when your client doesn't. Map competitor visibility by intent category to find gaps and opportunities across the full buyer journey.",
+  },
+  {
+    scenario: "Brand vs. Organic prompt testing",
+    outcome: "Run two analyses — one Organic (no brand name) and one Brand-centric — to compare where the brand should appear vs. where it actually appears. Quantify the visibility gap.",
+  },
+  {
+    scenario: "Multi-market expansion planning",
+    outcome: "Test visibility across different locations and industries. See how AI recommends your client in Mumbai vs. the US, or in Fintech vs. SaaS contexts.",
+  },
+];
+
+const includes = [
+  "9 funnel-aligned intent types covering ToFu → MoFu → BoFu",
+  "45 AI-generated prompts per brand analysis",
+  "6 query styles (Conversational, Formal, Command, Keyword-Dense, Context-Heavy, Comparison)",
+  "Organic and Brand-centric prompt modes",
+  "Up to 3 competitor benchmarks per analysis",
+  "Full prompt customization — edit, delete, or add your own",
+  "Per-prompt citation tracking with source URLs",
+  "AI Discovery Funnel visualization",
+  "Trust Gap detection and scoring",
+  "Auto-generated actionable insights",
+  "CSV export for client reporting",
+  "Weekly tracking scheduling",
+];
+---
+
+<Layout
+  title="AI Visibility Tracker — Track Brand Citations Across AI Search Engines | PhantomRank"
+  description="Track how often your client's brand gets cited and mentioned across ChatGPT, Perplexity, Gemini, and Claude. 45 strategic prompts across 9 intent types. Built for marketing agencies."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Features", href: "/features" },
+    { name: "AI Visibility Tracker", href: "/features/ai-visibility-tracker" },
+  ]}
+>
+  <FeatureDetail
+    feature={feature}
+    insight={insight}
+    outputs={outputs}
+    howItWorks={howItWorks}
+    useCases={useCases}
+    includes={includes}
+  />
+  <CTA />
+</Layout>

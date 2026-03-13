@@ -1,5 +1,7 @@
 ---
 import { stats } from "../../utils/data";
+
+const glassCard = "bg-white/60 dark:bg-white/4 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-primary/5 hover:border-primary/30 dark:hover:border-primary/20 hover:-translate-y-1";
 ---
 
 <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
@@ -7,19 +9,19 @@ import { stats } from "../../utils/data";
     <div
       class="reveal inline-flex items-center gap-2 px-3 py-1 text-primary text-lg font-semibold"
     >
-      Built for Scale
+      Trusted by Agencies
     </div>
     <h2
       class="reveal text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
     >
-      PhantomRank by the numbers
+      Built for agencies from day one
     </h2>
   </div>
 
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
     {stats.map((stat) => (
       <div
-        class="reveal bg-card p-8 rounded-2xl border border-border shadow-sm text-center"
+        class:list={["reveal p-8 text-center", glassCard]}
       >
         <p class="text-4xl font-bold tracking-tight text-foreground mb-2">
           {stat.value}
@@ -29,23 +31,20 @@ import { stats } from "../../utils/data";
     ))}
   </div>
 
-  <div class="reveal mt-16 rounded-2xl border border-border bg-card p-8 sm:p-12">
+  <div class:list={["reveal mt-16 p-8 sm:p-12", glassCard]}>
     <div class="grid gap-8 md:grid-cols-2 items-center">
       <div>
         <h3 class="text-2xl font-bold tracking-tight text-foreground mb-4">
-          Grounded in research
+          Methodology you can trust
         </h3>
         <p class="text-muted-foreground mb-4">
-          PhantomRank's methodology is built on the Princeton GEO study
-          (KDD 2024) — the first large-scale academic research into what
-          influences AI citation rates. We don't guess at what works. We
-          measure what the research proves.
+          PhantomRank uses a systematic 9-intent framework covering the full buyer journey—from awareness to decision. We generate 45 strategic prompts per brand, analyze citation frequency across answer engines, and calculate share of voice using the same metrics enterprise platforms charge $1,500+/month for.
         </p>
         <a
-          href="/methodology"
+          href="/use-cases"
           class="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
         >
-          Read our methodology
+          See how agencies use PhantomRank
           <svg
             class="h-4 w-4"
             fill="none"
@@ -62,21 +61,21 @@ import { stats } from "../../utils/data";
         </a>
       </div>
       <div class="grid grid-cols-2 gap-4">
-        <div class="rounded-xl bg-blue-500/10 p-6 text-center">
-          <p class="text-2xl font-bold text-blue-400">6</p>
-          <p class="text-xs text-muted-foreground mt-1">AI Platforms</p>
+        <div class="rounded-xl bg-blue-500/10 border border-blue-400/20 backdrop-blur-sm p-6 text-center">
+          <p class="text-2xl font-bold text-blue-400">9</p>
+          <p class="text-xs text-muted-foreground mt-1">Intent Types Tracked</p>
         </div>
-        <div class="rounded-xl bg-purple-500/10 p-6 text-center">
-          <p class="text-2xl font-bold text-purple-400">3</p>
-          <p class="text-xs text-muted-foreground mt-1">Core Metrics</p>
+        <div class="rounded-xl bg-purple-500/10 border border-purple-400/20 backdrop-blur-sm p-6 text-center">
+          <p class="text-2xl font-bold text-purple-400">45</p>
+          <p class="text-xs text-muted-foreground mt-1">Prompts Per Brand</p>
         </div>
-        <div class="rounded-xl bg-pink-500/10 p-6 text-center">
-          <p class="text-2xl font-bold text-pink-400">KDD</p>
-          <p class="text-xs text-muted-foreground mt-1">2024 Research</p>
+        <div class="rounded-xl bg-pink-500/10 border border-pink-400/20 backdrop-blur-sm p-6 text-center">
+          <p class="text-2xl font-bold text-pink-400">3</p>
+          <p class="text-xs text-muted-foreground mt-1">Live Intelligence Tools</p>
         </div>
-        <div class="rounded-xl bg-green-500/10 p-6 text-center">
+        <div class="rounded-xl bg-green-500/10 border border-green-400/20 backdrop-blur-sm p-6 text-center">
           <p class="text-2xl font-bold text-green-400">100%</p>
-          <p class="text-xs text-muted-foreground mt-1">Measurement Only</p>
+          <p class="text-xs text-muted-foreground mt-1">Multi-Client Ready</p>
         </div>
       </div>
     </div>

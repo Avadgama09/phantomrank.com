@@ -1,0 +1,91 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Headline from '../../components/ui/Headline.astro';
+import Card from '../../components/ui/Card.astro';
+import { useCases } from '../../utils/use-cases';
+import { pageMeta } from '../../utils/data';
+import { Icon } from 'astro-icon/components';
+
+const meta = pageMeta['use-cases'] || {
+  title: "Industry Use Cases",
+  description: "Discover how agencies use PhantomRank to track AI visibility across different industries."
+};
+---
+
+<Layout metadata={meta} breadcrumbs={[
+  { name: "Home", href: "/" },
+  { name: "Use Cases", href: "/use-cases" },
+]}>
+  <section class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+      <!-- Header -->
+      <Headline
+        title="Industry Use Cases"
+        subtitle="How agencies use PhantomRank to win AI search for their clients."
+        tagline="Playbooks"
+      />
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        {useCases.map((useCase) => (
+          <a href={`/use-cases/${useCase.slug}`} class="group">
+            <Card class="h-full transition-all duration-300 hover:shadow-lg hover:border-primary/50 relative overflow-hidden">
+              <div class="p-6">
+                <div class={`w-12 h-12 rounded-lg flex items-center justify-center mb-6 ${useCase.iconClass}`}>
+                  <Icon name={useCase.icon} class="w-6 h-6" />
+                </div>
+
+                <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                  {useCase.title}
+                </h3>
+
+                <p class="text-muted-foreground line-clamp-3">
+                  {useCase.description}
+                </p>
+
+                <div class="mt-6 flex items-center text-sm font-medium text-primary">
+                  Read Playbook
+                  <Icon name="lucide:arrow-right" class="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                </div>
+              </div>
+            </Card>
+          </a>
+        ))}
+      </div>
+
+      <!-- Newsletter CTA -->
+      <div class="mt-20 rounded-2xl border border-border bg-card p-10 text-center">
+        <h2 class="text-2xl font-bold text-foreground mb-3">
+          New playbooks, every week
+        </h2>
+        <p class="text-muted-foreground mb-8 max-w-xl mx-auto">
+          We publish new industry playbooks regularly. Subscribe and get them straight to your inbox — along with AEO tips, GEO research, and PhantomRank updates.
+        </p>
+        <form
+          class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto"
+          action="/signup"
+          method="POST"
+        >
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="you@agency.com"
+            class="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+          />
+          <button
+            type="submit"
+            class="shrink-0 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary/80 hover:shadow-lg hover:shadow-primary/25"
+          >
+            Subscribe
+          </button>
+        </form>
+        <p class="mt-4 text-xs text-muted-foreground">
+          No spam. Unsubscribe anytime.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</Layout>

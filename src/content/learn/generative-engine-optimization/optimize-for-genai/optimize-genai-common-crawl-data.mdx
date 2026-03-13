@@ -1,0 +1,102 @@
+---
+type: article
+title: "How to Optimize for GenAI Using Common Crawl Data"
+description: "Learn how Common Crawl data shapes LLM training and how to use web graph metrics like Harmonic Centrality to improve your GenAI visibility."
+slug: "optimize-genai-common-crawl-data"
+author: "phantomrank-team"
+publisheddate: "2026-03-12"
+updateddate: "2026-03-12"
+hub: "generative-engine-optimization"
+cluster: "optimize-for-genai"
+category: "Generative Engine Optimization"
+seo:
+  title: "How to Optimize for GenAI Using Common Crawl Data | PhantomRank"
+  description: "Learn how Common Crawl data shapes LLM training and how to use web graph metrics like Harmonic Centrality to improve your GenAI visibility."
+featuredimage:
+  src: "/images/learn/generative-engine-optimization/optimize-for-genai/optimize-genai-common-crawl-data.webp"
+  alt: "Optimizing for generative AI using Common Crawl web graph data"
+schematype: "Article"
+keywords:
+  - "optimize for GenAI"
+  - "Common Crawl"
+  - "AI training data"
+  - "Harmonic Centrality"
+  - "LLM visibility"
+  - "generative engine optimization"
+relatedLinks:
+  - label: "Back to Generative Engine Optimization Hub"
+    href: "/learn/generative-engine-optimization"
+  - label: "Understanding Harmonic Centrality to Optimize for GenAI"
+    href: "/learn/generative-engine-optimization/optimize-for-genai/harmonic-centrality-genai"
+  - label: "The Two Layers of AI Visibility"
+    href: "/learn/generative-engine-optimization/optimize-for-genai/two-layers-ai-visibility"
+---
+
+
+Most conversations about [generative engine optimization](/learn/generative-engine-optimization) focus on content structure, schema markup, and writing style. Those matter. But they skip the infrastructure layer underneath — the one that determines whether an LLM encounters your content during training in the first place. That layer is Common Crawl.
+
+This guide explains what Common Crawl is, why it shapes GenAI visibility at a foundational level, and what you can do about it.
+
+## What Common Crawl Actually Is
+
+Common Crawl is a nonprofit that maintains an open repository of web crawl data. Every month, it crawls roughly 2.1 billion web pages and makes the data freely available. As of February 2026, the archive spans over 17 years of continuous crawling.
+
+Here is why that matters for GenAI: **64% of the 47 most prominent LLMs** used at least one filtered version of Common Crawl in their training data. For GPT-3, over 80% of training tokens came from it. Models like LLaMA, Gemini, and Claude all draw from similar pipelines.
+
+Common Crawl is not the only training source — Wikipedia accounts for roughly 22% of training data across major models — but it is the largest single pipeline feeding content into the models that power AI search.
+
+## How Common Crawl Decides What to Crawl
+
+Common Crawl does not crawl the entire web. Not even close. As their lead crawl engineer has stated: "It is often claimed that Common Crawl contains the entire web, but that is absolutely not true."
+
+The system uses a metric called **Harmonic Centrality** to prioritize which domains get crawled more frequently. Harmonic Centrality measures how "close" a domain is to all other domains in the web's link graph — not how many links point to it, but how structurally connected it is across the broader web topology.
+
+Domains with higher Harmonic Centrality scores get crawled more often, which means more of their pages end up in monthly snapshots, which means LLMs train on more of their content across multiple time periods. The result: the model builds stronger associations with that domain's brand, topics, and expertise.
+
+You can check where any domain ranks using the [Common Crawl Web Graph Statistics tool](https://commoncrawl.github.io/cc-webgraph-statistics/), which now includes interactive charts and a domain lookup feature for the top 1,000 domains.
+
+## The Practical Optimization Checklist
+
+Optimizing for Common Crawl is not about tricking a crawler. It is about ensuring your content is accessible, well-connected, and worth returning to.
+
+### 1. Audit Your Crawl Accessibility
+
+This is the most common failure point. Stephen Burns of Common Crawl documented a case where Children's Hospital of Los Angeles — one of the top pediatric cancer centers in the US — was invisible to AI search because Cloudflare's default settings blocked CCBot.
+
+Check your `robots.txt` for the following crawlers:
+
+- **CCBot** (Common Crawl)
+- **GPTBot** (OpenAI)
+- **PerplexityBot** (Perplexity)
+- **ClaudeBot** (Anthropic)
+- **Google-Extended** (Gemini)
+
+If any are blocked — intentionally or through CDN defaults — your content cannot enter the training pipeline.
+
+### 2. Build Links from Structurally Connected Domains
+
+Traditional link volume is less important here than **where in the web graph** the linking domain sits. One link from a domain with high Harmonic Centrality moves your score more than hundreds of links from isolated sites.
+
+Practical targets include SaaS directories (Product Hunt, G2, Capterra), established industry publications, Reddit, GitHub, and Wikipedia-adjacent sources.
+
+### 3. Syndicate Strategically
+
+Do not keep content locked to a single domain. Publish on Medium, LinkedIn, Dev.to, and Substack with canonical links back to your primary site. Each syndication point creates another node in the web graph that links to you, improving your structural position. Burns explicitly recommends this approach as a way to increase the odds your content survives the preprocessing pipeline.
+
+### 4. Publish Content That Gets Referenced
+
+The compounding flywheel works like this: content in Common Crawl → LLMs train on it → LLMs cite it → other sites reference it → your Harmonic Centrality improves → Common Crawl visits more frequently.
+
+Original research, definitive guides, and free tools trigger this cycle most effectively. Data-driven studies get cited. Canonical resources get linked. Tools get embedded.
+
+## What This Means for Your Strategy
+
+Optimizing for Common Crawl is a long game. Even if you improve your Harmonic Centrality today, current LLMs will not reflect that change until their next training cycle — and knowledge cutoffs lag by months. Common Crawl releases new web graph snapshots monthly, but models absorb new training data on longer cycles.
+
+Think of it as building the foundation that compounds over 6 to 18 months. The links you build, the content you syndicate, and the crawl access you ensure today influence how AI models perceive your brand for years.
+
+Platforms like [PhantomRank](https://phantomrank.com) are already tracking the retrieval layer — measuring whether brands get cited in real-time AI responses. But the training data layer is the one most brands still overlook. Addressing both is what separates surface-level GenAI optimization from a strategy built on structural visibility.
+
+For a deeper look at the metric driving crawl priority, read [Understanding Harmonic Centrality to Optimize for GenAI](/learn/generative-engine-optimization/optimize-for-genai/harmonic-centrality-genai). And to understand how training data and retrieval work as two separate systems, see [The Two Layers of AI Visibility](/learn/generative-engine-optimization/optimize-for-genai/two-layers-ai-visibility).
+
+For more on the full discipline of [generative engine optimization](/learn/generative-engine-optimization), see our complete guide.

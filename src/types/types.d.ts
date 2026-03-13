@@ -46,6 +46,43 @@ export interface Feature {
   iconClass?: string;
 }
 
+export interface FeatureUseCase {
+  scenario: string;
+  outcome: string;
+}
+
+export interface FeatureDetailProps {
+  feature: Feature;
+  insight: string;
+  outputs: string[];
+  howItWorks: string[];
+  useCases: FeatureUseCase[];
+  includes: string[];
+}
+
+export interface UseCase {
+  title: string;
+  slug: string;
+  industry: string;
+  description: string;
+  icon: string;
+  iconClass: string;
+}
+
+export type ResourceType = "article" | "guide" | "tool" | "research" | "community";
+
+export interface Resource {
+  title: string;
+  description: string;
+  type: ResourceType;
+  href: string;
+  external?: boolean;
+  date?: string;
+  author?: string;
+  tag?: string;
+  featured?: boolean;
+}
+
 export interface Plan {
   name: string;
   price: string;

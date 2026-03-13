@@ -1,0 +1,100 @@
+---
+// src/pages/learn/[hub]/[cluster]/[article].astro
+import { getCollection } from "astro:content";
+import ArticleLayout from "../../../../layouts/ArticleLayout.astro";
+import { hubs } from "../../../../config/hubs";
+
+export async function getStaticPaths() {
+  const all = await getCollection("learn");
+
+  // Get articles: any .mdx inside a cluster folder that isn't _index.mdx or _pillar.mdx
+  const articles = all.filter((entry) => {
+    const parts = entry.id.split("/");
+    return (
+      parts.length >= 3 &&
+      !entry.id.endsWith("_index.mdx") &&
+      !entry.id.endsWith("_pillar.mdx")
+    );
+  });
+
+  return articles.map((article) => {
+    const parts = article.id.split("/");
+    const hubSlug = parts[0];
+    const clusterSlug = parts[1];
+    // Use frontmatter slug if present, otherwise derive from filename
+    const articleSlug =
+      article.data.slug ||
+      parts[parts.length - 1].replace(/\.mdx$/, "");
+
+    // Find sibling articles in same cluster
+    const siblings = all
+      .filter((e) => {
+        const p = e.id.split("/");
+        return (
+          p[0] === hubSlug &&
+          p[1] === clusterSlug &&
+          !e.id.endsWith("_index.mdx") &&
+          !e.id.endsWith("_pillar.mdx")
+        );
+      })
+      .map((e) => {
+        const p = e.id.split("/");
+        const s = e.data.slug || p[p.length - 1].replace(/\.mdx$/, "");
+        return {
+          slug: s,
+          title: e.data.title,
+          href: `/learn/${hubSlug}/${clusterSlug}/${s}`,
+        };
+      })
+      .sort((a, b) => a.title.localeCompare(b.title));
+
+    // Find cluster _index for title
+    const clusterIndex = all.find(
+      (e) => e.id === `${hubSlug}/${clusterSlug}/_index.mdx`
+    );
+
+    return {
+      params: { hub: hubSlug, cluster: clusterSlug, article: articleSlug },
+      props: {
+        entry: article,
+        hubSlug,
+        clusterSlug,
+        clusterTitle: clusterIndex?.data?.title || clusterSlug,
+        siblingArticles: siblings,
+        totalArticles: siblings.length,
+        currentArticle: articleSlug,
+      },
+    };
+  });
+}
+
+const { entry, hubSlug, clusterSlug, clusterTitle, siblingArticles, totalArticles, currentArticle } = Astro.props;
+const { Content } = await entry.render();
+
+const hub = hubs.find((h: { slug: string; title: string }) => h.slug === hubSlug);
+
+const hubTitle = hub?.title || hubSlug;
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Learn", href: "/learn" },
+  { name: hubTitle, href: `/learn/${hubSlug}` },
+  { name: clusterTitle, href: `/learn/${hubSlug}/${clusterSlug}` },
+  { name: entry.data.title },
+];
+---
+
+<ArticleLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  breadcrumbs={breadcrumbs}
+  hubTitle={hubTitle}
+  hubSlug={hubSlug}
+  clusterTitle={clusterTitle}
+  clusterSlug={clusterSlug}
+  siblingArticles={siblingArticles}
+  currentArticle={currentArticle}
+  totalArticles={totalArticles}
+>
+  <Content />
+</ArticleLayout>

@@ -1,0 +1,404 @@
+---
+title: "AI Search for WordPress SEO Plugin Developers"
+description: "Extend WordPress SEO plugins with AI visibility tracking—architecture patterns, schema integration, and competitive features that let plugins monitor ChatGPT, Perplexity, and AI Overviews performance."
+seo:
+  title: "AI Visibility for WordPress SEO Plugins | PhantomRank"
+  description: "Add AI search tracking to WordPress SEO plugins. Technical architecture, schema optimization, and competitive intelligence features users will pay for."
+hub: "ai-search-agency-strategy"
+order: 5
+readTime: "13 min read"
+publishedAt: "2026-03-10"
+updatedAt: "2026-03-10"
+tags: ["WordPress plugins", "SEO plugins", "AI visibility", "schema markup", "competitive features"]
+---
+
+You maintain a WordPress SEO plugin with 50,000+ active installations. Users trust you for traditional SEO guidance—keyword optimization, meta descriptions, sitemaps, schema markup. But in the last 6 months, support requests increasingly mention AI search: "How do I optimize for ChatGPT?" "Why does my competitor appear in Perplexity but I don't?" "Can your plugin track AI visibility?"
+
+Your plugin currently can't answer these questions. Neither can Yoast, Rank Math, or All in One SEO—the category leaders haven't built AI visibility features yet. This creates a competitive window: whoever ships credible AI search capabilities first will differentiate in a commoditized market and capture users actively searching for these features.
+
+But building AI visibility tracking into WordPress plugins presents unique technical challenges: API costs scale linearly with user count making freemium models unprofitable, competitive tracking requires external infrastructure plugins can't easily provide, schema optimization for AI extractability differs from traditional SEO schema practices, and users expect dashboard visualizations showing AI performance integrated with existing SEO metrics.
+
+Effective AI visibility features for WordPress plugins balance three constraints: technical feasibility (what's buildable within WordPress plugin architecture), economic viability (what pricing model covers infrastructure costs without alienating free users), and user value (what features meaningfully improve users' AI search presence, not vanity metrics).
+
+In this guide, you'll learn which AI visibility features are technically feasible within WordPress plugin constraints, how to structure freemium pricing that covers API costs while attracting paid users, what schema optimizations actually improve AI extractability for common content types, how to integrate AI visibility dashboards into existing SEO plugin interfaces, and when to partner with external services versus building infrastructure yourself.
+
+## What AI Visibility Features Can WordPress Plugins Realistically Offer?
+
+WordPress plugins face architectural constraints that limit what's feasible. Plugins run on users' hosting infrastructure with variable performance, limited persistent storage, and restricted ability to make continuous external API calls. Features that work perfectly in SaaS applications fail in plugin environments.
+
+### Which Features Are Technically Feasible Within Plugin Architecture?
+
+**On-demand AI visibility checks** work because they're user-initiated rather than continuous. User clicks "Check AI Visibility" button in plugin dashboard. Plugin executes 5-10 strategic prompts across ChatGPT and Perplexity APIs, analyzes whether user's domain appears in responses, calculates basic visibility score, and displays results immediately. This happens on-demand when user triggers it, not continuously in background.
+
+Technical implementation: Plugin uses WordPress HTTP API (`wp_remote_post()`) to call ChatGPT and Perplexity APIs with timeout of 30-60 seconds per request, parses JSON responses searching for user's domain or brand mentions, stores results in WordPress options table (`update_option()`) for historical comparison, and displays formatted results in plugin admin dashboard using WordPress admin UI components.
+
+**Cost structure:** At $0.002 per ChatGPT API call (using GPT-4o-mini) and $0.005-$0.01 per Perplexity API call, 10 checks cost approximately $0.05-$0.10. If free users get 10 checks monthly, that's $0.05-$0.10 per user monthly cost. For plugin with 10,000 free users actually using feature (10-20% of installations typically use advanced features), monthly API cost is $500-$1,000.
+
+**Schema optimization guidance** works because it's local analysis not requiring external APIs. Plugin analyzes current page content, identifies content types (product pages, articles, how-to guides, comparison pages), checks existing schema markup, and recommends specific schema additions proven to improve AI extractability. This is computational analysis, not API-dependent.
+
+Technical implementation: Plugin hooks into WordPress post editor, parses post content using the DOMDocument PHP class to analyze structure (headings, lists, tables, images), identifies content patterns suggesting specific schema types (FAQ sections suggest FAQPage schema, comparison tables suggest Product or Review schema), checks if schema already exists in post metadata, and displays recommendations in Gutenberg sidebar panel or Classic Editor metabox.
+
+**User value:** Actionable guidance specific to their content. Instead of generic "add schema markup" advice, plugin says "This page has comparison table with pricing data. Add Product schema for each product mentioned with `offers.price` property—AI platforms cite pages with structured pricing 3x more often."
+
+**Content extractability scoring** evaluates whether page content is structured for AI citation without calling external APIs. Plugin analyzes content against known extractability factors: presence of comparison tables, specific data points (numbers, dates, pricing), FAQ sections with clear Q&A structure, bulleted lists versus paragraph-heavy prose, and headings creating clear content hierarchy.
+
+Technical implementation: Plugin scores content on extractability index (0-100) based on structural factors. Assigns points for specific data points (5 points per numeric fact, pricing mention, or date reference), comparison elements (10 points for comparison tables, 5 points for pros/cons lists), FAQ structure (10 points for FAQ sections with proper markup), and extractable formatting (5 points for bulleted lists, 3 points for clear heading hierarchy).
+
+Display extractability score in plugin dashboard with specific recommendations improving score: "Score: 68/100. Add comparison table with 3-5 competitors (+10 points). Convert third paragraph into bulleted list (+5 points). Add FAQ section answering 3-5 common questions (+10 points)."
+
+### Which Features Are Not Feasible or Too Costly for Plugin Architecture?
+
+**Continuous competitive monitoring** fails in plugin architecture. Tracking 5 competitors across 50 prompts daily requires 250 API calls per site daily. At $0.005 per call, that's $1.25 daily or $37.50 monthly per user. For plugin with 10,000 users, monthly API cost is $375,000—economically impossible for freemium plugin pricing.
+
+Why it fails: WordPress plugins can't reliably run scheduled tasks continuously. WordPress cron (`wp-cron`) is pseudo-cron triggered by site visits, not true background scheduling. Sites with low traffic don't trigger cron reliably. Running API-intensive tasks on every site visit kills performance.
+
+**Alternative approach:** Partner with external service offering continuous tracking. Plugin provides on-demand checks (economically viable) and schema optimization (local analysis). Users wanting continuous monitoring upgrade to integrated service subscription handled outside plugin.
+
+**Historical trend analysis beyond 90 days** becomes database burden. Storing daily AI visibility checks for 10,000 users over 12 months generates significant database bloat—each check stores 5-10 data points, resulting in millions of database rows on shared hosting infrastructure not designed for this scale.
+
+Why it fails: WordPress database isn't optimized for time-series data at scale. Querying 12 months of historical data for dashboard charts creates slow page loads on shared hosting. Users complain about plugin "making site slow."
+
+**Alternative approach:** Offer 30-90 day historical view within plugin. For longer historical analysis, integrate with external analytics service storing data off-site in properly scaled database infrastructure.
+
+**Real-time AI citation alerts** require continuous monitoring not feasible in plugin architecture. To alert user when competitor surges in AI visibility, plugin would need to check competitor performance every 4-6 hours—600+ API calls daily per user, creating same cost problem as continuous monitoring.
+
+**Alternative approach:** Weekly summary emails generated by optional connected service. Plugin focuses on on-demand analysis and optimization guidance (its architectural strengths), while paid external service handles continuous monitoring and alerting (requiring infrastructure plugins can't provide).
+
+## How Should WordPress Plugins Structure AI Visibility Pricing?
+
+Freemium WordPress plugins face tension between offering enough free value to attract users and reserving premium features that justify paid upgrades. AI visibility features exacerbate this because external API costs create hard per-user costs even for free tier.
+
+### What Features Should Be Free vs Premium?
+
+The freemium model that works: Free tier provides limited on-demand checking and optimization guidance creating value and demonstrating capability. Premium tier adds volume, frequency, competitive intelligence, and continuous monitoring users can't get without paying.
+
+**Free tier features (5-10 checks per month):**
+
+**Single-site AI visibility check:** User manually triggers check scanning their domain across 5-10 high-intent prompts relevant to their category. Plugin executes ChatGPT and Perplexity queries, reports whether site appears in responses, and calculates basic visibility score (0-100).
+
+**Schema optimization recommendations:** Plugin analyzes each page's content structure and recommends specific schema types improving AI extractability. This is local computational analysis not requiring API calls, so no incremental cost per usage.
+
+**Content extractability scoring:** For each post/page, plugin scores content on extractability index (0-100) based on structural factors (comparison tables, specific data, FAQ sections, clear formatting). Provides specific recommendations improving score.
+
+**Basic AI SEO checklist:** Dashboard widget showing essential AI optimization tasks for site—"Add FAQ schema to product pages," "Create comparison guide with structured data," "Implement Article schema on blog posts," "Add specific pricing data in product descriptions."
+
+**Cost analysis for free tier:** 10 checks monthly per user at $0.05-$0.10 per check bundle = $0.50-$1.00 per active user monthly. If 20% of free users (2,000 of 10,000 installations) actively use feature, monthly cost is $1,000-$2,000. This is subsidized by premium subscriptions.
+
+**Premium tier features ($9-$19/month per site):**
+
+**Unlimited on-demand checks:** Remove monthly check limit. Power users can check visibility daily as they optimize content, A/B test different schema implementations, or monitor impact of content updates.
+
+**Competitive tracking:** Monitor 3-5 competitors alongside own site. See share-of-voice comparison showing who dominates category in AI search. This requires 5x more API calls but premium pricing covers cost.
+
+**Platform-specific breakdowns:** Free tier shows aggregate AI visibility. Premium shows performance breakdown across ChatGPT, Perplexity, Google AI Overviews, and Gemini. Reveals platform-specific optimization opportunities.
+
+**Historical trend analysis:** 90-day historical charts showing visibility trends, schema implementation impact, and competitive position changes. Demonstrates ROI of optimization efforts over time.
+
+**Priority API access:** Premium users' checks process faster with dedicated API quota. During high-traffic periods, premium checks complete in 30 seconds while free tier queues may take 2-3 minutes.
+
+**Advanced schema templates:** Pre-built schema templates for complex content types—comparison guides, pricing pages, tool listings, case studies, technical documentation. One-click implementation of proven AI-extractable structures.
+
+**Weekly email reports:** Automated weekly summary of AI visibility performance, competitive movements, and optimization recommendations delivered via email. Set-and-forget monitoring without dashboard checking.
+
+**Cost analysis for premium tier:** 100 checks monthly per premium user at $0.05-$0.10 per check bundle = $5-$10 per premium user monthly API cost. At $9-$19/month subscription price, gross margin is $4-$14 per user monthly. At 1,000 premium subscribers, monthly gross margin is $4,000-$14,000 covering free tier subsidy ($1,000-$2,000) and generating $2,000-$12,000 net margin.
+
+### How Do You Convert Free Users to Premium?
+
+**Conversion tactics proven to work:**
+
+**Usage limit notifications:** When free user reaches 7 of 10 monthly checks, display dashboard notice: "You've used 7 of 10 free AI visibility checks this month. Upgrade to Premium for unlimited checks and competitive tracking starting at $9/month." Create urgency without being pushy.
+
+**Competitive tease:** Free tier shows user's visibility score (68/100) but displays competitor scores as blurred with "Upgrade to Premium to see how you compare to Competitor A, Competitor B, and Competitor C." Curiosity drives upgrades.
+
+**Feature-gated recommendations:** When free user gets schema recommendations, show "5 essential recommendations available, 8 advanced recommendations available in Premium." They see value of basic recommendations, want access to advanced guidance.
+
+**ROI demonstration:** After user implements free tier recommendations, show impact: "Your extractability score improved from 58 to 76 after implementing our schema recommendations. Premium users get advanced optimization strategies that typically improve scores to 85+." Prove value before asking for payment.
+
+**Time-limited trial:** Offer 14-day premium trial to engaged free users (defined as users who completed 8+ AI visibility checks in first 30 days). Trial removes friction to experiencing premium value.
+
+**Conversion rate targets:** Well-executed freemium WordPress plugins convert 2-5% of active free users to premium. At 10,000 free installations with 20% active usage (2,000 active users), 2-5% conversion yields 40-100 premium subscribers. At $14/month average subscription, that's $560-$1,400 monthly recurring revenue.
+
+## What Schema Optimizations Actually Improve AI Extractability?
+
+Traditional SEO schema focuses on Google rich results and knowledge panels. AI extractability schema prioritizes structured data that large language models can parse and cite reliably. The optimization strategies differ significantly.
+
+### Which Schema Types Have Highest Impact on AI Citations?
+
+Research analyzing 50,000+ AI citations reveals schema types consistently associated with higher citation rates: FAQPage schema, Product schema with detailed offer properties, HowTo schema with step-by-step instructions, Article schema with author and publication details, and Review/AggregateRating schema with specific scores and review counts.
+
+**FAQPage schema implementation** for content with question-answer structure. AI platforms extract FAQ content as citations when users ask related questions—if your FAQ answers "How long does implementation take?", ChatGPT cites your answer when users ask implementation timeline questions.
+
+WordPress plugin implementation: Plugin detects FAQ patterns in content—H3 headings formatted as questions followed by paragraph answers. Suggests FAQPage schema automatically. Provides Gutenberg block or shortcode for adding FAQ sections that auto-generate proper schema.
+
+Here's the target schema structure the plugin should generate:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "How long does typical implementation take?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Most implementations complete in 2-3 weeks including setup, data migration, and team training. Enterprise deployments may take 4-6 weeks due to additional integration requirements."
+    }
+  }]
+}
+```
+
+**Impact:** Pages with properly implemented FAQPage schema appear in AI citations 40-60% more frequently when users ask questions directly related to FAQ content. This is highest ROI schema type for AI visibility.
+
+**Product schema with offer details** for e-commerce and SaaS product pages. AI platforms cite product pages when users ask about pricing, features, or product comparisons—but only when schema provides specific structured data they can extract.
+
+Critical properties for AI extractability: `offers.price` with specific numeric value, `offers.priceCurrency`, `offers.availability` (InStock, OutOfStock, PreOrder), `brand.name`, specific feature descriptions in `description` field, and `aggregateRating` if reviews exist.
+
+WordPress plugin implementation: For WooCommerce sites, plugin automatically enhances default WooCommerce Product schema with AI-optimized properties. For non-WooCommerce sites, provides custom product markup generator in post editor.
+
+Here's a complete Product schema example with AI-optimized properties:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "ProjectFlow Business Plan",
+  "description": "Project management software with unlimited users, 50GB storage per workspace, 15+ integrations (Slack, GitHub, Google Drive), and built-in time tracking.",
+  "brand": {
+    "@type": "Brand",
+    "name": "ProjectFlow"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "49.00",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "priceValidUntil": "2026-12-31"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.7",
+    "reviewCount": "1284"
+  }
+}
+```
+
+**Impact:** Product pages with detailed offer schema appear in AI citations 35-50% more frequently for pricing and comparison queries compared to pages without structured pricing data.
+
+**Article schema with authorship** for blog posts and content marketing articles. AI platforms prefer citing content with clear authorship and publication details because it supports citation credibility.
+
+Essential properties: `author.name` and `author.url`, `datePublished` and `dateModified`, `publisher.name` and `publisher.logo`, `headline` matching page title, and `description` (meta description).
+
+WordPress plugin implementation: Plugin auto-generates Article schema for all blog posts using WordPress post metadata—pulls author from post author field, dates from publish/modified dates, publisher from site title and logo in theme customizer.
+
+Here's the Article schema structure the plugin should output:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Set Up Email Marketing Automation",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Chen",
+    "url": "https://example.com/team/sarah-chen"
+  },
+  "datePublished": "2026-02-15",
+  "dateModified": "2026-03-01",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MarketingPro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.com/logo.png"
+    }
+  },
+  "description": "Step-by-step guide to setting up 5 essential email automation sequences for e-commerce businesses."
+}
+```
+
+**Impact:** Blog posts with complete Article schema appear in AI citations 20-30% more frequently than posts without schema or with incomplete schema missing author/publisher details.
+
+### What Schema Mistakes Hurt AI Visibility?
+
+**Overly generic descriptions** in schema fields waste the extractability opportunity. Example bad practice: Product schema description says "Our powerful platform helps teams collaborate effectively." AI platforms can't extract specific facts from vague marketing language.
+
+Example good practice: "Project management software with unlimited users, 50GB storage per workspace, 15+ integrations (Slack, GitHub, Google Drive), and built-in time tracking. Plans start at $49/month for teams up to 25 users."
+
+**Plugin implementation:** When plugin generates schema, prioritize specific extractable facts over marketing copy. Parse product description for numbers, feature names, pricing details, and technical specifications. If description is too vague, prompt user: "Add specific details to improve AI extractability: number of features, storage limits, user capacity, integration list, pricing tiers."
+
+**Missing offer availability** in Product schema causes AI platforms to avoid citing your product for purchase-intent queries. If schema doesn't indicate whether product is currently available for purchase, AI platforms prefer competitors with clear availability signals.
+
+**Plugin check:** When analyzing Product schema, verify `offers.availability` property exists and uses valid Schema.org value (InStock, OutOfStock, PreOrder, Discontinued). If missing, flag as critical issue: "Add availability status to product schema—AI platforms cite in-stock products 45% more often."
+
+**Inconsistent pricing between schema and page content** breaks trust AI platforms have in your data. If schema says "$49/month" but page content shows "$79/month," AI platforms detect inconsistency and deprioritize your content as unreliable.
+
+**Plugin validation:** Parse visible page content for pricing mentions. Compare against `offers.price` in schema. Flag discrepancies: "Schema price ($49) doesn't match page content ($79). AI platforms may ignore this page due to data inconsistency."
+
+## How Do You Integrate AI Visibility Dashboards Into Existing SEO Plugin Interfaces?
+
+Users already trust your plugin for SEO guidance. AI visibility features should feel like natural extension of existing dashboard, not bolted-on separate tool. Integration design determines adoption rates.
+
+### Where Should AI Visibility Features Live in Plugin Dashboard?
+
+**Option 1: Dedicated "AI Search" top-level menu** works when AI visibility becomes major plugin feature with 5+ distinct screens (visibility dashboard, competitive analysis, schema optimizer, content extractability checker, settings).
+
+Here's an example navigation structure for this approach:
+
+```text
+Dashboard (existing)
+AI Search (new top-level)
+├── AI Visibility Overview
+├── Competitive Analysis
+├── Schema Optimizer
+├── Content Extractability
+└── Settings
+General Settings (existing)
+```
+
+**Advantage:** Clear separation from traditional SEO features. Users interested in AI search know exactly where to find related features. Signals that AI search is substantial capability, not minor addition.
+
+**Disadvantage:** May overwhelm users who don't care about AI search yet. Adds cognitive load to primary navigation.
+
+**Best for:** Plugins where AI visibility becomes core differentiator and expected to generate 30%+ of premium upgrades.
+
+**Option 2: AI Visibility section within existing Dashboard** works when treating AI visibility as one of several SEO metrics alongside keyword rankings, site health, backlinks.
+
+Implementation: Add "AI Search Performance" widget to main Dashboard showing current visibility score, trend arrow (improving/declining), and "View Details" link expanding to full analysis.
+
+**Advantage:** Discoverability. Every user sees AI visibility metrics on main dashboard without seeking them out. Creates awareness driving feature adoption.
+
+**Disadvantage:** Dashboard clutter if user isn't interested in AI search. Some users prefer focused traditional SEO interface.
+
+**Best for:** Plugins introducing AI visibility as important-but-not-dominant feature alongside existing traditional SEO capabilities.
+
+**Option 3: AI recommendations integrated into post editor** works for schema optimization and content extractability features that provide page-specific guidance.
+
+Implementation: Gutenberg sidebar panel or Classic Editor metabox showing real-time AI extractability score and specific recommendations for current post/page.
+
+**Advantage:** Contextual guidance at point of content creation. Users see recommendations while writing/editing, making implementation immediate.
+
+**Disadvantage:** Limited space for comprehensive competitive analysis or site-wide AI visibility tracking.
+
+**Best for:** Content-focused features (schema recommendations, extractability scoring) rather than site-wide analytics.
+
+**Recommended hybrid approach:** Use all three strategically. Post editor integration handles page-specific optimization guidance, the dashboard widget covers site-wide AI visibility metrics and trend awareness, and the dedicated submenu serves users wanting deep competitive analysis.
+
+### What Visualizations Help Users Understand AI Visibility?
+
+**Visibility score gauge (0-100)** provides immediate at-a-glance status understanding. Use color coding: 0-40 (red/poor), 41-65 (yellow/fair), 66-85 (green/good), 86-100 (dark green/excellent). Add comparison context: "Your score: 68. Category average: 54. Top competitor: 82."
+
+**Platform performance breakdown** shows visibility isn't uniform across AI platforms. Use horizontal bar chart comparing performance across ChatGPT, Perplexity, Google AI Overviews, and Gemini. Reveals optimization priorities—user should focus on the platform where they lag most.
+
+| Platform | Visibility Score | Priority |
+|---|---|---|
+| ChatGPT | 72% | Maintain |
+| Perplexity | 65% | Optimize |
+| Gemini | 61% | Optimize |
+| Google AI Overviews | 58% | High Priority |
+
+**Competitive positioning grid** visualizes where you stand versus competitors on two dimensions: visibility rate (X-axis) and sentiment score (Y-axis). Plot user's site and 3-5 competitors as labeled dots. Ideal position is top-right quadrant (high visibility, positive sentiment).
+
+**Citation source breakdown** shows which pages earn most AI citations. Display as table in dashboard showing Page URL, Citation Count (last 30 days), Primary Topics Cited, and Platforms Citing. Reveals content working best, providing templates for future optimization.
+
+**Schema implementation status** displays progress toward complete AI-optimized schema coverage. Use progress bars showing coverage across schema types—for example, FAQPage schema (12 of 24 eligible pages), Product schema (31 of 31 product pages), Article schema (156 of 180 blog posts), Review schema (8 of 45 eligible pages). Provides clear action list for completing coverage.
+
+## When Should Plugins Partner With External Services vs Build In-House?
+
+The build-versus-partner decision determines feature scope, development timeline, and ongoing maintenance burden. Some capabilities are better served through partnerships with specialized services.
+
+### What Capabilities Make Sense to Build In-House?
+
+**Schema generation and validation** is core plugin competency. WordPress plugins already handle meta tags, sitemaps, and structured data. Extending to AI-optimized schema is natural extension of existing technical capability. You own the content, understand WordPress data structures, and can integrate directly into post editor.
+
+**Build in-house signals:** Feature requires deep WordPress integration (accessing post metadata, theme customization data, e-commerce platform data). Logic is computational not data-intensive (analyzing content structure, generating schema JSON, validating markup). No ongoing per-user API costs making feature economically sustainable at scale.
+
+**Content extractability analysis** fits in-house build profile. Analyzing whether content has comparison tables, specific data points, FAQ structure, and clear hierarchy is computational work done locally. No external APIs needed. Results improve user's content immediately.
+
+**Implementation approach:** Build PHP analysis engine parsing post content via DOMDocument, identifying extractability signals (tables, lists, headings, numbers), scoring on 0-100 index, and displaying recommendations in editor metabox. Total development: 40-60 hours for initial release, 10-15 hours monthly maintenance.
+
+Here's a simplified example of how the extractability scoring logic works in PHP:
+
+```php
+function calculate_extractability_score( $post_content ) {
+    $score = 0;
+    $doc   = new DOMDocument();
+    @$doc->loadHTML( mb_convert_encoding( $post_content, 'HTML-ENTITIES', 'UTF-8' ) );
+
+    // Check for comparison tables
+    $tables = $doc->getElementsByTagName( 'table' );
+    if ( $tables->length > 0 ) {
+        $score += 10; // Comparison table detected
+    }
+
+    // Check for FAQ-style headings (questions)
+    $headings = $doc->getElementsByTagName( 'h3' );
+    $faq_count = 0;
+    foreach ( $headings as $heading ) {
+        if ( str_contains( $heading->textContent, '?' ) ) {
+            $faq_count++;
+        }
+    }
+    if ( $faq_count >= 3 ) {
+        $score += 10; // FAQ structure detected
+    }
+
+    // Check for specific data points (numbers, prices)
+    preg_match_all( '/\$[\d,.]+|\d+%|\d+ (users|GB|MB|integrations)/', $post_content, $matches );
+    $score += min( count( $matches[0] ) * 5, 25 ); // Cap at 25 points
+
+    // Check for bulleted lists
+    $lists = $doc->getElementsByTagName( 'ul' );
+    if ( $lists->length > 0 ) {
+        $score += 5;
+    }
+
+    return min( $score, 100 );
+}
+```
+
+This scoring function runs entirely on local server resources—no API calls, no external dependencies, no per-user costs. The plugin calls this function when users open the post editor and displays the score with specific improvement recommendations.
+
+### What Capabilities Should Partner With External Services?
+
+**Continuous competitive monitoring** requires infrastructure plugin architecture can't efficiently provide. Tracking 5 competitors across 50 prompts daily means 250 API calls per site daily. For plugin with 10,000 users, that's 2.5 million daily API calls costing $12,500 daily or $375,000 monthly at $0.005 per call—economically impossible.
+
+**Partnership model:** Integrate with specialized AI visibility tracking service (like [PhantomRank](https://phantomrank.com)). Plugin provides free on-demand checks (10 monthly) and schema optimization. Users wanting continuous monitoring upgrade to integrated external service. Plugin earns 25-30% revenue share on referrals, generating passive income without infrastructure burden.
+
+**Historical trend analysis beyond 90 days** creates database scaling challenges. Storing 12+ months of daily AI visibility data for thousands of sites results in millions of database rows. Querying this for dashboard charts creates performance issues on shared hosting.
+
+**Partnership model:** Plugin stores 30-90 days of data locally (manageable scale). For longer historical analysis, integrate with external analytics service providing data storage, advanced querying, and visualization. Users export data to service via one-click integration.
+
+**Enterprise multi-site tracking** where agencies manage AI visibility across 20-50 client sites needs centralized dashboard, cross-client reporting, and white-label capabilities—features architecturally difficult in WordPress plugin format designed for single-site installation.
+
+**Partnership model:** Plugin positions as entry point for single-site users. When users need multi-site management (agencies, enterprise), seamless upgrade path to integrated service provides centralized dashboard. Plugin earns revenue share, service handles operational complexity.
+
+Here's how a typical plugin-to-service integration flow works:
+
+```text
+WordPress Plugin (Free/Premium)
+├── On-demand visibility checks (5-10 prompts, user-triggered)
+├── Schema optimization guidance (local analysis, no API)
+├── Content extractability scoring (local analysis, no API)
+└── "Upgrade to Pro Monitoring" CTA
+        │
+        ▼
+External Service (PhantomRank or similar)
+├── Continuous tracking (50+ prompts, automated daily)
+├── Competitive monitoring (5-10 competitors tracked)
+├── Historical trends (12+ months stored off-site)
+├── Multi-site management (agency dashboard)
+└── White-label reporting (branded PDF exports)
+```
+
+**Decision framework:** Build in-house when feature is computationally local, integrates deeply with WordPress, has no ongoing per-user costs, and enhances core plugin value. Partner when feature requires continuous external API usage, needs specialized infrastructure WordPress can't efficiently provide, creates database scaling challenges, or targets different customer segment (agencies/enterprise vs. individual site owners).
+
+Ready to add AI visibility features to your WordPress plugin? Continue exploring implementation strategies:
+
+- [What Is AI Visibility Tracking?](/learn/ai-visibility-tracking/what-is-ai-visibility-tracking) – Understand core concepts before building features
+- [AI Search Agency Strategy](/learn/ai-search-agency-strategy) – How agencies use AI visibility (your potential partners)
+- [Multi-Client AI Tracking](/learn/ai-search-agency-strategy/multi-client-ai-tracking) – Architecture for agencies managing many clients
+- [Schema Optimization for AI](/learn/ai-seo-optimization/schema-markup-ai-citations) – Deep dive into AI-extractable schema patterns
+
+[PhantomRank](https://phantomrank.com) offers plugin partnership programs with API access for on-demand checking, white-label continuous monitoring upgrades, and revenue-share models letting WordPress plugins monetize AI visibility features without building full infrastructure.
+
+[See Partnership Options](https://phantomrank.com/partners) or [API Documentation](https://phantomrank.com/docs/api)

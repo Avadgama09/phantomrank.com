@@ -1,0 +1,563 @@
+---
+type: "cluster"
+title: "Check Your Website: Complete SEO Health, AI Readiness, and Performance Audit Guide 2026"
+description: "Comprehensive website checking guide covering traditional SEO health audits, AI readiness assessment, performance optimization, and monthly maintenance. Learn how to audit technical SEO, verify AI crawler access, measure Core Web Vitals, check indexation issues, and maintain website health with actionable checklists and tooling recommendations."
+hubSlug: "ai-powered-seo"
+clusterSlug: "check-your-website"
+primaryKeyword: "check your website"
+secondaryKeywords: ["website audit", "SEO health check", "website performance check", "AI readiness audit", "website checker tool"]
+searchVolume: 9160
+keywordDifficulty: 85
+intent: "Informational"
+priorityPhase: 4
+targetWordCount: 2100
+status: "published"
+author: "phantomrank-team"
+publishedDate: "2026-03-11"
+updatedDate: "2026-03-11"
+seo:
+  title: "Check Your Website 2026: Complete SEO, AI Readiness & Performance Audit"
+  description: "Ultimate website checking guide with actionable checklists for SEO health, AI readiness (GPTBot, PerplexityBot access), Core Web Vitals, indexation, and monthly maintenance. Includes free and paid audit tools, priority-based fixes, and automated monitoring recommendations."
+featuredImage:
+  src: "/images/learn/ai-powered-seo/check-your-website/hero.webp"
+  alt: "Website audit dashboard showing SEO health scores, AI crawler verification, performance metrics, and issue prioritization"
+schemaType: "Article"
+---
+
+The distinction between checking your website and actually improving it lies in structured methodology—what to check, in what order, with which tools, interpreting results correctly, prioritizing fixes by impact, and establishing recurring maintenance preventing regression. Generic website checking advice—"run an audit tool," "fix broken links," "improve page speed"—provides no actionable framework for systematic evaluation distinguishing critical issues from noise.
+
+This creates specific challenges for comprehensive website checking in 2026 extending beyond traditional SEO audits. Technical SEO health (crawlability, indexation, site architecture, mobile usability) remains foundational but insufficient. AI readiness assessment (crawler access verification, content structure for AI extraction, factual density, schema implementation) determines conversational search visibility. Performance optimization (Core Web Vitals, page speed, resource loading) affects both traditional rankings and AI crawler behavior. Security and trust signals (SSL certificates, HTTPS, security headers, privacy compliance) influence both user confidence and search engine treatment.
+
+Most organizations approach website checking reactively—running audits when traffic drops, rankings decline, or conversions suffer. This reactive pattern misses the preventive maintenance value of systematic recurring checks catching issues before impact. Establishing monthly, quarterly, and annual checking cadences with appropriate depth at each interval creates proactive health monitoring rather than reactive fire-fighting.
+
+Tool selection for website checking varies by depth required and budget available. Free tools (Google Search Console, PageSpeed Insights, Mobile-Friendly Test) provide essential baseline checks but lack comprehensive coverage. Freemium tools (Screaming Frog free version, Ubersuggest limited scans) enable deeper analysis with usage caps. Paid platforms (Semrush Site Audit, Ahrefs Site Audit, Sitebulb) deliver comprehensive automated scanning with prioritized recommendations. AI-specific checkers (PhantomRank AI crawler verification, SE Visible citation tracking) address conversational search readiness traditional audits ignore.
+
+This guide provides comprehensive website checking methodology covering traditional SEO health audits, AI readiness assessment, performance optimization, security verification, and monthly maintenance checklists. Includes tool recommendations by budget tier, issue prioritization frameworks, and action plan templates for systematic improvement.
+
+## Website AI Readiness Audit: Is Your Site Optimized for AI Search?
+
+AI readiness represents the newest dimension of website health, measuring how effectively conversational AI platforms can discover, crawl, extract, and cite your content. Traditional SEO audits ignore AI-specific requirements, creating blind spots for brands investing in AI visibility without verifying foundational technical requirements.
+
+### AI Crawler Access Verification
+
+**Why it matters:** If AI platform crawlers can't access your content, optimization efforts are futile. Many sites inadvertently block AI crawlers through robots.txt restrictions, rate limiting, or CDN configurations preventing bot access.
+
+**Critical crawlers to verify:**
+
+
+- **GPTBot:** OpenAI's crawler for ChatGPT training data
+- **ChatGPT-User:** OpenAI's crawler for real-time search features
+- **PerplexityBot:** Perplexity's content discovery and citation crawler
+- **Claude-Web:** Anthropic's crawler for Claude training and real-time data
+- **Google-Extended:** Google's crawler for Bard/Gemini (separate from Googlebot)
+- **Applebot-Extended:** Apple's crawler for Apple Intelligence and Siri
+
+
+**Verification checklist:**
+
+**1. Check robots.txt file (yourdomain.com/robots.txt):**
+
+
+- **Verify no blocking directives** for AI crawlers
+- **Common mistakes:** `User-agent: GPTBot` followed by `Disallow: /` blocks GPTBot entirely
+- **Recommended approach:** Allow all AI crawlers unless specific privacy/content concerns
+
+
+**Example robots.txt allowing AI crawlers:**
+
+```
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot  
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+```
+
+**2. Review server logs for AI crawler activity:**
+
+
+- **Check access logs** (Apache, Nginx, CDN logs) for AI crawler user-agent strings
+- **Verify crawling frequency:** Should see regular visits (weekly-monthly depending on site size)
+- **If zero activity despite allowing:** Content may not be discoverable, or site not in crawler's index
+
+
+**3. Test crawler access with user-agent simulation:**
+
+Use curl or browser dev tools to simulate AI crawler user-agents:
+
+```bash
+# Test GPTBot access
+curl -A "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; GPTBot/1.0; +https://openai.com/gptbot)" https://yourdomain.com
+
+# Test PerplexityBot access  
+curl -A "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)" https://yourdomain.com
+```
+
+**Expected result:** Should return 200 OK status with page content, not 403 Forbidden or 429 Rate Limited
+
+**Common blocking issues to resolve:**
+
+
+- **CDN bot protection:** Cloudflare, Akamai, Fastly default configs may block unknown bots. Whitelist AI crawler IPs or user-agents.
+- **Rate limiting:** Aggressive rate limits may throttle AI crawlers. Configure separate limits for verified crawlers.
+- **Authentication requirements:** Pages behind authentication obviously not crawlable. Public-facing content must be publicly accessible.
+- **JavaScript-dependent rendering:** If critical content loads via JavaScript, ensure server-side rendering or static HTML fallbacks exist.
+
+
+### Content Structure for AI Extraction
+
+**Why it matters:** AI platforms favor content with clear structure, factual density, and extractable information. Pages designed for keyword optimization often lack the structure AI systems need for confident citation.
+
+**AI-friendly content structure checklist:**
+
+**1. Clear hierarchical headings (H1, H2, H3):**
+
+
+- **Single H1:** One clear primary heading stating page topic
+- **Logical H2 structure:** Major sections with descriptive headings
+- **H3 for subsections:** Supporting details under H2 sections
+- **Avoid heading stuffing:** Don't use headings solely for keyword placement
+
+
+**2. Concise introductory paragraphs:**
+
+
+- **First 150-200 words** should directly answer primary question or state primary claim
+- **Avoid long windup:** Get to the point immediately for easy AI extraction
+- **Include key facts early:** Statistics, dates, specific claims in opening paragraphs
+
+
+**3. Bulleted and numbered lists:**
+
+
+- **Lists are extraction-friendly:** AI systems parse bulleted lists easily
+- **Use for steps, features, benefits, specifications:** Natural use cases for list formatting
+- **Keep list items concise:** 1-2 sentences per bullet maximum
+
+
+**4. Comparison tables:**
+
+
+- **Structure:** Products/options in columns, features/specifications in rows
+- **Include specific values:** Not "fast" but "2.3 seconds," not "affordable" but "$12/month"
+- **Add table captions:** Descriptive captions help AI understand table purpose
+
+
+**Example AI-friendly comparison table:**
+
+
+| **Feature** | **Product A** | **Product B** | **Product C** |
+| --- | --- | --- | --- |
+| Price | $12/mo | $19/mo | $29/mo |
+| Storage | 10GB | 50GB | Unlimited |
+| Users | 5 | 20 | Unlimited |
+| Support | Email | Chat | Phone |
+| Mobile App | Yes | Yes | Yes |
+
+
+**5. FAQ sections with question-answer pairs:**
+
+
+- **Common questions** users actually ask about your topic, product, service
+- **Concise answers:** 150-300 words per answer, directly addressing question
+- **Question format:** Use actual question phrasing users would ask ("How long does X take?" not "Duration of X")
+
+
+**6. Factual density over marketing fluff:**
+
+
+- **Specific numbers:** "87\% customer satisfaction" not "high satisfaction"
+- **Dates and timeframes:** "Founded in 2019, serving customers since 2020"
+- **Measurable outcomes:** "Average setup time 2.3 hours" not "quick setup"
+- **Attributable claims:** "According to [Source], [Statistic]" not unsupported assertions
+
+
+### Schema Markup Implementation
+
+**Why it matters:** Structured data helps AI systems understand content context, entity relationships, and factual claims. While not proven to directly impact AI citations, schema improves content interpretability.
+
+**Priority schema types for AI readiness:**
+
+**1. FAQ Schema (highest priority):**
+
+Markup for question-answer pairs enabling AI extraction:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "How much does your service cost?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Our service costs $12 per user per month when billed annually, or $15 per user per month on monthly billing. All plans include 24/7 support and mobile apps."
+    }
+  }]
+}
+```
+
+**2. Organization Schema:**
+
+Markup providing authoritative information about your company:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Your Company Name",
+  "url": "https://yourdomain.com",
+  "logo": "https://yourdomain.com/logo.png",
+  "foundingDate": "2019",
+  "numberOfEmployees": "45",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US"
+  }
+}
+```
+
+**3. Product Schema (for e-commerce/SaaS):**
+
+Markup for product information AI systems can extract:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Product Name",
+  "description": "Product description",
+  "offers": {
+    "@type": "Offer",
+    "price": "12.00",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.6",
+    "reviewCount": "2400"
+  }
+}
+```
+
+**4. Article Schema (for content pages):**
+
+Markup for blog posts, guides, and informational content:
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Article Headline",
+  "datePublished": "2026-03-10",
+  "dateModified": "2026-03-10",
+  "author": {
+    "@type": "Person",
+    "name": "Author Name"
+  }
+}
+```
+
+**Schema validation and testing:**
+
+
+- **Google Rich Results Test:** Verify schema implementation at search.google.com/test/rich-results
+- **Schema Markup Validator:** Validate JSON-LD syntax at validator.schema.org
+- **Check rendering:** Confirm schema appears correctly in Google Search Console > Enhancements
+
+
+### llms.txt Implementation
+
+**Why it matters:** llms.txt file (analogous to robots.txt but for AI understanding) provides structured information AI systems can reference about your site, products, and content.
+
+**What to include in llms.txt:**
+
+
+- **Company overview:** Brief description, founding date, mission
+- **Product/service descriptions:** What you offer with specific details
+- **Key differentiators:** What makes you different from competitors
+- **Use case clarity:** When your solution best fits, when it doesn't
+- **Category positioning:** How you describe your category and position
+- **Pricing transparency:** Pricing tiers, typical costs, billing model
+- **Integration information:** Platforms you integrate with, APIs available
+
+
+**Example llms.txt structure:**
+
+```
+# Company: YourCompany
+# Description: Project management software for small teams (5-25 people) prioritizing simplicity over enterprise features
+# Founded: 2019
+# Customers: 840+ paying customers
+
+## Product Information
+- Product: Cloud-based project management platform
+- Best for: Small teams, non-technical users, budget-conscious buyers
+- Not ideal for: Enterprise teams, complex custom workflows, 50+ person teams
+- Pricing: $12/user/month (annual), $15/user/month (monthly)
+- Mobile apps: iOS (4.6★, 2400 reviews), Android (4.4★, 1800 reviews)
+
+## Key Features
+- Task management with simple boards
+- Team collaboration and chat
+- File sharing and storage (10GB-unlimited)
+- 40+ integrations (Slack, Google Workspace, Zapier)
+- 24/7 chat support, 8-minute avg response time
+
+## Differentiators
+- Simplest onboarding: 2.3 hour average setup time vs 6+ hours competitors
+- Lower cost: 40-50% cheaper than Asana, Monday.com
+- Non-technical friendly: 87% users complete first project within 30 minutes
+```
+
+**Implementation:**
+
+1. Create plain text file named `llms.txt`
+2. Place in site root: `yourdomain.com/llms.txt`
+3. Keep updated quarterly as product, pricing, positioning evolves
+4. Monitor AI crawler access logs for llms.txt requests
+
+
+### AI Readiness Audit Checklist Summary
+
+Use this checklist for systematic AI readiness verification:
+
+
+- **☐ robots.txt verification:** AI crawlers not blocked (GPTBot, PerplexityBot, Claude-Web, Google-Extended allowed)
+- **☐ Server log analysis:** AI crawler activity present in last 30 days
+- **☐ CDN/firewall config:** AI crawler IPs/user-agents whitelisted, not rate-limited aggressively
+- **☐ Content structure:** Clear H1/H2/H3 hierarchy, factual density, lists and tables where appropriate
+- **☐ FAQ sections:** 8-12 common questions answered per primary content page
+- **☐ FAQ schema:** FAQ Schema markup implemented on pages with Q&A content
+- **☐ Organization schema:** Company information structured data present
+- **☐ Product/Article schema:** Appropriate schema for content type implemented
+- **☐ Schema validation:** All schema passes Google Rich Results Test
+- **☐ llms.txt file:** Created and deployed in site root with current information
+- **☐ Introductory paragraph clarity:** First 150-200 words directly answer primary question
+- **☐ Comparison tables:** Product/feature comparisons use table format with specific values
+- **☐ Factual specificity:** Replace vague claims ("fast," "affordable," "popular") with measurable facts
+
+
+**Prioritization:** If unable to implement all improvements immediately:
+
+**Phase 1 (highest priority):**
+1. Verify AI crawler access (robots.txt, CDN whitelisting)
+2. Add FAQ sections with FAQ schema to top 10 pages
+3. Create llms.txt file with essential information
+
+
+**Phase 2 (medium priority):**
+1. Improve content structure (headings, lists, introductory paragraphs)
+2. Add comparison tables where applicable
+3. Implement Organization and Product schema
+
+
+**Phase 3 (ongoing optimization):**
+1. Increase factual density across content
+2. Expand FAQ coverage to all primary pages
+3. Monitor AI crawler activity and adjust based on patterns
+
+
+**Key takeaway:** AI readiness audit verifies technical access requirements (crawler permissions, CDN configurations), content structure (FAQ sections, tables, factual density), and structured data implementation (FAQ schema, Organization schema, llms.txt). Most sites fail AI readiness not because content quality is poor, but because technical barriers prevent AI crawlers from accessing content, or content structure prevents confident extraction and citation. Systematic verification using this checklist identifies and resolves blocking issues.
+
+## Monthly Website Health Checklist: 15 Things to Audit Regularly
+
+Proactive website maintenance prevents issues before impact. This recurring checklist catches problems early while manageable rather than after traffic drops or conversions decline.
+
+### Monthly Checks (15-30 minutes)
+
+**1. Google Search Console health review:**
+
+
+- **☐ Coverage errors:** Check for new indexation errors, crawl blocks, 404s
+- **☐ Core Web Vitals:** Verify LCP, FID, CLS remain in "Good" range
+- **☐ Security issues:** Confirm no manual actions or security warnings
+- **☐ Mobile usability:** Check for new mobile usability errors
+- **☐ Organic traffic trend:** Verify traffic within expected seasonal range
+
+
+**2. Uptime and SSL verification:**
+
+
+- **☐ Site accessibility:** Confirm homepage and key pages load properly
+- **☐ SSL certificate validity:** Check expiration date (should auto-renew 30 days before expiry)
+- **☐ HTTPS enforcement:** Verify HTTP redirects to HTTPS properly
+- **☐ Mixed content warnings:** No insecure resources loading on HTTPS pages
+
+
+**3. Critical page performance spot check:**
+
+
+- **☐ Homepage load time:** Should load under 3 seconds on desktop, under 4 seconds mobile
+- **☐ Top 5 landing pages:** Verify load speed acceptable on primary entry pages
+- **☐ Conversion pages:** Test checkout, signup, contact forms load quickly
+- **☐ Image optimization:** Spot check recent images are compressed and properly sized
+
+
+**4. Broken link detection:**
+
+
+- **☐ Internal broken links:** Use Screaming Frog, Ahrefs, or Semrush to find 404s
+- **☐ Priority:** Fix broken links on homepage, navigation, top landing pages first
+- **☐ External broken links:** Identify and replace dead outbound links
+- **☐ Redirect chains:** Find and simplify redirect chains (A→B→C should be A→C)
+
+
+**5. Content freshness check:**
+
+
+- **☐ Date accuracy:** Update "last updated" dates on refreshed content
+- **☐ Outdated information:** Scan top 20 pages for outdated statistics, deprecated features
+- **☐ Seasonal content:** Ensure seasonal content is current (tax guides updated annually, etc.)
+- **☐ Author bios:** Verify author information current and accurate
+
+
+**6. Conversion form functionality:**
+
+
+- **☐ Contact forms:** Submit test inquiry, verify delivery and autoresponder
+- **☐ Signup forms:** Test email capture, verify welcome email sends
+- **☐ Checkout process:** Complete test purchase, verify confirmation and receipts
+- **☐ Form error handling:** Test invalid inputs, confirm helpful error messages display
+
+
+**7. Analytics and tracking verification:**
+
+
+- **☐ GA4 data collection:** Verify events firing properly
+- **☐ Conversion tracking:** Confirm goal completions and e-commerce transactions recording
+- **☐ Tag Manager errors:** Check GTM debug for tag firing issues
+- **☐ Tracking code presence:** Spot check key pages for analytics script
+
+
+**8. Security and compliance:**
+
+
+- **☐ Software updates:** Update CMS (WordPress, etc.) to latest stable version
+- **☐ Plugin/theme updates:** Update plugins and themes (test on staging first)
+- **☐ Privacy policy accuracy:** Confirm privacy policy reflects current practices
+- **☐ Cookie consent functionality:** Verify cookie banner displays and functions properly
+
+
+**9. Backup verification:**
+
+
+- **☐ Automated backup status:** Confirm daily/weekly backups running successfully
+- **☐ Backup integrity:** Spot test restore process quarterly (not every month)
+- **☐ Backup retention:** Verify appropriate retention period (30 days minimum)
+- **☐ Off-site storage:** Confirm backups stored separately from production server
+
+
+**10. Indexation status check:**
+
+
+- **☐ Total indexed pages:** Compare indexed page count vs sitemap page count
+- **☐ Unintended indexation:** Search "site:yourdomain.com" for admin pages, test pages leaked
+- **☐ Canonical issues:** Verify canonical tags point correctly
+- **☐ Noindex audit:** Confirm noindex tags only on intended pages (staging, duplicates)
+
+
+**11. Mobile experience verification:**
+
+
+- **☐ Mobile rendering:** View top 10 pages on actual mobile device (not just responsive mode)
+- **☐ Touch targets:** Verify buttons and links easily tappable (48×48px minimum)
+- **☐ Font readability:** Confirm text readable without zooming (16px minimum)
+- **☐ Horizontal scrolling:** No unintended horizontal scrolling on mobile
+
+
+**12. Structured data validation:**
+
+
+- **☐ Schema errors:** Check GSC > Enhancements for schema warnings
+- **☐ Rich results eligibility:** Verify pages with schema eligible for rich results
+- **☐ New schema opportunities:** Identify pages that could benefit from schema addition
+- **☐ Schema updates:** Update schema when product details, pricing, ratings change
+
+
+**13. Page speed regression check:**
+
+
+- **☐ PageSpeed Insights:** Run on homepage and top 3 landing pages
+- **☐ Core Web Vitals:** Verify LCP under 2.5s, FID under 100ms, CLS under 0.1
+- **☐ Performance budget:** Confirm total page weight within budget (typically under 2MB)
+- **☐ Render-blocking resources:** Check for new render-blocking CSS/JS introduced
+
+
+**14. Search visibility spot check:**
+
+
+- **☐ Branded searches:** Verify you rank #1 for primary brand terms
+- **☐ Top 5 keywords:** Check positions for most important commercial keywords
+- **☐ Featured snippets:** Confirm owned featured snippets still present
+- **☐ SERP feature presence:** Verify knowledge panel, sitelinks, FAQs displaying
+
+
+**15. AI visibility spot check (if applicable):**
+
+
+- **☐ Citation presence:** Test 10-15 priority prompts in ChatGPT/Perplexity
+- **☐ Mention accuracy:** Verify AI platforms describe your offering correctly
+- **☐ Competitive positioning:** Check if competitors displacing you in AI recommendations
+- **☐ AI-referred traffic:** Review analytics for AI referral traffic trends
+
+
+### Quick Monthly Audit Workflow (30-minute version)
+
+For time-constrained teams, prioritized minimal monthly audit:
+
+**Minutes 0-5:** Google Search Console overview
+
+- Coverage errors, Core Web Vitals status, security issues
+
+
+**Minutes 5-10:** Critical functionality tests
+
+- Homepage loads, SSL valid, primary form submits successfully
+
+
+**Minutes 10-15:** Performance spot check
+
+- Run PageSpeed Insights on homepage, check Core Web Vitals
+
+
+**Minutes 15-20:** Broken link and indexation check
+
+- Screaming Frog crawl for 404s, verify indexation count stable
+
+
+**Minutes 20-25:** Security updates
+
+- Apply CMS and plugin updates (on staging first, then production)
+
+
+**Minutes 25-30:** Traffic and conversion verification
+
+- Review GA4 for traffic anomalies, verify conversion tracking active
+
+
+**If issues detected:** Schedule deeper investigation and fixes within 48 hours. Don't attempt comprehensive fixes during 30-minute monthly audit—surface issues, then address separately.
+
+**Key takeaway:** Monthly website health checks catch issues early—broken links before they damage UX, expiring SSL certificates before they trigger browser warnings, security updates before vulnerabilities exploited, performance regressions before traffic drops. 15-30 minute recurring audits provide 10× return preventing problems vs fixing after impact. Use checklist systematically ensuring nothing overlooked.
+
+## Where Should You Go From Here
+
+Explore related strategic guides for improving website health and AI readiness. [AI Visibility Tracking Complete Guide](/learn/ai-visibility-tracking) explains systematic measurement of AI citation rates and share of voice mentioned in monthly AI visibility spot checks. [Best AI SEO Tools Comparison](/learn/ai-powered-seo/best-ai-seo-tools) evaluates audit platforms including Semrush Site Audit, Ahrefs Site Audit, and specialized AI readiness checkers. [SEO Goals Framework](/learn/ai-powered-seo/seo-goals) shows how to set health targets and KPIs for traditional SEO and AI visibility metrics. [The Complete Guide to AI-Powered SEO](/learn/ai-powered-seo) provides optimization strategies for issues identified during audits.
+
+PhantomRank enables the AI visibility spot checks referenced in monthly maintenance—verify AI citation presence, monitor competitive positioning, track AI-referred traffic across Perplexity with ChatGPT, Gemini, and Grok coming soon. Automated prompt testing replaces manual checking, alerts flag citation rate drops, reporting surfaces optimization opportunities.
+
+Ready to implement comprehensive website health monitoring including AI readiness? [Get Access](https://phantomrank.com) or [See How It Works](https://app.phantomrank.com).

@@ -1,0 +1,232 @@
+---
+// src/pages/learn/index.astro
+import Layout from "../../layouts/Layout.astro";
+import HubCard from "../../components/content/HubCard.astro";
+import { hubs } from "../../config/hubs";
+import { getCollection } from "astro:content";
+
+const clusterModules = import.meta.glob("../../content/learn/*/*/_index.mdx", {
+  eager: false,
+});
+
+const clusterCounts: Record<string, number> = {};
+for (const path of Object.keys(clusterModules)) {
+  const parts = path.split("/");
+  const hubSlug = parts[parts.indexOf("learn") + 1];
+  clusterCounts[hubSlug] = (clusterCounts[hubSlug] || 0) + 1;
+}
+
+// Get all articles
+const allEntries = await getCollection("learn");
+const articles = allEntries
+  .filter((e) => {
+    const parts = e.id.split("/");
+    return (
+      parts.length >= 3 &&
+      !e.id.endsWith("_index.mdx") &&
+      !e.id.endsWith("_pillar.mdx")
+    );
+  })
+  .map((e) => {
+    const parts = e.id.split("/");
+    const hubSlug = parts[0];
+    const clusterSlug = parts[1];
+    const articleSlug = e.data.slug || parts[parts.length - 1].replace(/\.mdx$/, "");
+    const hub = hubs.find((h) => h.slug === hubSlug);
+    return {
+      title: e.data.title,
+      description: e.data.description || "",
+      href: `/learn/${hubSlug}/${clusterSlug}/${articleSlug}`,
+      hubSlug,
+      hubTitle: hub?.title || hubSlug,
+      clusterSlug,
+      category: e.data.category || "",
+      keywords: e.data.keywords || e.data.secondarykeywords || [],
+      publisheddate: e.data.publisheddate || "",
+    };
+  })
+  .sort((a, b) => b.publisheddate.localeCompare(a.publisheddate));
+
+// Collect unique hub slugs that have articles
+const hubsWithArticles = [...new Set(articles.map((a) => a.hubSlug))];
+---
+
+<Layout
+  title="Learn — PhantomRank"
+  description="Explore PhantomRank's learn hub covering AI visibility tracking, GEO, AEO, agency strategy, and AI-powered SEO."
+  breadcrumbs={[{ name: "Home", href: "/" }, { name: "Learn" }]}
+>
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+        PhantomRank Learn
+      </p>
+      <h1 class="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+        Learn AI search, visibility tracking, and modern SEO
+      </h1>
+      <p class="mt-6 text-lg leading-8 text-muted-foreground">
+        PhantomRank's content hub for agencies, SEO teams, and marketers who
+        want to understand how brands get discovered, cited, and compared inside
+        AI-generated answers.
+      </p>
+    </div>
+
+    <!-- Hub cards -->
+    <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {hubs.map((hub) => (
+        <HubCard
+          title={hub.title}
+          description={hub.description}
+          href={`/learn/${hub.slug}`}
+          icon={hub.icon}
+          clusterCount={clusterCounts[hub.slug] || 0}
+        />
+      ))}
+    </div>
+
+    <!-- Articles section -->
+    {articles.length > 0 && (
+      <div class="mt-16" id="articles-section">
+        <h2 class="text-2xl font-semibold text-foreground">All Articles</h2>
+        <p class="mt-2 text-muted-foreground">
+          In-depth articles across all topics. Filter by hub or sort to find what you need.
+        </p>
+
+        <!-- Controls -->
+        <div class="mt-6 flex flex-wrap items-center gap-4">
+          <select
+            id="hub-filter"
+            class="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
+          >
+            <option value="all">All Hubs</option>
+            {hubsWithArticles.map((slug) => {
+              const hub = hubs.find((h) => h.slug === slug);
+              return <option value={slug}>{hub?.title || slug}</option>;
+            })}
+          </select>
+
+          <select
+            id="sort-select"
+            class="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="az">A → Z</option>
+            <option value="za">Z → A</option>
+          </select>
+        </div>
+
+        <!-- Article grid -->
+        <div id="articles-grid" class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {articles.map((article) => (
+            <a
+              href={article.href}
+              data-hub={article.hubSlug}
+              data-title={article.title}
+              data-date={article.publisheddate}
+              class="article-card group flex flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/40 hover:shadow-md"
+            >
+              <span class="mb-2 text-xs font-medium uppercase tracking-wider text-primary">
+                {article.hubTitle}
+              </span>
+              <h3 class="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+                {article.title}
+              </h3>
+              {article.description && (
+                <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">
+                  {article.description}
+                </p>
+              )}
+              <span class="mt-auto pt-4 text-xs text-muted-foreground">
+                {article.publisheddate}
+              </span>
+            </a>
+          ))}
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="mt-8 flex items-center justify-center gap-2"></div>
+      </div>
+    )}
+  </section>
+</Layout>
+
+<script>
+  const ITEMS_PER_PAGE = 12;
+  let currentPage = 1;
+  let filteredCards: HTMLElement[] = [];
+
+  const grid = document.getElementById("articles-grid")!;
+  const allCards = Array.from(grid.querySelectorAll(".article-card")) as HTMLElement[];
+  const hubFilter = document.getElementById("hub-filter") as HTMLSelectElement;
+  const sortSelect = document.getElementById("sort-select") as HTMLSelectElement;
+  const pagination = document.getElementById("pagination")!;
+
+  function applyFilterAndSort() {
+    const hub = hubFilter.value;
+    const sort = sortSelect.value;
+
+    filteredCards = allCards.filter((card) => {
+      if (hub === "all") return true;
+      return card.dataset.hub === hub;
+    });
+
+    filteredCards.sort((a, b) => {
+      switch (sort) {
+        case "newest":
+          return (b.dataset.date || "").localeCompare(a.dataset.date || "");
+        case "oldest":
+          return (a.dataset.date || "").localeCompare(b.dataset.date || "");
+        case "az":
+          return (a.dataset.title || "").localeCompare(b.dataset.title || "");
+        case "za":
+          return (b.dataset.title || "").localeCompare(a.dataset.title || "");
+        default:
+          return 0;
+      }
+    });
+
+    currentPage = 1;
+    render();
+  }
+
+  function render() {
+    const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE);
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+
+    allCards.forEach((card) => {
+      card.style.display = "none";
+      card.style.order = "";
+    });
+
+    filteredCards.forEach((card, i) => {
+      if (i >= start && i < end) {
+        card.style.display = "flex";
+        card.style.order = String(i);
+      }
+    });
+
+    // Pagination buttons
+    pagination.innerHTML = "";
+    if (totalPages <= 1) return;
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = String(i);
+      btn.className = i === currentPage
+        ? "rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground"
+        : "rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground hover:bg-muted";
+      btn.addEventListener("click", () => {
+        currentPage = i;
+        render();
+        document.getElementById("articles-section")?.scrollIntoView({ behavior: "smooth" });
+      });
+      pagination.appendChild(btn);
+    }
+  }
+
+  hubFilter.addEventListener("change", applyFilterAndSort);
+  sortSelect.addEventListener("change", applyFilterAndSort);
+  applyFilterAndSort();
+</script>

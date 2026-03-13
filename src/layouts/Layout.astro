@@ -11,7 +11,7 @@ interface Props {
     canonical?: string;
     ignoreTitleTemplate?: boolean;
   };
-  breadcrumbs?: { name: string; href: string }[];
+  breadcrumbs?: { name: string; href?: string }[];
 }
 
 import Seo from "../components/seo/Seo.astro";
@@ -32,6 +32,12 @@ const finalDescription = metadata?.description || description;
 const finalOgImage = metadata?.ogImage || ogImage;
 const finalCanonical = metadata?.canonical || canonical;
 const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
+
+// Schema needs href on every item — fall back to current page URL for the last crumb
+const schemaBreadcrumbs = breadcrumbs?.map((b) => ({
+  name: b.name,
+  href: b.href || Astro.url.pathname,
+}));
 ---
 
 <!doctype html>
@@ -47,8 +53,8 @@ const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
     <Schema type="WebSite" data={{}} />
     <Schema type="Organization" data={{}} />
     {
-      breadcrumbs && breadcrumbs.length > 0 && (
-        <Schema type="BreadcrumbList" data={{ breadcrumbs }} />
+      schemaBreadcrumbs && schemaBreadcrumbs.length > 0 && (
+        <Schema type="BreadcrumbList" data={{ breadcrumbs: schemaBreadcrumbs }} />
       )
     }
     <slot name="head" />
@@ -100,6 +106,51 @@ const finalIgnoreTitleTemplate = metadata?.ignoreTitleTemplate || false;
 
       <Navbar />
       <main id="main-content" class="relative z-10 grow pt-18">
+        {
+          breadcrumbs && breadcrumbs.length > 0 && (
+            <nav
+              aria-label="Breadcrumb"
+              class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:px-8"
+            >
+              <ol class="flex flex-wrap items-center gap-1.5 text-sm">
+                {breadcrumbs.map((crumb, i) => (
+                  <li class="flex items-center gap-1.5">
+                    {i > 0 && (
+                      <svg
+                        class="h-3.5 w-3.5 shrink-0 text-muted-foreground/50"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    )}
+                    {crumb.href ? (
+                      <a
+                        href={crumb.href}
+                        class="text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        {crumb.name}
+                      </a>
+                    ) : (
+                      <span
+                        class="font-medium text-foreground"
+                        aria-current="page"
+                      >
+                        {crumb.name}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )
+        }
         <slot />
       </main>
       <Footer />

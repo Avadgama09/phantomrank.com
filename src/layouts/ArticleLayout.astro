@@ -1,0 +1,118 @@
+---
+// src/layouts/ArticleLayout.astro — Article page with sibling-articles sidebar
+import Layout from "./Layout.astro";
+
+interface SiblingArticle {
+  slug: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  breadcrumbs?: { name: string; href?: string }[];
+  hubTitle: string;
+  hubSlug: string;
+  clusterTitle: string;
+  clusterSlug: string;
+  siblingArticles: SiblingArticle[];
+  currentArticle: string;
+  totalArticles: number;
+}
+
+const {
+  title,
+  description,
+  breadcrumbs,
+  hubTitle,
+  hubSlug,
+  clusterTitle,
+  clusterSlug,
+  siblingArticles,
+  currentArticle,
+  totalArticles,
+} = Astro.props;
+
+const displayedArticles = siblingArticles.slice(0, 5);
+const hasMore = totalArticles > 5;
+---
+
+<Layout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <a
+      href={`/learn/${hubSlug}/${clusterSlug}`}
+      class="mb-8 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+    >
+      <svg class="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to {clusterTitle}
+    </a>
+
+    <div class="lg:grid lg:grid-cols-[1fr_280px] lg:gap-12">
+      <article
+        class="min-w-0 overflow-x-auto prose prose-lg max-w-none
+          prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground
+          prose-p:text-muted-foreground prose-p:leading-8
+          prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+          prose-strong:text-foreground
+          prose-li:text-muted-foreground
+          prose-blockquote:border-primary/40 prose-blockquote:text-muted-foreground
+          prose-code:rounded prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary
+          prose-pre:overflow-x-auto
+          prose-table:text-sm
+          prose-th:font-semibold prose-th:text-foreground
+          prose-td:text-muted-foreground
+          prose-img:rounded-xl prose-img:shadow-md
+          prose-hr:border-border"
+      >
+        <slot />
+      </article>
+
+      <aside class="hidden lg:block">
+        <div class="sticky top-24">
+          <h3 class="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            More in {clusterTitle}
+          </h3>
+          <nav class="mt-4 flex flex-col gap-1">
+            {displayedArticles.map((article) => (
+              <a
+                href={article.href}
+                class:list={[
+                  "rounded-md px-3 py-2 text-sm transition-colors",
+                  article.slug === currentArticle
+                    ? "bg-primary/10 font-medium text-primary"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                ]}
+              >
+                {article.title}
+              </a>
+            ))}
+          </nav>
+
+          {hasMore && (
+            <a
+              href={`/learn/${hubSlug}/${clusterSlug}`}
+              class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:underline"
+            >
+              View all {totalArticles} articles
+              <svg class="ml-1 h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          )}
+
+          <div class="mt-8 border-t border-border pt-6">
+            <a
+              href={`/learn/${hubSlug}`}
+              class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← {hubTitle}
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>

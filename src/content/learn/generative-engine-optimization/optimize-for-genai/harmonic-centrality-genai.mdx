@@ -1,0 +1,89 @@
+---
+type: article
+title: "Understanding Harmonic Centrality to Optimize for GenAI"
+description: "Harmonic Centrality determines how often Common Crawl visits your domain. Learn what it measures and how to improve it for better GenAI visibility."
+slug: "harmonic-centrality-genai"
+author: "phantomrank-team"
+publisheddate: "2026-03-12"
+updateddate: "2026-03-12"
+hub: "generative-engine-optimization"
+cluster: "optimize-for-genai"
+category: "Generative Engine Optimization"
+seo:
+  title: "Understanding Harmonic Centrality to Optimize for GenAI | PhantomRank"
+  description: "Harmonic Centrality determines how often Common Crawl visits your domain. Learn what it measures and how to improve it for better GenAI visibility."
+featuredimage:
+  src: "/images/learn/generative-engine-optimization/optimize-for-genai/harmonic-centrality-genai.webp"
+  alt: "Harmonic Centrality web graph metric for generative AI optimization"
+schematype: "Article"
+keywords:
+  - "Harmonic Centrality"
+  - "Common Crawl"
+  - "web graph"
+  - "optimize for GenAI"
+  - "AI training data"
+  - "PageRank vs Harmonic Centrality"
+relatedLinks:
+  - label: "Back to Generative Engine Optimization Hub"
+    href: "/learn/generative-engine-optimization"
+  - label: "How to Optimize for GenAI Using Common Crawl Data"
+    href: "/learn/generative-engine-optimization/optimize-for-genai/optimize-genai-common-crawl-data"
+  - label: "The Two Layers of AI Visibility"
+    href: "/learn/generative-engine-optimization/optimize-for-genai/two-layers-ai-visibility"
+---
+
+
+If you have explored [how Common Crawl data shapes GenAI visibility](/learn/generative-engine-optimization/optimize-for-genai/optimize-genai-common-crawl-data), you already know that not every website gets crawled equally. The metric that determines crawl priority is called **Harmonic Centrality**. It is not new — graph theorists have studied it for years — but its practical importance for AI visibility is a recent development that most marketers have not caught up with.
+
+This is part of our complete guide to [generative engine optimization](/learn/generative-engine-optimization).
+
+## What Harmonic Centrality Measures
+
+Harmonic Centrality calculates how "close" a node is to all other nodes in a graph, weighted by inverse distance. In the context of Common Crawl's web graph, each domain is a node and each link between domains is an edge.
+
+A domain with high Harmonic Centrality is not simply one with many inbound links. It is one that can be reached from most other domains in relatively few steps. Think of it as measuring how structurally embedded a domain is in the web — not its popularity, but its proximity to everything else.
+
+Common Crawl calculates this using HyperBall, a probabilistic algorithm for computing centrality across massive graphs. The methodology is documented in the research paper *Axioms for Centrality* by Boldi and Vigna (2013). Every monthly crawl generates updated scores covering 94 to 163 million domains — a dataset that is freely available through Common Crawl's web graph releases.
+
+## Why It Matters More Than PageRank
+
+Common Crawl publishes both Harmonic Centrality and PageRank scores in its monthly web graph releases. But the two metrics tell fundamentally different stories about a domain's position in the web.
+
+| Metric | What It Measures | Vulnerability to Manipulation |
+|---|---|---|
+| **PageRank** | How many important nodes link to you, and how they distribute their authority | High — susceptible to link farming and interconnected spam pages |
+| **Harmonic Centrality** | How close you are to all other nodes in the graph, weighted by inverse distance | Low — harder to game through artificial link patterns |
+
+The distinction matters practically. PageRank can be inflated by creating many interconnected pages that point to a target. Harmonic Centrality resists this because it measures your structural position in the **entire** web graph, not just your immediate link neighborhood. As the Common Crawl documentation states: "PageRank is susceptible to manipulation. Harmonic Centrality is better for reducing this spam, because it is harder to game or exploit through artificial link patterns."
+
+This is precisely why Common Crawl chose Harmonic Centrality — not PageRank — to prioritize crawl frequency. Higher Harmonic Centrality means more frequent visits, more pages archived per crawl cycle, and more of your content ending up in the training data that powers ChatGPT, Gemini, Claude, and other LLMs.
+
+## What the Top Domains Reveal
+
+The top 15 domains in Common Crawl's latest web graph data reveal patterns that challenge traditional SEO assumptions. CDN and infrastructure domains like gstatic, Cloudflare, and jsDelivr rank extremely high because they are embedded as resources across millions of sites. Social platforms dominate the top 10 for similar structural reasons.
+
+The most instructive example is Wikipedia. It ranks 14th in Harmonic Centrality but only 37th in PageRank — yet it is ChatGPT's most-cited source at 7.8% of total citations. That gap between the two metrics illustrates why Harmonic Centrality is the better proxy for training data influence. Wikipedia is not the most "authoritative" domain by traditional link metrics, but it is among the most structurally connected — reachable in very few hops from nearly anywhere on the web.
+
+You can look up any domain in the top 1,000 using the [Common Crawl Web Graph Statistics tool](https://commoncrawl.github.io/cc-webgraph-statistics/). A March 2026 redesign added interactive charts, a domain lookup feature, and side-by-side domain comparison — so you can benchmark your domain against a competitor across every crawl period.
+
+## How to Improve Your Harmonic Centrality
+
+You cannot directly "set" your Harmonic Centrality. But you can influence it by changing your domain's position in the web graph through deliberate, sustained effort.
+
+**Earn links from well-connected hubs.** A single mention on a domain that sits near the top of the web graph — Reddit, GitHub, a major publication, a SaaS directory like Product Hunt or G2 — shifts your structural position more than dozens of links from isolated sites. Focus on domains that function as network hubs: sites embedded deeply in the web's link topology, not just sites with high traffic.
+
+**Distribute your content across multiple nodes.** When you publish on Medium, LinkedIn, Dev.to, or Substack alongside your own domain, you create multiple web graph nodes that all point back to you. This increases the number of short paths between your domain and the rest of the web, which is exactly what Harmonic Centrality rewards.
+
+**Avoid blocking CCBot.** This sounds basic, but it is the single most common failure point. If your CDN or `robots.txt` blocks Common Crawl's bot, your domain does not appear in the web graph at all — and your Harmonic Centrality effectively drops to zero for that crawl period. Cloudflare's default settings have been known to block CCBot silently, so verify with server logs rather than assumptions.
+
+**Build cross-domain relationships over time.** Harmonic Centrality rewards sustained structural connectivity, not sudden link spikes. Guest posts, industry partnerships, open-source contributions, and directory listings all add graph edges that accumulate over months and years. Each new edge shortens the average path between your domain and the broader web.
+
+## The Realistic Timeline
+
+Harmonic Centrality is a lagging metric. Even after you build new links and improve your web graph position, the change only appears in Common Crawl's next web graph release — published monthly. And LLMs only absorb that updated data when they retrain, a cycle measured in months, not days.
+
+The implication: optimizing for Harmonic Centrality is not a quick win. It is a structural investment that compounds over 6 to 18 months. But once your position improves, it is durable and difficult for competitors to undercut — precisely because the metric resists manipulation.
+
+AI visibility tracking tools like [PhantomRank](https://phantomrank.com) measure the retrieval layer in near real-time, showing when brands get cited in AI responses today. Harmonic Centrality influences the deeper layer: whether the model "knows" your brand before anyone asks. Both layers matter, and both deserve dedicated attention in any serious [generative engine optimization](/learn/generative-engine-optimization) strategy.
+
+For the full picture of how these two systems interact, see [The Two Layers of AI Visibility](/learn/generative-engine-optimization/optimize-for-genai/two-layers-ai-visibility). And for the broader discipline, explore our complete guide to [generative engine optimization](/learn/generative-engine-optimization).

@@ -1,5 +1,5 @@
 ---
-import { features } from "../../utils/data";
+import { features } from "../../utils/features";
 import type { FeatureCategory } from "../../types/types";
 
 interface Props {
@@ -18,6 +18,8 @@ const categories: FeatureCategory[] = [
 ];
 
 const isPreview = variant === "preview";
+
+const glassCard = "bg-white/60 dark:bg-white/4 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 p-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-primary/5 hover:border-primary/30 dark:hover:border-primary/20 hover:-translate-y-1";
 ---
 
 <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
@@ -25,19 +27,19 @@ const isPreview = variant === "preview";
     <div
       class="reveal inline-flex items-center gap-2 px-3 py-1 text-primary text-lg font-semibold"
     >
-      {isPreview ? "Features" : "All Features"}
+      {isPreview ? "Platform Features" : "Full Platform"}
     </div>
     <h2
       class="reveal text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
     >
       {isPreview
-        ? "Everything you need to track AI visibility"
-        : "The PhantomRank platform"}
+        ? "Track AI visibility across the full funnel"
+        : "AI search intelligence for every stage"}
     </h2>
     <p class="reveal text-xl text-muted-foreground max-w-2xl mx-auto">
       {isPreview
-        ? "Three live tools today. A full AI visibility platform coming soon."
-        : "Market intelligence, content production, and predictive tools — purpose-built for agencies managing AI visibility."}
+        ? "Three live tools tracking brand visibility, competitive positioning, and community signals. More coming soon."
+        : "From competitive benchmarking to content optimization and trend prediction—built specifically for agencies managing multiple client brands."}
     </p>
   </div>
 
@@ -45,14 +47,14 @@ const isPreview = variant === "preview";
   <div class="mb-16">
     {!isPreview && (
       <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-primary mb-8 text-center">
-        Available Now
+        Live Now
       </h3>
     )}
     <div class="grid gap-6 md:grid-cols-3">
       {liveFeatures.map((feature) => (
         <a
           href={`/features/${feature.slug}`}
-          class="reveal bg-card p-8 rounded-2xl border border-border shadow-sm transition-all hover:border-primary/50 group"
+          class:list={["reveal group", glassCard]}
         >
           <div
             class={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${feature.iconClass}`}
@@ -101,19 +103,17 @@ const isPreview = variant === "preview";
     </div>
   </div>
 
-  {/* ── Coming Soon Features (full variant only shows all, preview shows count) ── */}
+  {/* ── Coming Soon Features ── */}
   {isPreview ? (
     <div class="reveal text-center">
       <p class="text-muted-foreground mb-4">
-        Plus {comingSoonFeatures.length} more features coming soon — including
-        trend prediction, AI-native content production, and predictive budget
-        optimisation.
+        {comingSoonFeatures.length} more features in development—content optimization, predictive analytics, and automated reporting for multi-client workflows.
       </p>
       <a
         href="/features"
         class="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
       >
-        View all features
+        See the full roadmap
         <svg
           class="h-4 w-4"
           fill="none"
@@ -138,13 +138,13 @@ const isPreview = variant === "preview";
         return categoryFeatures.length > 0 ? (
           <div class="mb-12">
             <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6 text-center">
-              {category} — Coming Soon
+              {category} — In Development
             </h3>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {categoryFeatures.map((feature) => (
                 <a
                   href={`/features/${feature.slug}`}
-                  class="reveal bg-card p-8 rounded-2xl border border-border shadow-sm transition-all hover:border-primary/50 opacity-75 hover:opacity-100 group"
+                  class:list={["reveal group opacity-75 hover:opacity-100", glassCard]}
                 >
                   <div class="flex items-center gap-2 mb-2">
                     <h3 class="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">

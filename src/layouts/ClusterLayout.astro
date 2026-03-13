@@ -1,0 +1,62 @@
+---
+// src/layouts/ClusterLayout.astro — Two-column: prose content + sidebar with current cluster highlighted
+import Layout from "./Layout.astro";
+import HubNav from "../components/content/HubNav.astro";
+
+interface ClusterLink {
+  slug: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  breadcrumbs?: { name: string; href?: string }[];
+  hubTitle: string;
+  hubSlug: string;
+  clusters: ClusterLink[];
+  currentCluster: string;
+}
+
+const { title, description, breadcrumbs, hubTitle, hubSlug, clusters, currentCluster } = Astro.props;
+---
+
+<Layout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <a
+      href={`/learn/${hubSlug}`}
+      class="mb-8 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+    >
+      <svg class="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to {hubTitle}
+    </a>
+
+    <div class="lg:grid lg:grid-cols-[1fr_280px] lg:gap-12">
+      <article
+        class="min-w-0 overflow-x-auto prose prose-lg max-w-none
+          prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground
+          prose-p:text-muted-foreground prose-p:leading-8
+          prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+          prose-strong:text-foreground
+          prose-li:text-muted-foreground
+          prose-blockquote:border-primary/40 prose-blockquote:text-muted-foreground
+          prose-code:rounded prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary
+          prose-pre:overflow-x-auto
+          prose-table:text-sm
+          prose-th:font-semibold prose-th:text-foreground
+          prose-td:text-muted-foreground
+          prose-img:rounded-xl prose-img:shadow-md
+          prose-hr:border-border"
+      >
+        <slot />
+      </article>
+
+      <aside class="hidden lg:block">
+        <HubNav hubTitle={hubTitle} clusters={clusters} currentCluster={currentCluster} />
+      </aside>
+    </div>
+  </div>
+</Layout>

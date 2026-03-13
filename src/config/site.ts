@@ -1,5 +1,6 @@
 import ogImage from "../assets/og-image.png";
 
+
 export const siteConfig = {
   name: "PhantomRank",
   description:
@@ -11,22 +12,26 @@ export const siteConfig = {
   twitter: "@PhantomRank",
   ogImage: ogImage,
 
+
   navLinks: [
     { text: "Home", href: "/" },
     { text: "Features", href: "/features" },
     { text: "Dashboard", href: "/dashboard" },
-    { text: "Methodology", href: "/methodology" },
+    { text: "Use Cases", href: "/use-cases" },
     { text: "Pricing", href: "/pricing" },
-    { text: "Resources", href: "/resources" },
+    { text: "Resources", href: "/learn" },
   ],
 
+
   ctaLink: { text: "Get Access", href: "/signup" },
+
 
   footerLinks: [
     { text: "About Us", href: "/about" },
     { text: "Terms & Conditions", href: "/terms" },
     { text: "Privacy Policy", href: "/privacy" },
   ],
+
 
   socialLinks: {
     twitter: "https://twitter.com/PhantomRank",

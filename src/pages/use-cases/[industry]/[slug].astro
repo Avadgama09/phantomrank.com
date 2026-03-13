@@ -1,0 +1,96 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/ui/Button.astro';
+import { Icon } from 'astro-icon/components';
+import { useCases } from '../../utils/use-cases';
+import { pageMeta } from '../../utils/data';
+import type { UseCase } from '../../types/types';
+
+export function getStaticPaths() {
+  return useCases.map((uc) => ({
+    params: { slug: uc.slug },
+    props: { useCase: uc },
+  }));
+}
+
+interface Props {
+  useCase: UseCase;
+}
+
+const { useCase } = Astro.props;
+
+const meta = pageMeta['use-cases'] ?? {
+  title: 'Industry Use Cases',
+  description:
+    'Discover how marketing agencies use PhantomRank to track and improve AI visibility for clients across industries.',
+};
+---
+
+<Layout metadata={meta} breadcrumbs={[
+  { name: 'Home', href: '/' },
+  { name: 'Use Cases', href: '/use-cases' },
+  { name: useCase.title, href: `/use-cases/${useCase.slug}` }
+]}>
+  <article class="relative mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
+    {/* ── Header ── */}
+    <div class="reveal mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <div class={`w-10 h-10 rounded-lg flex items-center justify-center ${useCase.iconClass}`}>
+          <Icon name={useCase.icon} class="w-5 h-5" />
+        </div>
+        <span class="text-sm text-muted-foreground">
+          Industry Use Case
+        </span>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-3">
+        {useCase.title}
+      </h1>
+      <p class="text-lg text-muted-foreground">
+        {useCase.description}
+      </p>
+    </div>
+
+    {/* ── PhantomRank angle (scaffolding only for now) ── */}
+    <section class="reveal mb-10">
+      <h2 class="text-xl font-semibold text-foreground mb-4">
+        How agencies use PhantomRank
+      </h2>
+      <div class="bg-card rounded-2xl border border-border p-8">
+        <p class="text-muted-foreground">
+          This page will eventually walk through concrete workflows for this industry using PhantomRank&apos;s features
+          like AI Visibility Tracker, Industry Metrics, and Community Manager. For now, it&apos;s a scaffold so we can
+          safely expand later without changing the structure.
+        </p>
+      </div>
+    </section>
+
+    {/* ── CTA ── */}
+    <section class="reveal">
+      <div class="bg-card rounded-2xl border border-border p-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-foreground mb-1">
+            Want to see this for your clients?
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            Get access to PhantomRank and start tracking AI visibility for brands in the {useCase.industry} space.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            href="/dashboard"
+            class="rounded-full bg-foreground/10 px-8 py-3.5 text-sm font-semibold text-foreground transition-all hover:bg-foreground/20 text-center"
+          >
+            Try Live Dashboard
+          </a>
+          <a
+            href="/signup"
+            class="rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-primary/80 hover:shadow-lg hover:shadow-primary/25 text-center"
+          >
+            Get Access
+          </a>
+        </div>
+      </div>
+    </section>
+  </article>
+</Layout>

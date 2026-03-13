@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import FeatureDetail from "../../components/sections/FeatureDetail.astro";
+import CTA from "../../components/sections/CTA.astro";
+import { features } from "../../utils/features";
+
+const feature = features.find((f) => f.slug === "industry-metrics")!;
+
+const insight = "Before you can improve a client's AI visibility, you need to know who already owns the conversation. Most agencies pitch AI optimization without understanding the landscape — who the leaders are, what buying criteria AI uses to rank them, and which shortlists your client is missing from. Industry Metrics maps the competitive terrain so your strategy starts with market intelligence, not assumptions.";
+
+const outputs = [
+  "Client Overlay Card showing whether your brand appears in the AI landscape, its tier (Leader/Challenger/Niche), criteria wins, shortlist appearances, and missing criteria where competitors win but you don't",
+  "Market Leaderboard ranking every brand AI recognizes in the industry — with presence scores, tier badges, fame claims, and expandable detail panels showing criteria wins and shortlist appearances per brand",
+  "Buying Criteria Breakdown showing what factors AI uses to evaluate brands in the industry, with best-in-class winners and reasoning for each criterion",
+  "AI Shortlists showing which brands AI recommends for different buyer personas (Small Business Owner, Enterprise Procurement Manager, CTO, Agency Professional, etc.) — ranked with reasons",
+  "Source Classification categorizing every citation AI used into Social/Forum, Directory/Listing, Research Report, Government/Academic, Industry Media/Blog, or Brand/Company Site — so you know where authority comes from",
+  "Exportable reports — Shortlists as CSV and full audit data as JSON for client presentations",
+];
+
+const howItWorks = [
+  "Brand Lookup — Enter your client's brand name and website domain. PhantomRank uses Tavily to auto-enrich the company profile: industry, region, and description are pre-filled automatically.",
+  "Review Company Card — Verify and edit the auto-filled details. Adjust the industry category, specify a more precise industry label (e.g., 'Premium Multi-specialty Hospital Chain' instead of just 'Healthcare'), confirm the primary market region, and select the buyer persona that best matches the typical decision-maker in this market.",
+  "Run Industry Audit — PhantomRank queries AI to map the full competitive landscape: which brands appear, how they're tiered, what buying criteria AI evaluates, who gets shortlisted for each buyer type, and where your client fits (or doesn't) in that picture.",
+  "Analyze Results — Explore the Market Leaderboard, click into any competitor to see their criteria wins and shortlist placements, review your client's missing criteria, and export everything for the client deck.",
+];
+
+const useCases = [
+  {
+    scenario: "New client onboarding",
+    outcome: "Run an Industry Metrics audit before the kickoff meeting. Walk in knowing exactly who AI considers the leaders in your client's space, what criteria drive those rankings, and where the gaps are.",
+  },
+  {
+    scenario: "Competitive positioning strategy",
+    outcome: "See which buying criteria your client wins on and which they're missing. Build a content strategy targeting the specific criteria where competitors outperform your client in AI recommendations.",
+  },
+  {
+    scenario: "Authority source mapping",
+    outcome: "Use Source Classification to see where AI pulls its data from — G2 reviews, Reddit threads, industry reports, company blogs. Then prioritize getting your client listed on the sources that matter most.",
+  },
+  {
+    scenario: "Quarterly business review with clients",
+    outcome: "Show clients their tier, criteria wins, and shortlist appearances vs. competitors. Export the full leaderboard as a CSV and drop it into the QBR deck with real competitive intelligence.",
+  },
+  {
+    scenario: "Identify uncontested positioning",
+    outcome: "Find buying criteria where no strong brand dominates. Position your client to own that criterion in AI recommendations before competitors catch on.",
+  },
+  {
+    scenario: "Multi-persona visibility gaps",
+    outcome: "See which buyer personas AI recommends your client for — and which ones it doesn't. A client might win the 'CTO/Tech Lead' shortlist but be invisible to 'Small Business Owners'. Target the gap.",
+  },
+];
+
+const includes = [
+  "Auto-enrichment via Tavily (brand name + domain → full company profile)",
+  "16 industry categories supported",
+  "7 buyer persona types for shortlist analysis",
+  "Market Leaderboard with presence scores and tier classification",
+  "Buying Criteria analysis with best-in-class winners per criterion",
+  "Client Overlay showing your position vs. the landscape",
+  "Missing Criteria detection — where competitors win but you don't appear",
+  "AI Shortlists ranked by buyer persona with reasoning",
+  "Source Classification across 6 source types (Social, Directory, Research, Government, Media, Brand)",
+  "CSV export for shortlists",
+  "Full JSON export for complete audit data",
+  "Editable company card — override any auto-filled detail before running the audit",
+];
+---
+
+<Layout
+  title="Industry Metrics — AI Market Leaderboard & Competitive Landscape Audit | PhantomRank"
+  description="Map the competitive landscape in AI search. See which brands AI recommends in your client's industry, what buying criteria drive rankings, and where your client fits. Built for marketing agencies."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Features", href: "/features" },
+    { name: "Industry Metrics", href: "/features/industry-metrics" },
+  ]}
+>
+  <FeatureDetail
+    feature={feature}
+    insight={insight}
+    outputs={outputs}
+    howItWorks={howItWorks}
+    useCases={useCases}
+    includes={includes}
+  />
+  <CTA />
+</Layout>

@@ -1,0 +1,133 @@
+---
+type: article
+title: "The Technical Checklist to Optimize for GenAI Crawler Access"
+description: "A complete technical checklist covering robots.txt, CDN settings, rendering, performance thresholds, and llms.txt to ensure AI crawlers can access your site."
+slug: "technical-checklist-genai-crawler-access"
+author: "phantomrank-team"
+publisheddate: "2026-03-12"
+updateddate: "2026-03-12"
+hub: "generative-engine-optimization"
+cluster: "optimize-for-genai"
+category: "Generative Engine Optimization"
+seo:
+  title: "Technical Checklist for GenAI Crawler Access | PhantomRank"
+  description: "A complete technical checklist covering robots.txt, CDN settings, rendering, performance thresholds, and llms.txt to ensure AI crawlers can access your site."
+featuredimage:
+  src: "/images/learn/generative-engine-optimization/optimize-for-genai/technical-checklist-genai-crawler-access.webp"
+  alt: "Technical checklist for generative AI crawler access optimization"
+schematype: "Article"
+keywords:
+  - "AI crawler access"
+  - "robots.txt AI"
+  - "GenAI technical checklist"
+  - "llms.txt"
+  - "server-side rendering AI"
+  - "generative engine optimization"
+relatedLinks:
+  - label: "Back to Generative Engine Optimization Hub"
+    href: "/learn/generative-engine-optimization"
+  - label: "Unblocking CCBot and GPTBot"
+    href: "/learn/generative-engine-optimization/optimize-for-genai/unblocking-ccbot-gptbot"
+  - label: "How to Optimize for GenAI Using Common Crawl Data"
+    href: "/learn/generative-engine-optimization/optimize-for-genai/optimize-genai-common-crawl-data"
+---
+
+Every [generative engine optimization](/learn/generative-engine-optimization) strategy depends on one prerequisite: AI crawlers must be able to access, read, and parse your content. This checklist covers the full technical stack — from `robots.txt` to rendering architecture — in the order you should audit it. Each step is a dependency for the next. If step one fails, nothing downstream matters.
+
+## 1. robots.txt Configuration
+
+Your `robots.txt` file is the first gate. Visit `yourdomain.com/robots.txt` and verify the following AI crawlers are explicitly allowed:
+
+```
+User-agent: CCBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+```
+
+Verify no `Disallow: /` exists under any AI user agent, no wildcard rule blocks all bots, and no `Crawl-delay` directives throttle AI crawlers. Each crawler serves a different purpose: CCBot feeds [Common Crawl's training pipeline](/learn/generative-engine-optimization/optimize-for-genai/optimize-genai-common-crawl-data), GPTBot and ClaudeBot collect training data, OAI-SearchBot and PerplexityBot power real-time citations, and Google-Extended feeds Gemini. For a deeper look, see our guide to [unblocking these bots](/learn/generative-engine-optimization/optimize-for-genai/unblocking-ccbot-gptbot).
+
+## 2. CDN and WAF Verification
+
+Your CDN operates at a layer above `robots.txt`. A request blocked by the CDN never reaches your server, making your `robots.txt` rules irrelevant.
+
+**Cloudflare users:** Navigate to **Security > Bots > AI Scrapers and Crawlers**. If this toggle is enabled, it blocks CCBot and GPTBot — often without the site owner realizing it.
+
+**Other CDN/WAF users:** Review bot management rules for AI crawler user agent strings and rate-limiting rules that might throttle crawlers.
+
+**The definitive test:** Check server access logs for `CCBot`, `GPTBot`, `OAI-SearchBot`, `ClaudeBot`, `PerplexityBot`, and `Google-Extended`. Confirm they receive HTTP 200 responses. If you see 403s, 429s, or no entries, crawlers are being blocked somewhere in your stack.
+
+## 3. Rendering Architecture
+
+AI crawlers cannot execute JavaScript. If your site is built on React, Vue, Angular, or another client-side rendering framework, AI crawlers see the HTML shell but not the dynamically loaded content users see in browsers.
+
+**Quick test:** Disable JavaScript in your browser and load your top 5 pages. What you see is approximately what AI crawlers see. If your content disappears, you have a rendering problem.
+
+**Solutions, in order of effectiveness:**
+
+| Approach | How It Works | Best For |
+|---|---|---|
+| **Server-Side Rendering (SSR)** | Full HTML generated on the server before delivery | New builds or major refactors |
+| **Pre-rendering** | Static HTML generated at build time for bot user agents | Content-heavy sites with infrequent updates |
+| **Hybrid / ISR** | Combines SSR for initial load with client-side interactivity | Complex apps needing both UX and crawlability |
+
+SSR is the recommended approach. Pre-rendering for AI crawler user agents provides a viable intermediate step if full migration is not practical.
+
+## 4. Page Performance Thresholds
+
+Page performance directly affects AI citation rates. AI crawlers have timeouts, and slow or bloated pages get abandoned before the content is fully captured.
+
+| Metric | Target | Impact on AI Visibility |
+|---|---|---|
+| **Largest Contentful Paint (LCP)** | ≤ 2.5 seconds | 1.47x more likely to appear in AI outputs |
+| **Cumulative Layout Shift (CLS)** | ≤ 0.1 | 29.8% higher inclusion in generative summaries |
+| **HTML page weight** | < 1 MB | AI crawlers abandon ~18% of pages exceeding 1 MB |
+| **Total page load time** | < 3 seconds | Recommended ceiling for AI bot accessibility |
+
+A page that passes Google's Core Web Vitals may still fail AI crawler requirements if it relies on JavaScript for content delivery or has bloated HTML. Test with Lighthouse or WebPageTest, and verify raw HTML size (view source, not rendered DOM).
+
+## 5. llms.txt Implementation
+
+`llms.txt` is a markdown-formatted file placed in your site's root directory that gives AI systems a curated map of your most important content. Unlike `robots.txt` (which restricts access), `llms.txt` functions as a guide helping LLMs navigate to high-value pages efficiently.
+
+OpenAI's crawler accounts for over 94% of `llms.txt` crawling activity on sites that have implemented it — clear evidence that the dominant AI platform actively uses these files.
+
+**How to create one:** Place a markdown file named `llms.txt` in your root directory. Include a brief description of your organization, then list your most important pages with descriptions and direct URLs, organized by category. Keep it under 100 entries and update quarterly.
+
+## 6. Schema Markup for AI Extraction
+
+Schema markup improves AI search visibility by approximately 30%. Prioritize **Organization** (entity identity), **Article** (content type and authorship), **FAQPage** (conversational Q&A), and **HowTo** (procedural steps). Validate with Google's Rich Results Test and ensure entities are consistent across your site.
+
+## The Complete Audit Checklist
+
+Run through these in order — each depends on the previous step passing:
+
+- [ ] All AI crawlers explicitly allowed in `robots.txt`
+- [ ] CDN/WAF bot protection not blocking AI user agents
+- [ ] Server logs confirm 200 responses for AI crawler requests
+- [ ] Core content visible with JavaScript disabled
+- [ ] SSR or pre-rendering implemented for content pages
+- [ ] LCP ≤ 2.5s, CLS ≤ 0.1, HTML < 1 MB
+- [ ] `llms.txt` created and placed in root directory
+- [ ] Organization, Article, and FAQ schema deployed
+- [ ] Schema validates without errors
+
+This audit takes under an hour for most sites. Track whether fixes translate into citations using [PhantomRank](https://phantomrank.com).
+
+For the broader discipline, see our complete guide to [generative engine optimization](/learn/generative-engine-optimization).

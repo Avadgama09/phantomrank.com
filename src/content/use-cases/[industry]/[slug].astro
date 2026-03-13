@@ -1,0 +1,86 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const all = await getCollection('use-cases', ({ data }) => !data.draft);
+  return all.map((entry) => {
+    const [industry, slug] = entry.slug.split('/');
+    return { params: { industry, slug }, props: { entry } };
+  });
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const [industry] = entry.slug.split('/');
+
+const industryTitle = industry
+  .split('-')
+  .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+  .join(' ');
+
+const meta = {
+  title: entry.data.title,
+  description: entry.data.description,
+};
+---
+
+<Layout
+  metadata={meta}
+  breadcrumbs={[
+    { name: 'Home', href: '/' },
+    { name: 'Use Cases', href: '/use-cases' },
+    { name: industryTitle, href: `/use-cases/${industry}` },
+    { name: entry.data.title },
+  ]}
+>
+  <article class="relative mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
+    <div class="reveal mb-10">
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+          {entry.data.motion}
+        </span>
+        {entry.data.persona.map((p: string) => (
+          <span class="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+            {p}
+          </span>
+        ))}
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
+        {entry.data.title}
+      </h1>
+      <p class="text-lg text-muted-foreground">
+        {entry.data.description}
+      </p>
+    </div>
+
+    <div class="reveal prose prose-invert max-w-none mb-16">
+      <Content />
+    </div>
+
+    <div class="reveal rounded-2xl border border-border bg-card p-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="text-lg font-semibold text-foreground mb-1">
+          Run this playbook for your clients
+        </h3>
+        <p class="text-sm text-muted-foreground">
+          Get access to PhantomRank and start tracking AI visibility in the {industryTitle} space.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a
+          href="/dashboard"
+          class="rounded-full bg-foreground/10 px-6 py-3 text-sm font-semibold text-foreground hover:bg-foreground/20 transition-all text-center"
+        >
+          Try Dashboard
+        </a>
+        <a
+          href="/signup"
+          class="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary/80 hover:shadow-lg hover:shadow-primary/25 transition-all text-center"
+        >
+          Get Access
+        </a>
+      </div>
+    </div>
+  </article>
+</Layout>

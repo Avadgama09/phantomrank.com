@@ -1,27 +1,34 @@
 ---
 import type { Feature } from "../../types/types";
 
+
 interface Props {
   feature: Feature;
-  problem: string;
+  insight: string;
+  outputs: string[];
   howItWorks: string[];
-  whoItsFor: string[];
+  useCases: { scenario: string; outcome: string }[];
+  includes: string[];
 }
 
-const { feature, problem, howItWorks, whoItsFor } = Astro.props;
+
+const { feature, insight, outputs, howItWorks, useCases, includes } = Astro.props;
+
 
 const isLive = feature.status === "live";
 ---
 
+
 <article class="relative mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
-  {/* ── Status Banner ── */}
+  {/* ── Status Banner (Coming Soon only) ── */}
   {!isLive && (
     <div class="reveal mb-8 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4 text-center">
       <p class="text-sm text-amber-400 font-medium">
-        This feature is currently in development. Get notified when it launches.
+        In development. Join the waitlist to get early access.
       </p>
     </div>
   )}
+
 
   {/* ── Header ── */}
   <div class="reveal mb-12">
@@ -33,7 +40,7 @@ const isLive = feature.status === "live";
             : "bg-amber-500/10 text-amber-400"
         }`}
       >
-        {isLive ? "Available Now" : "Coming Soon"}
+        {isLive ? "Live" : "Coming Soon"}
       </span>
       <span class="text-sm text-muted-foreground">
         {feature.category}
@@ -47,44 +54,109 @@ const isLive = feature.status === "live";
     </p>
   </div>
 
-  {/* ── The Problem It Solves ── */}
+
+  {/* ── The Insight ── */}
   <section class="reveal mb-12">
     <h2 class="text-xl font-semibold text-foreground mb-4">
-      The problem
+      The insight
     </h2>
     <div class="bg-card rounded-2xl border border-border p-8">
-      <p class="text-muted-foreground">{problem}</p>
+      <p class="text-muted-foreground text-lg leading-relaxed">{insight}</p>
     </div>
   </section>
 
-  {/* ── How It Works ── */}
+
+  {/* ── What You'll See ── */}
   <section class="reveal mb-12">
     <h2 class="text-xl font-semibold text-foreground mb-4">
-      How it works
+      What you'll see
     </h2>
     <div class="bg-card rounded-2xl border border-border p-8">
       <ul class="space-y-4">
-        {howItWorks.map((step, index) => (
-          <li class="flex items-start gap-4">
-            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-              {index + 1}
-            </span>
-            <p class="text-muted-foreground pt-0.5">{step}</p>
+        {outputs.map((output) => (
+          <li class="flex items-start gap-3">
+            <svg
+              class="mt-0.5 h-5 w-5 shrink-0 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.64 0 8.577 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.64 0-8.577-3.007-9.963-7.178z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <span class="text-muted-foreground">{output}</span>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  {/* ── Who It's For ── */}
+
+  {/* ── How It Works (Collapsible) ── */}
+  <section class="reveal mb-12">
+    <details class="group">
+      <summary class="flex cursor-pointer items-center justify-between text-xl font-semibold text-foreground mb-4">
+        <span>How it works</span>
+        <svg
+          class="h-5 w-5 text-muted-foreground transition-transform group-open:rotate-180"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      </summary>
+      <div class="bg-card rounded-2xl border border-border p-8">
+        <ul class="space-y-4">
+          {howItWorks.map((step, index) => (
+            <li class="flex items-start gap-4">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                {index + 1}
+              </span>
+              <p class="text-muted-foreground pt-0.5">{step}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  </section>
+
+
+  {/* ── Use Cases ── */}
   <section class="reveal mb-12">
     <h2 class="text-xl font-semibold text-foreground mb-4">
-      Who it's for
+      Use cases
+    </h2>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {useCases.map((uc) => (
+        <div class="bg-card rounded-2xl border border-border p-6">
+          <p class="text-sm font-semibold text-foreground mb-2">{uc.scenario}</p>
+          <p class="text-sm text-muted-foreground">{uc.outcome}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+
+  {/* ── What's Included ── */}
+  <section class="reveal mb-12">
+    <h2 class="text-xl font-semibold text-foreground mb-4">
+      What's included
     </h2>
     <div class="bg-card rounded-2xl border border-border p-8">
-      <ul class="space-y-3">
-        {whoItsFor.map((audience) => (
-          <li class="flex items-start gap-3">
+      <div class="grid gap-3 sm:grid-cols-2">
+        {includes.map((item) => (
+          <div class="flex items-start gap-3">
             <svg
               class="mt-0.5 h-5 w-5 shrink-0 text-green-400"
               fill="none"
@@ -98,12 +170,13 @@ const isLive = feature.status === "live";
                 d="M4.5 12.75l6 6 9-13.5"
               />
             </svg>
-            <span class="text-muted-foreground">{audience}</span>
-          </li>
+            <span class="text-muted-foreground">{item}</span>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   </section>
+
 
   {/* ── CTA ── */}
   <div class="reveal text-center">
@@ -113,13 +186,13 @@ const isLive = feature.status === "live";
           href="/dashboard"
           class="rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-primary/80 hover:shadow-lg hover:shadow-primary/25"
         >
-          Try It in the Dashboard
+          Open in Dashboard
         </a>
         <a
           href="/signup"
           class="rounded-full bg-foreground/10 px-8 py-3.5 text-sm font-semibold text-foreground transition-all hover:bg-foreground/20"
         >
-          Get Access
+          Sign Up Free
         </a>
       </div>
     ) : (
@@ -128,13 +201,13 @@ const isLive = feature.status === "live";
           href="/signup"
           class="rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-primary/80 hover:shadow-lg hover:shadow-primary/25"
         >
-          Get Notified When This Launches
+          Join the Waitlist
         </a>
         <a
           href="/features"
           class="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
         >
-          View all features
+          See all features
           <svg
             class="h-4 w-4"
             fill="none"

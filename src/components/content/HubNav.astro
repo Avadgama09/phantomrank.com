@@ -1,0 +1,68 @@
+---
+// src/components/content/HubNav.astro — Right sidebar (like TGC's "In this guide")
+interface ClusterLink {
+  slug: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  hubTitle: string;
+  clusters: ClusterLink[];
+  currentCluster?: string;
+}
+
+const { hubTitle, clusters, currentCluster } = Astro.props;
+---
+
+<nav class="sticky top-24" aria-label="Hub navigation">
+  <div class="rounded-2xl border border-border bg-background/60 p-6">
+    <h3
+      class="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground"
+    >
+      In this guide
+    </h3>
+
+    <p class="mt-1 text-sm font-semibold text-foreground">{hubTitle}</p>
+
+    <ul class="mt-4 space-y-1">
+      {clusters.map((cluster) => (
+        <li>
+          <a
+            href={cluster.href}
+            class:list={[
+              "block rounded-lg px-3 py-2 text-sm transition-colors",
+              currentCluster === cluster.slug
+                ? "bg-primary/10 font-medium text-primary"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            ]}
+          >
+            {cluster.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-6 border-t border-border pt-4">
+      <a
+        href="/learn"
+        class="inline-flex items-center text-xs font-medium text-muted-foreground transition-colors hover:text-primary"
+      >
+        <svg
+          class="mr-1.5 h-3.5 w-3.5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        All hubs
+      </a>
+    </div>
+  </div>
+</nav>

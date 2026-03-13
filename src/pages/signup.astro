@@ -25,25 +25,25 @@ const meta = pageMeta.signup;
         <h1
           class="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
         >
-          Start tracking your brand's
+          Let's get your agency
           <span
             class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
           >
-            AI visibility
+            AI-search ready
           </span>
         </h1>
         <p class="text-lg text-muted-foreground mb-8">
-          Create your free account and see how your brand shows up across
-          ChatGPT, Perplexity, Gemini, Claude, Grok, and Copilot. No credit
-          card required.
+          Tell us a little about your agency and we'll get you set up. Whether
+          you're managing 3 brands or 300, we'll find the right plan for you.
         </p>
 
         <div class="space-y-4 mb-8">
           {[
-            "Free plan — 1 brand, 5 scans/month, 1 competitor",
-            "Live dashboard with brand mentions and citations",
-            "Results in minutes, not days",
-            "Upgrade or cancel anytime",
+            "Free plan available — no credit card required",
+            "Track brands across ChatGPT, Perplexity, Gemini, Claude, Grok & Copilot",
+            "Live dashboard with mentions, citations, and share of voice",
+            "Setup in minutes — first results the same day",
+            "Upgrade, downgrade, or cancel anytime",
           ].map((item) => (
             <div class="flex items-start gap-3">
               <svg
@@ -78,7 +78,7 @@ const meta = pageMeta.signup;
       <div class="reveal">
         <div class="bg-card rounded-2xl border border-border p-8 shadow-sm">
           <h2 class="text-xl font-semibold text-foreground mb-6">
-            Create your account
+            Request access
           </h2>
 
           <form class="space-y-5" action="/signup" method="POST">
@@ -152,16 +152,32 @@ const meta = pageMeta.signup;
               </select>
             </div>
 
+            <div>
+              <label
+                for="message"
+                class="block text-sm font-medium text-foreground mb-1.5"
+              >
+                How can we help? <span class="text-muted-foreground font-normal">(optional)</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Tell us about your agency, the clients you work with, or anything you'd like us to know before we get in touch."
+                class="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+              ></textarea>
+            </div>
+
             <button
               type="submit"
               class="w-full rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-primary/80 hover:shadow-lg hover:shadow-primary/25"
             >
-              Get Access — It's Free
+              Request Access
             </button>
           </form>
 
           <p class="mt-4 text-center text-xs text-muted-foreground">
-            By signing up you agree to our
+            By submitting this form you agree to our
             <a href="/terms" class="text-primary hover:text-primary/80">Terms</a>
             and
             <a href="/privacy" class="text-primary hover:text-primary/80">Privacy Policy</a>.

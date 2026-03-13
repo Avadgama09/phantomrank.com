@@ -1,0 +1,81 @@
+---
+// src/pages/learn/[hub]/index.astro
+import PillarLayout from "../../../layouts/PillarLayout.astro";
+
+type Frontmatter = {
+  title?: string;
+  description?: string;
+  seo?: { title?: string; description?: string };
+  featuredimage?: { src?: string; alt?: string };
+};
+
+type MdxModule = {
+  default: any;
+  frontmatter?: Frontmatter;
+};
+
+export function getStaticPaths() {
+  const pillarModules = import.meta.glob<MdxModule>(
+    "../../../content/learn/*/_pillar.mdx",
+    { eager: true },
+  );
+
+  const clusterModules = import.meta.glob<MdxModule>(
+    "../../../content/learn/*/*/_index.mdx",
+    { eager: true },
+  );
+
+  return Object.entries(pillarModules).map(([path, mod]) => {
+    const parts = path.split("/");
+    const hub = parts[parts.indexOf("learn") + 1];
+
+    const clusters = Object.entries(clusterModules)
+      .filter(([cPath]) => {
+        const cParts = cPath.split("/");
+        return cParts[cParts.indexOf("learn") + 1] === hub;
+      })
+      .map(([cPath, cMod]) => {
+        const cParts = cPath.split("/");
+        const clusterSlug = cParts[cParts.indexOf("learn") + 2];
+        const fallbackTitle = clusterSlug
+          .replace(/-/g, " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+        return {
+          slug: clusterSlug,
+          title: cMod.frontmatter?.title || fallbackTitle,
+          href: `/learn/${hub}/${clusterSlug}`,
+        };
+      })
+      .sort((a, b) => a.title.localeCompare(b.title));
+
+    return {
+      params: { hub },
+      props: { entry: mod, hub, clusters },
+    };
+  });
+}
+
+const { entry, hub, clusters } = Astro.props as {
+  entry: MdxModule;
+  hub: string;
+  clusters: { slug: string; title: string; href: string }[];
+};
+const Content = entry.default;
+const fm = entry.frontmatter ?? {};
+---
+
+<PillarLayout
+  title={fm.seo?.title || fm.title || "Learn Hub"}
+  description={fm.seo?.description || fm.description || ""}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Learn", href: "/learn" },
+    { name: fm.title || hub },
+  ]}
+  hubTitle={fm.title || hub}
+  clusters={clusters}
+  featuredImage={fm.featuredimage?.src ? { src: fm.featuredimage.src, alt: fm.featuredimage.alt || "" } : undefined}
+
+>
+  <Content />
+</PillarLayout>

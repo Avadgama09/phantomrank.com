@@ -1,0 +1,162 @@
+---
+// src/pages/learn/[hub]/[cluster]/index.astro
+import ClusterLayout from "../../../../layouts/ClusterLayout.astro";
+import { getCollection } from "astro:content";
+
+type Frontmatter = {
+  title?: string;
+  description?: string;
+  seo?: { title?: string; description?: string };
+  order?: number;
+};
+
+type MdxModule = {
+  default: any;
+  frontmatter?: Frontmatter;
+};
+
+export async function getStaticPaths() {
+  const clusterModules = import.meta.glob<MdxModule>(
+    "../../../../content/learn/*/*/_index.mdx",
+    { eager: true },
+  );
+
+  const pillarModules = import.meta.glob<MdxModule>(
+    "../../../../content/learn/*/_pillar.mdx",
+    { eager: true },
+  );
+
+  const hubTitles: Record<string, string> = {};
+  for (const [path, mod] of Object.entries(pillarModules)) {
+    const parts = path.split("/");
+    const hubSlug = parts[parts.indexOf("learn") + 1];
+    hubTitles[hubSlug] = mod.frontmatter?.title || hubSlug;
+  }
+
+  const hubClusters: Record<string, { slug: string; title: string; href: string; order: number }[]> = {};
+  for (const [path, mod] of Object.entries(clusterModules)) {
+    const parts = path.split("/");
+    const learnIndex = parts.indexOf("learn");
+    const hubSlug = parts[learnIndex + 1];
+    const clusterSlug = parts[learnIndex + 2];
+    const fallbackTitle = clusterSlug
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c: string) => c.toUpperCase());
+
+    if (!hubClusters[hubSlug]) hubClusters[hubSlug] = [];
+    hubClusters[hubSlug].push({
+      slug: clusterSlug,
+      title: mod.frontmatter?.title || fallbackTitle,
+      href: `/learn/${hubSlug}/${clusterSlug}`,
+      order: mod.frontmatter?.order ?? 999,
+    });
+  }
+
+  for (const hub of Object.keys(hubClusters)) {
+    hubClusters[hub].sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+  }
+
+  // Get all articles from the collection
+  const allEntries = await getCollection("learn");
+
+  return Object.entries(clusterModules).map(([path, mod]) => {
+    const parts = path.split("/");
+    const learnIndex = parts.indexOf("learn");
+    const hubSlug = parts[learnIndex + 1];
+    const clusterSlug = parts[learnIndex + 2];
+
+    // Find articles in this cluster
+    const clusterArticles = allEntries
+      .filter((e) => {
+        const p = e.id.split("/");
+        return (
+          p[0] === hubSlug &&
+          p[1] === clusterSlug &&
+          !e.id.endsWith("_index.mdx") &&
+          !e.id.endsWith("_pillar.mdx")
+        );
+      })
+      .map((e) => {
+        const p = e.id.split("/");
+        const slug = e.data.slug || p[p.length - 1].replace(/\.mdx$/, "");
+        return {
+          slug,
+          title: e.data.title,
+          description: e.data.description || "",
+          href: `/learn/${hubSlug}/${clusterSlug}/${slug}`,
+          publisheddate: e.data.publisheddate || "",
+        };
+      })
+      .sort((a, b) => a.title.localeCompare(b.title));
+
+    return {
+      params: { hub: hubSlug, cluster: clusterSlug },
+      props: {
+        entry: mod,
+        hub: hubSlug,
+        cluster: clusterSlug,
+        siblings: hubClusters[hubSlug] || [],
+        hubTitle: hubTitles[hubSlug] || hubSlug,
+        articles: clusterArticles,
+      },
+    };
+  });
+}
+
+const { entry, hub, cluster, siblings, hubTitle, articles } = Astro.props as {
+  entry: MdxModule;
+  hub: string;
+  cluster: string;
+  siblings: { slug: string; title: string; href: string }[];
+  hubTitle: string;
+  articles: { slug: string; title: string; description: string; href: string; publisheddate: string }[];
+};
+const Content = entry.default;
+const fm = entry.frontmatter ?? {};
+---
+
+<ClusterLayout
+  title={fm.seo?.title || fm.title || "Cluster"}
+  description={fm.seo?.description || fm.description || ""}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Learn", href: "/learn" },
+    { name: hubTitle, href: `/learn/${hub}` },
+    { name: fm.title || cluster },
+  ]}
+  hubTitle={hubTitle}
+  hubSlug={hub}
+  clusters={siblings}
+  currentCluster={cluster}
+>
+  <Content />
+
+  {articles.length > 0 && (
+    <div class="mt-12 border-t border-border pt-10">
+      <h2 class="text-2xl font-semibold tracking-tight text-foreground">
+        Articles in This Topic
+      </h2>
+      <p class="mt-2 text-muted-foreground">
+        {articles.length} article{articles.length === 1 ? "" : "s"} exploring this topic in depth.
+      </p>
+
+      <div class="mt-6 grid gap-4">
+        {articles.map((article) => (
+          <a
+            href={article.href}
+            class="group flex flex-col rounded-lg border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-sm"
+          >
+            <h3 class="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+              {article.title}
+            </h3>
+            {article.description && (
+              <p class="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+                {article.description}
+              </p>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</ClusterLayout>
