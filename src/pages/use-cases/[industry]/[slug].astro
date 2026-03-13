@@ -7,11 +7,19 @@ import { pageMeta } from '../../../utils/data';
 import type { UseCase } from '../../../types/types';
 
 export function getStaticPaths() {
-  return useCases.map((uc) => ({
-    params: { slug: uc.slug },
-    props: { useCase: uc },
-  }));
+  return useCases.map((uc) => {
+    const industrySlug = uc.industry
+      .toLowerCase()
+      .replace(/&/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+    return {
+      params: { industry: industrySlug, slug: uc.slug },
+      props: { useCase: uc },
+    };
+  });
 }
+
 
 interface Props {
   useCase: UseCase;
