@@ -1,10 +1,10 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Button from '../../components/ui/Button.astro';
+import Layout from '../../../layouts/Layout.astro';
+import Button from '../../../components/ui/Button.astro';
 import { Icon } from 'astro-icon/components';
-import { useCases } from '../../utils/use-cases';
-import { pageMeta } from '../../utils/data';
-import type { UseCase } from '../../types/types';
+import { useCases } from '../../../utils/use-cases';
+import { pageMeta } from '../../../utils/data';
+import type { UseCase } from '../../../types/types';
 
 export function getStaticPaths() {
   return useCases.map((uc) => ({
