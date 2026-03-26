@@ -12,13 +12,19 @@ import ThemeToggle from "../ui/ThemeToggle.astro";
     <div class="flex items-center gap-2">
       <a
         href="/"
-        class="text-xl font-bold tracking-tight text-foreground transition-colors hover:text-primary"
+        class="flex items-center gap-2.5 transition-opacity hover:opacity-80"
       >
-        {siteConfig.name}
+        <img 
+          src="/images/Logo/logo-transparent-svg.svg" 
+          alt="PhantomRank Logo" 
+          class="h-8 w-auto md:h-9" 
+        />
+        <span class="text-xl font-bold tracking-tight text-foreground">
+          {siteConfig.name}
+        </span>
       </a>
     </div>
 
-    <!-- Desktop Menu -->
     <div class="hidden md:block">
       <div class="ml-10 flex items-baseline space-x-8">
         {
@@ -44,7 +50,6 @@ import ThemeToggle from "../ui/ThemeToggle.astro";
       <ThemeToggle />
     </div>
 
-    <!-- Mobile Menu Button -->
     <div class="md:hidden flex items-center">
       <button
         id="mobile-menu-button"
@@ -60,7 +65,7 @@ import ThemeToggle from "../ui/ThemeToggle.astro";
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          aria-hidden="true"
+          stroke-width="2"
         >
           <path
             stroke-linecap="round"
@@ -74,7 +79,7 @@ import ThemeToggle from "../ui/ThemeToggle.astro";
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          aria-hidden="true"
+          stroke-width="2"
         >
           <path
             stroke-linecap="round"

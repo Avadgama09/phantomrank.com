@@ -6,8 +6,15 @@ import { siteConfig } from "../../config/site";
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
       <div class="flex flex-col items-center gap-2 md:items-start">
-        <span class="text-lg font-bold text-foreground">{siteConfig.name}</span>
-        <p class="text-sm text-muted-foreground max-w-md">
+        <a href="/" class="transition-opacity hover:opacity-80">
+          <img 
+            src="/images/Logo/logo-transparent-svg.svg" 
+            alt="PhantomRank Logo" 
+            class="h-7 w-auto mb-2 dark:invert" 
+          />
+          <span class="sr-only">{siteConfig.name}</span>
+        </a>
+        <p class="text-sm text-muted-foreground max-w-md text-center md:text-left">
           {siteConfig.description}
         </p>
       </div>
