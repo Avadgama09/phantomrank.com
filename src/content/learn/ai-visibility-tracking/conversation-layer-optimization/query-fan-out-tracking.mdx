@@ -1,0 +1,148 @@
+---
+type: article
+title: "Query Fan-Out: How AI Platforms Generate Follow-Up Questions (And How to Be Cited in All of Them)"
+description: "AI platforms decompose every query into 8–12 sub-queries before answering. Pages cited across both main and fan-out queries are 161% more likely to appear in AI Overviews. Here's how to build for it."
+slug: "query-fan-out-tracking"
+author: "phantomrank-team"
+publisheddate: "2026-03-17"
+updateddate: "2026-03-17"
+hub: "ai-visibility-tracking"
+cluster: "conversation-layer-optimization"
+category: "AI Visibility Tracking"
+seo:
+  title: "Query Fan-Out: How to Get Cited Across Every AI Sub-Query | PhantomRank"
+  description: "AI decomposes every query into 8–12 sub-queries before answering. Pages ranked for both main and fan-out queries earn 161% more AI citations. Here's the strategy."
+featuredimage:
+  src: "/images/learn/ai-visibility-tracking/conversation-layer-optimization/query-fan-out-hero.webp"
+  alt: "Branching diagram showing a single user query expanding into 8-12 parallel sub-queries across AI platforms"
+schematype: "Article"
+keywords:
+  - "query fan-out AI search optimization"
+  - "AI sub-queries brand citation"
+  - "Google AI Mode query fan-out"
+  - "ChatGPT query decomposition"
+  - "AI topic cluster visibility"
+relatedLinks:
+  - label: "Back to Conversation Layer Optimization Cluster"
+    href: "/learn/ai-visibility-tracking/conversation-layer-optimization"
+  - label: "High-Chaining Probability Queries"
+    href: "/learn/ai-visibility-tracking/conversation-layer-optimization/question-chaining-probability-scoring"
+  - label: "Conversational Retention: The AI Visibility Metric Your Dashboard Is Missing"
+    href: "/learn/ai-visibility-tracking/track-brand-in-ai-search/conversational-retention-metric"
+  - label: "Forget Keywords. Your Real Target Is the Total Addressable Prompt Market."
+    href: "/learn/generative-engine-optimization/geo-vs-seo/total-addressable-prompt-market"
+---
+
+When a buyer types a question into an AI platform, they submit one query. The AI searches for an answer to twelve.
+
+That gap — between the one query the user typed and the multiple sub-queries the AI generated internally — is where most brands' AI visibility strategy falls apart. Brands that have built content for the single surface query earn one citation opportunity. Brands that have built content for the full semantic cluster earn twelve.
+
+This is query fan-out: the mechanism by which AI search platforms decompose a single user query into a set of parallel sub-queries spanning adjacent subtopics, alternative phrasings, related angles, and contextual variations. Google officially confirmed it at Google I/O 2025 as the core mechanism behind AI Mode. Every major AI platform uses some variant of it. And the data on its impact on citation probability is striking.
+
+## The 161% Citation Advantage
+
+Research from ALM Corp and Search Engine Land, analysing over 173,000 URLs and 33,000 fan-out queries, produced the clearest quantification of what fan-out means for brand visibility:
+
+**Pages that rank for both the main query and fan-out sub-queries are 161% more likely to be cited in AI Overviews than pages ranking only for the main keyword.** The Spearman correlation coefficient between fan-out query rankings and AI Overview citations is 0.77 — a very strong relationship that holds across verticals.
+
+More counterintuitively: **ranking for fan-out sub-queries alone (without ranking for the main keyword) makes a page 49% more likely to earn an AI citation than ranking exclusively for the primary head term.** The AI values comprehensive subtopic coverage more than it values dominance on the single top-level query.
+
+This completely inverts the traditional SEO priority model. In keyword-based SEO, the head term drives the strategy and long-tail sub-topics are nice-to-haves. In AI citation optimisation, the sub-topic cluster is the primary target and the head term is one node among many.
+
+For agencies whose clients have strong content on one or two core topics but thin coverage of the surrounding cluster, this is the most actionable gap in the entire AI visibility framework.
+
+## How Fan-Out Works by Platform
+
+The mechanism is similar across platforms, but the scale and focus differs enough to affect content strategy.
+
+**Google AI Mode / AI Overviews**
+Google uses a custom Gemini 2.5 model for query decomposition, generating 8–12 sub-queries for standard queries and potentially hundreds for Deep Search. Google's Head of Search Elizabeth Reid confirmed AI Mode "calls on our custom version of Gemini to break the question into different subtopics, and issues a multitude of queries simultaneously." The fan-out operates at the **passage level** — Google evaluates specific sections of your content, not the page holistically. A page with one relevant section can earn a citation even if the rest of the page is off-topic.
+
+**ChatGPT**
+Generates 4–8 sub-queries for simple queries, 12–20 for complex ones. Profound's analysis found ChatGPT adds commercial and temporal modifiers during fan-out — "best," "top," "reviews," and the current year. This means content needs to include these modifiers naturally to align with ChatGPT's internal sub-query patterns.
+
+**Perplexity**
+Perplexity's real-time RAG system means fan-out queries are executed against the live web simultaneously. With its 20–30 source evaluation per query (highest of any platform), it is the most thorough fan-out executor. Fresh content across multiple sub-topic pages gives a compounding freshness advantage on Perplexity because each sub-query retrieval favours recently updated pages independently.
+
+**Fan-out personalisation:** Research from Kopp Online Marketing found that 43% of fan-out sub-queries now include personalised context (location, device, prior behaviour), up from 18% in 2024. Content that supports multiple regional and use-case interpretations performs better in personalised fan-out scenarios.
+
+## Mapping Your Client's Fan-Out Cluster
+
+The strategic task for agencies is mapping the full fan-out cluster for each client's core topics — and then auditing which cells of that cluster are covered by existing content.
+
+### Step 1: Identify the Core Topic Seeds
+
+Start with the 3–5 most important Category Awareness queries for the client — the prompts a buyer would use when first exploring the category. These are the seeds from which the fan-out cluster grows.
+
+For an AI visibility tracking platform: *"best AI visibility tracking tools for agencies"* is the seed. Everything else fans out from here.
+
+### Step 2: Map the Fan-Out Sub-Queries
+
+For each seed query, generate the full fan-out cluster using a combination of:
+
+- **People Also Ask** on Google — these surface the most common user follow-up questions the search engine predicts from the head query
+- **Search Console query data** — long-tail variations already driving impressions that indicate actual user sub-intent
+- **AI simulation** — ask ChatGPT or Perplexity to *"generate the 10–15 sub-questions a user would naturally ask after asking [seed query]"* — this gives you the AI's own internal model of what fan-out looks like for the topic
+- **"What" / "Why" / "How" / "Which" branching** — systematically expand the head topic across the standard interrogative variants that AI sub-queries tend to follow
+
+Categorise each sub-query by type using the Wellows taxonomy:
+| Sub-Query Type | Description | Example |
+|---|---|---|
+| Equivalent | Alternative phrasing of same intent | "AI search tracking tools" vs "AI visibility monitoring" |
+| Follow-up | Logical next question from the seed | "How do AI trackers calculate share of voice?" |
+| Generalization | Broader version of the seed | "How do brands track digital visibility?" |
+| Comparison | Competitive angle | "AI visibility tools vs traditional rank trackers" |
+| Use-case specific | Vertical or buyer-type variation | "AI visibility tracking for B2B SaaS companies" |
+
+### Step 3: Audit Content Coverage
+
+Map each identified sub-query to existing content. For each cell:
+- **Covered:** Existing content directly addresses this sub-query at passage level
+- **Partial:** A page exists but doesn't address this angle clearly enough for passage-level extraction
+- **Missing:** No content covers this sub-query at all
+
+**Sites with 80%+ topical coverage retain 85.4% of AI visibility across fan-out queries** (WordLift research via Ekamoira analysis). The delta between 50% coverage and 80% coverage is measurable and significant. The audit makes it visible.
+
+### Step 4: Prioritise and Fill
+
+Not all fan-out gaps are equal. Prioritise filling sub-query gaps by:
+
+1. **Sub-queries that appear in both ChatGPT and Perplexity fan-out patterns** (cross-platform value)
+2. **Follow-up and comparison sub-queries** (these connect Category Awareness to Recommendation and are highest-chaining — see [Question Chaining Probability Scoring](/learn/ai-visibility-tracking/conversation-layer-optimization/question-chaining-probability-scoring))
+3. **Sub-queries with existing user demand** in Search Console or People Also Ask (validated intent, not speculative)
+4. **Use-case and comparison sub-queries** (Comparison content earns AI citations at 23% higher rates than general informational content)
+
+## The Fan-Out Decay Curve and Topical Authority
+
+The ALM Corp analysis introduced a concept called the **Fan-Out Decay Curve (FDC)** — the relationship between topical coverage depth and AI visibility retention as queries move further from the core topic.
+
+The finding: sites with 80%+ topical coverage on a subject retain 85.4% of AI visibility across the full fan-out cluster. Sites with below 50% topical coverage retain approximately 30–40% — meaning AI platforms actively deprioritise partial-coverage domains in favour of those that cover the full semantic territory.
+
+This is the topical authority signal in AI search — not Domain Authority, but genuine content coverage of the complete topic cluster. Building pillar pages that cover the core topic comprehensively, supported by cluster pages that address each fan-out sub-query at depth, is the content architecture that AI fan-out rewards.
+
+Internal linking between pillar and cluster pages is also a direct signal: Google's Search Central documentation confirms that "content architecture supporting topical relationships" improves AI Overviews citation eligibility. The link structure helps AI crawlers understand your domain's topical relationships and extends citation eligibility across the full cluster.
+
+{/* PHANTOMRANK DATA: Show fan-out coverage scores for tracked client brands — illustrating the correlation between topical coverage depth and AI citation rate across the fan-out cluster */}
+
+---
+
+## Key Takeaways
+
+- Query fan-out means AI platforms internally generate 8–12 (or more) sub-queries for every user query before synthesising an answer. Brands with topical breadth get cited across multiple sub-queries; narrow brands get cited in one or none.
+- Pages ranked for both main queries and fan-out sub-queries earn 161% more AI citations. Fan-out sub-query coverage alone beats main-query-only coverage by 49%.
+- Google AI Mode generates 8–12 standard sub-queries and operates at the passage level. ChatGPT generates 4–20 depending on complexity. Perplexity executes fan-out against the live web in real time.
+- The Fan-Out Decay Curve shows sites with 80%+ topical coverage retain 85.4% of AI visibility. Below 50% coverage, retention drops to 30–40%.
+- The agency workflow: seed query identification → fan-out cluster mapping → content coverage audit → prioritised gap filling by cross-platform value and chaining probability.
+
+For how fan-out sub-queries create high-chaining conversation patterns, see [High-Chaining Probability Queries](/learn/ai-visibility-tracking/conversation-layer-optimization/question-chaining-probability-scoring). For the TAPM framework that fan-out mapping feeds into, see [Forget Keywords. Your Real Target Is the Total Addressable Prompt Market.](/learn/generative-engine-optimization/geo-vs-seo/total-addressable-prompt-market)
+
+Return to the [Conversation Layer Optimization Cluster](/learn/ai-visibility-tracking/conversation-layer-optimization) for the full framework.
+
+{/* VIDEO PLACEHOLDER
+  Title: Query Fan-Out: How to Map and Own Your AI Sub-Query Cluster
+  Length: 7 minutes
+  Key points: The 161% citation advantage, platform-specific fan-out behaviour, the 4-step audit workflow
+  Production priority: HIGH
+*/}
+
+{/* TOOL: Fan-Out Cluster Mapper — enter a seed query, get the likely fan-out sub-queries generated by each major AI platform with coverage gap audit template */}

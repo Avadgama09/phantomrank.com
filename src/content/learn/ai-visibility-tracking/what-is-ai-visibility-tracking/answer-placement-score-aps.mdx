@@ -1,0 +1,87 @@
+---
+type: article
+title: "Answer Placement Score: Why Position Inside an AI Response Matters"
+description: "Not all AI mentions are equal. Learn how to calculate Answer Placement Score (APS) and why the first half of an AI response is the only real estate that matters."
+slug: "answer-placement-score-aps"
+author: "phantomrank-team"
+publisheddate: "2026-03-17"
+updateddate: "2026-03-17"
+hub: "ai-visibility-tracking"
+cluster: "what-is-ai-visibility-tracking"
+category: "AI Visibility Tracking"
+seo:
+  title: "Answer Placement Score (APS) in AI Search | PhantomRank"
+  description: "Not all AI mentions are equal. Learn how to calculate Answer Placement Score (APS) and why the first half of an AI response is the only real estate that matters."
+featuredimage:
+  src: "/images/learn/ai-visibility-tracking/what-is-ai-visibility-tracking/aps-hero.webp"
+  alt: "Diagram illustrating the Answer Placement Score weighting system"
+schematype: "Article"
+keywords:
+  - "answer placement score"
+  - "ai response position"
+  - "aps metric"
+  - "ai citation placement"
+  - "generative engine optimization"
+relatedLinks:
+  - label: "Back to AI Visibility Tracking Hub"
+    href: "/learn/ai-visibility-tracking"
+  - label: "The 7 AI Visibility Metrics That Actually Matter in 2026"
+    href: "/learn/ai-visibility-tracking/what-is-ai-visibility-tracking/7-ai-visibility-metrics-2026"
+  - label: "How to Calculate Share of Synthesis for Your Clients"
+    href: "/learn/ai-visibility-tracking/track-brand-in-ai-search/calculate-share-of-synthesis"
+---
+
+One of the biggest mistakes agencies make when reporting on AI search is treating all brand mentions as equal. If your client is mentioned in the very first sentence of a ChatGPT response, it drives massive consideration. If they are buried in an "Also consider" bullet point at the bottom, the impact is virtually zero.
+
+To bring accuracy to your client reporting, you need a weighted metric. You need the **Answer Placement Score (APS)**.
+
+In this guide, you'll learn the data behind user attention in AI interfaces, how to calculate APS, and how to use it to optimize your client's Generative Engine Optimization (GEO) strategy.
+
+## The Reality of AI User Attention
+
+Why does position matter so much in AI search? Because users interact with AI models differently than they interact with Google SERPs.
+
+On Google, a user might scroll through 10 links and open three tabs. In an AI interface like Perplexity or Gemini, the user reads the synthesized text sequentially. If the AI answers their question in the first paragraph, they stop reading.
+
+The data backs this up:
+*   **74.8%** of all AI citations appear in the first half of the response.
+*   **46.1%** appear in the first 30% of the text.
+*   Being mentioned in the first two sentences can drive roughly **5x more brand consideration** than later mentions.
+
+If your agency is just counting "Total Mentions," you are drastically overstating your client's actual visibility.
+
+## How to Calculate Answer Placement Score (APS)
+
+APS assigns a specific mathematical weight to a brand mention based on where it appears in the generated output. 
+
+### The Weighting System
+*   **First Named (Top 30%):** Weight = 1.0
+*   **Mid Response (31% - 70%):** Weight = 0.6
+*   **End of Text / Footnotes (Bottom 30%):** Weight = 0.3
+
+### The Formula
+To calculate a client's overall APS for a set of prompts, multiply the number of inclusions by their respective weights, then average the result.
+
+**`APS = (Sum of Position Weights * Inclusion Flag) / Total Mentions`**
+
+*Example:* You run 10 strategic prompts. Your client is mentioned in 5 of them.
+*   Mention 1: First paragraph (Weight: 1.0)
+*   Mention 2: Middle list (Weight: 0.6)
+*   Mention 3: First paragraph (Weight: 1.0)
+*   Mention 4: Bottom footnote (Weight: 0.3)
+*   Mention 5: Bottom footnote (Weight: 0.3)
+
+*Calculation:* (1.0 + 0.6 + 1.0 + 0.3 + 0.3) = 3.2 Total Score. 
+Divide by 5 total mentions = **0.64 APS**.
+
+This tells you that while the client is getting mentioned, they are trending toward the middle-to-bottom of the responses.
+
+## Using APS to Sell AEO Sprints
+
+When you show a client their APS, you immediately differentiate your agency from competitors who just show raw mention counts. 
+
+If a client has a high Mention Rate but a low APS (e.g., 0.35), it means the AI knows they exist, but doesn't consider them the primary authority. This is the perfect opportunity to pitch an **Answer Engine Optimization (AEO) sprint**. 
+
+You can explain: *"The AI is using your competitors as the core narrative and adding you as a footnote. We need to restructure your technical documentation, implement FAQ schema, and increase your Information Gain so the AI promotes you to the first paragraph."*
+
+Stop treating a footnote like a first-place finish. Use PhantomRank to track your clients' Answer Placement Score automatically, and start optimizing for the real estate that actually drives revenue.
