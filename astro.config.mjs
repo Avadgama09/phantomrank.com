@@ -6,7 +6,7 @@ import mdx from "@astrojs/mdx";
 import vercel from "@astrojs/vercel";
 
 export default defineConfig({
-  site: "https://phantomrank.com",
+  site: "https://www.phantomrank.com",
   output: "static",
   adapter: vercel(),
   integrations: [sitemap(), icon(), mdx()],

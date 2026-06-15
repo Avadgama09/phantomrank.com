@@ -1,9 +1,12 @@
 ---
 // src/pages/learn/index.astro
 import Layout from "../../layouts/Layout.astro";
+import { siteConfig } from "../../config/site";
 import HubCard from "../../components/content/HubCard.astro";
 import { hubs } from "../../config/hubs";
 import { getCollection } from "astro:content";
+import Schema from "../../components/seo/Schema.astro";
+import { faqs } from "../../utils/data";
 
 const clusterModules = import.meta.glob("../../content/learn/*/*/_index.mdx", {
   eager: false,
@@ -56,6 +59,18 @@ const hubsWithArticles = [...new Set(articles.map((a) => a.hubSlug))];
   description="Explore PhantomRank's learn hub covering AI visibility tracking, GEO, AEO, agency strategy, and AI-powered SEO."
   breadcrumbs={[{ name: "Home", href: "/" }, { name: "Learn" }]}
 >
+  <Fragment slot="head">
+    <Schema type="FAQPage" data={{ faqs }} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: articles.map((article, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${siteConfig.url}${article.href}`
+      }))
+    })} />
+  </Fragment>
   <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="max-w-3xl">
       <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary">
