@@ -5,7 +5,7 @@ export const siteConfig = {
   name: "PhantomRank",
   description:
     "AI Visibility Tracking for brands and marketing agencies in India. Track how your brand is cited in ChatGPT, Perplexity, Gemini, and Claude — mentions, citations, and share of voice across LLMs.",
-  url: "https://phantomrank.com",
+  url: "https://www.phantomrank.com",
   lang: "en",
   locale: "en_IN",
   author: "PhantomRank",
@@ -17,7 +17,7 @@ export const siteConfig = {
     { text: "Home", href: "/" },
     { text: "Features", href: "/features" },
     // { text: "Dashboard", href: "/dashboard" },
-    // { text: "Use Cases", href: "/use-cases" },
+    { text: "Use Cases", href: "/use-cases" },
     { text: "Pricing", href: "/pricing" },
     { text: "Resources", href: "/learn" },
   ],

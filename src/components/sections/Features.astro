@@ -1,6 +1,6 @@
 ---
 import { features } from "../../utils/features";
-import type { FeatureCategory } from "../../types/types";
+// import type { FeatureCategory } from "../../types/types";
 
 interface Props {
   variant?: "preview" | "full";
@@ -9,18 +9,18 @@ interface Props {
 const { variant = "preview" } = Astro.props;
 
 const liveFeatures = features.filter((f) => f.status === "live");
-const comingSoonFeatures = features.filter((f) => f.status === "coming-soon");
+// const comingSoonFeatures = features.filter((f) => f.status === "coming-soon");
 
-const categories: FeatureCategory[] = [
-  "Market Intelligence",
-  "Content Production",
-  "Prediction",
-];
+// const categories: FeatureCategory[] = [
+//   "Market Intelligence",
+//   "Content Production",
+//   "Prediction",
+// ];
 
 const isPreview = variant === "preview";
 
 const glassCard = "bg-white/60 dark:bg-white/4 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 p-8 rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 dark:hover:shadow-primary/5 hover:border-primary/30 dark:hover:border-primary/20 hover:-translate-y-1";
-const glassCardStatic = "bg-white/40 dark:bg-white/2 backdrop-blur-xl border border-white/20 dark:border-white/5 shadow-lg shadow-black/5 dark:shadow-black/20 p-8 rounded-2xl transition-all duration-300";
+// const glassCardStatic = "bg-white/40 dark:bg-white/2 backdrop-blur-xl border border-white/20 dark:border-white/5 shadow-lg shadow-black/5 dark:shadow-black/20 p-8 rounded-2xl transition-all duration-300";
 ---
 
 <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
@@ -105,6 +105,7 @@ const glassCardStatic = "bg-white/40 dark:bg-white/2 backdrop-blur-xl border bor
   </div>
 
   {/* ── Coming Soon Features ── */}
+  {/*
   {isPreview ? (
     <div class="reveal text-center">
       <p class="text-muted-foreground mb-4">
@@ -163,4 +164,5 @@ const glassCardStatic = "bg-white/40 dark:bg-white/2 backdrop-blur-xl border bor
       })}
     </>
   )}
+  */}
 </section>
