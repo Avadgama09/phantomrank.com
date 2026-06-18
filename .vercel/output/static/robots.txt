@@ -17,4 +17,4 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
-Sitemap: https://phantomrank.com/sitemap-index.xml
+Sitemap: https://www.phantomrank.com/sitemap-index.xml

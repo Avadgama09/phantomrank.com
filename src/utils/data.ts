@@ -126,18 +126,18 @@ export const faqs: FAQ[] = [
 // ─── Social Proof Stats ─────────────────────────────────────
 
 export const stats: Stat[] = [
-  { label: "AI Engines Tracked", value: "4" },
-  { label: "Brands Monitored", value: "10+" },
-  { label: "AI Queries Scanned", value: "900+" },
-  { label: "Agencies on PhantomRank", value: "2" },
+  { label: "AI Engines Tracked", value: "14" },
+  { label: "Brands Monitored", value: "20+" },
+  { label: "AI Queries Scanned", value: "2500+" },
+  { label: "Agencies on PhantomRank", value: "4" },
 ];
 
 // ─── Page Meta (SEO) ────────────────────────────────────────
 
 export const pageMeta: Record<string, PageMeta> = {
   home: {
-    title: "PhantomRank — AI Visibility Tracking for Marketing Agencies",
-    description: "Track how your brand is cited in ChatGPT, Perplexity, Gemini, and Claude. PhantomRank gives Indian agencies brand mention rates, citation frequency, and share of voice across AI engines.",
+    title: "PhantomRank — Search Intelligence for Brands & Agencies",
+    description: "PhantomRank is a search intelligence platform that shows how AI assistants and search engines talk about your brand. Brands and agencies use PhantomRank to track AI share of voice, citations, and answer placement across ChatGPT, Perplexity, Gemini, Claude, and other AI tools.",
   },
   features: {
     title: "Features",

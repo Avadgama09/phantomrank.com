@@ -4,10 +4,10 @@ import ogImage from "../assets/og-image.png";
 export const siteConfig = {
   name: "PhantomRank",
   description:
-    "AI Visibility Tracking for brands and marketing agencies in India. Track how your brand is cited in ChatGPT, Perplexity, Gemini, and Claude — mentions, citations, and share of voice across LLMs.",
+    "Search intelligence platform for brands and marketing agencies. Track how your brand is cited in ChatGPT, Perplexity, Gemini, Claude, and other AI tools — mentions, citations, and share of voice across AI assistants.",
   url: "https://www.phantomrank.com",
   lang: "en",
-  locale: "en_IN",
+  locale: "en_US",
   author: "PhantomRank",
   twitter: "@PhantomRank",
   ogImage: ogImage,

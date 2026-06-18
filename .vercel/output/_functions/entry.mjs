@@ -1,6 +1,6 @@
 import { renderers } from './renderers.mjs';
-import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_DWeF_nyb.mjs';
-import { manifest } from './manifest_Bd1kPkR2.mjs';
+import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_PdD9381K.mjs';
+import { manifest } from './manifest_DE6kCw3T.mjs';
 
 const serverIslandMap = new Map();;
 
@@ -30,8 +30,9 @@ const _page22 = () => import('./pages/robots.txt.astro.mjs');
 const _page23 = () => import('./pages/signup.astro.mjs');
 const _page24 = () => import('./pages/terms.astro.mjs');
 const _page25 = () => import('./pages/use-cases/_industry_/_slug_.astro.mjs');
-const _page26 = () => import('./pages/use-cases.astro.mjs');
-const _page27 = () => import('./pages/index.astro.mjs');
+const _page26 = () => import('./pages/use-cases/_slug_.astro.mjs');
+const _page27 = () => import('./pages/use-cases.astro.mjs');
+const _page28 = () => import('./pages/index.astro.mjs');
 const pageMap = new Map([
     ["node_modules/astro/dist/assets/endpoint/generic.js", _page0],
     ["src/pages/404.astro", _page1],
@@ -59,8 +60,9 @@ const pageMap = new Map([
     ["src/pages/signup.astro", _page23],
     ["src/pages/terms.astro", _page24],
     ["src/pages/use-cases/[industry]/[slug].astro", _page25],
-    ["src/pages/use-cases/index.astro", _page26],
-    ["src/pages/index.astro", _page27]
+    ["src/pages/use-cases/[slug].astro", _page26],
+    ["src/pages/use-cases/index.astro", _page27],
+    ["src/pages/index.astro", _page28]
 ]);
 
 const _manifest = Object.assign(manifest, {
@@ -71,7 +73,7 @@ const _manifest = Object.assign(manifest, {
     middleware: () => import('./_noop-middleware.mjs')
 });
 const _args = {
-    "middlewareSecret": "9feee617-bb5d-4e43-87b2-902ae9c7ed73",
+    "middlewareSecret": "3a693973-fe8f-4a1a-a962-c6e92bd1295a",
     "skewProtection": false
 };
 const _exports = createExports(_manifest, _args);
