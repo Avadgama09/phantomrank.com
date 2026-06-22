@@ -141,11 +141,7 @@ export const pageMeta: Record<string, PageMeta> = {
   },
   features: {
     title: "Features",
-    description: "Explore PhantomRank's AI visibility tracking features — from multi-engine scanning and competitor benchmarking to Reddit intelligence and predictive analytics.",
-  },
-  dashboard: {
-    title: "Live Dashboard Demo",
-    description: "Experience PhantomRank's AI visibility dashboard with sample data. Explore brand mention tracking, competitor analysis, and citation reports — no signup required.",
+    description: "Explore PhantomRank's search intelligence and AI visibility features — from competitor benchmarking and multi-engine scanning to Reddit intelligence and predictive analytics.",
   },
   "use-cases": {
     title: "Industry Use Cases",
