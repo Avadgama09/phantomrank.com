@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import FeatureDetail from "../../components/sections/FeatureDetail.astro";
 import CTA from "../../components/sections/CTA.astro";
+import FAQ from "../../components/sections/FAQ.astro";
 import { features } from "../../utils/features";
 
 const feature = features.find((f) => f.slug === "community-manager")!;
@@ -70,6 +71,29 @@ const includes = [
   "Per-thread CSV and JSON exports",
   "Auto-saved search form (picks up where you left off)",
 ];
+
+const faqs = [
+  {
+    question: "Why does the Community Manager focus so heavily on Reddit?",
+    answer: "AI search engines like ChatGPT, Gemini, and Perplexity don't just index static web pages; they prioritize high-signal community platforms like Reddit to answer subjective questions (\"what is the best CRM for a small agency?\"). If your client is absent or criticized on Reddit, they will be absent or criticized in AI answers. Community Manager lets you monitor and shape these critical source conversations."
+  },
+  {
+    question: "Can I track specific subreddits or is it category-wide?",
+    answer: "Both. You can run category-level searches to see how your entire vertical is discussed across Reddit, or product-level searches targeting exact brand and competitor mentions. PhantomRank automatically identifies the most active subreddits and threads for your niche."
+  },
+  {
+    question: "How do you distinguish between casual chatter and real buyer intent?",
+    answer: "Our AI parses threads using four specific purchase intent classifiers: Intent to Buy, Recently Bought, Considering Switch, and Seeking Alternative. We extract the exact usernames and quotes so you can verify the context and take action immediately."
+  },
+  {
+    question: "Is the Reddit data updated in real-time?",
+    answer: "Yes. PhantomRank queries Reddit's live index based on your selected research angle—including filtering for recent threads (last 6 to 18 months)—so you are always analyzing fresh, relevant conversations rather than outdated archives."
+  },
+  {
+    question: "How do we translate Reddit sentiment into client deliverables?",
+    answer: "You can export any thread analysis as a clean CSV or JSON report. Use the Pain Points tab to build content strategies that address real-world complaints, and use the Competitor Mentions tab to show clients exactly where they are winning or losing the community consensus."
+  }
+];
 ---
 
 <Layout
@@ -89,5 +113,6 @@ const includes = [
     useCases={useCases}
     includes={includes}
   />
+  <FAQ customFaqs={faqs} title="Community Manager — FAQs" subtitle="Focus: Reddit thread analysis, community sentiment, buyer intent, brand reputation." />
   <CTA />
 </Layout>

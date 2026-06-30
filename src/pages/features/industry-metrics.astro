@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import FeatureDetail from "../../components/sections/FeatureDetail.astro";
 import CTA from "../../components/sections/CTA.astro";
+import FAQ from "../../components/sections/FAQ.astro";
 import { features } from "../../utils/features";
 
 const feature = features.find((f) => f.slug === "industry-metrics")!;
@@ -76,6 +77,25 @@ const includes = [
   "Structured JSON export for complete audit data, suitable for internal analysis or custom dashboards.",
   "Editable company card so you can override any auto‑filled detail before running the audit.",
 ];
+
+const faqs = [
+  {
+    question: "How do Industry Metrics avoid mixing apples and oranges when comparing brands?",
+    answer: "We run a simultaneous 4‑call pipeline for your brand and 15–20 competitors using the exact same prompts, engines, and time windows. Landscape, buying criteria, shortlists, and information gaps are all generated in one batch. That way your Share of Voice, Share of Synthesis, and Answer Placement Scores are comparable because they come from the same model runs, not from separate, unaligned tests."
+  },
+  {
+    question: "Can I see which competitors and domains AI models prefer over us?",
+    answer: "Yes. Industry Metrics shows which brands are flagged as Leaders, Challengers, and Niche players, plus which domains—gov sites, media, reviews, communities, company sites—keep getting cited as evidence. It’s a way to see who is actually winning the recommendation layer and which ecosystems (Reddit, review platforms, directories) you need to participate in."
+  },
+  {
+    question: "Is Industry Metrics just a nice chart, or does it translate into actions?",
+    answer: "Every industry audit ends with an Information Gain Gap analysis: five topics where the AI’s knowledge is thin, vague, or outdated. Those gaps become a content calendar for your team. If AI keeps citing old sources for a key buying criterion, you know exactly which ‘definitive guide’ you need to publish next to shift the benchmarks."
+  },
+  {
+    question: "How often should we run Industry Metrics to get meaningful trends?",
+    answer: "Most teams run a deeper industry audit every 6–12 weeks, then rely on lighter weekly scans for monitoring. PhantomRank stores historical runs so you can see how filling information gaps affects your Share of Synthesis and Answer Placement over time, instead of reacting to single snapshots."
+  }
+];
 ---
 
 <Layout
@@ -95,5 +115,6 @@ const includes = [
     useCases={useCases}
     includes={includes}
   />
+  <FAQ customFaqs={faqs} title="Industry Metrics — FAQs" subtitle="Focus: competitive benchmarking, prompt sets, workflow transparency." />
   <CTA />
 </Layout>

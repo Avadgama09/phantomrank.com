@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import FeatureDetail from "../../components/sections/FeatureDetail.astro";
 import CTA from "../../components/sections/CTA.astro";
+import FAQ from "../../components/sections/FAQ.astro";
 import { features } from "../../utils/features";
 
 const feature = features.find((f) => f.slug === "ai-visibility-tracker")!;
@@ -76,6 +77,29 @@ const includes = [
   "CSV export for prompt‑level and summary data, ready for client decks and internal reporting.",
   "Scheduling support for recurring runs (e.g., weekly tracking) so you can see trends instead of one‑off snapshots.",
 ];
+
+const faqs = [
+  {
+    question: "How is your AI visibility tracking different from black‑box tools?",
+    answer: "PhantomRank doesn’t hide a secret sampling recipe. Every scan is co-designed with you: we start by drafting a brand DNA from your site and name, your team edits it, we generate buyer personas and journeys, you choose and adjust stages and intents, and you can rewrite every prompt in your own buyer language. Finally, you decide which models to hit and we log the exact versions and geo. Our job is to make that test repeatable and readable, not to pick prompts for you behind the scenes."
+  },
+  {
+    question: "Can I control which prompts and personas PhantomRank uses to test visibility?",
+    answer: "Yes. We propose personas and journeys from your brand DNA, but nothing is locked. You can select which personas matter, which stages of the journey to include, and edit or replace every prompt so it matches how your buyers actually speak. PhantomRank then reuses that set consistently, so trends over time reflect real changes, not our guesswork."
+  },
+  {
+    question: "How do you handle AI engines giving different answers to the same prompt?",
+    answer: "We treat each engine as a separate surface. For every prompt set, PhantomRank queries ChatGPT, Gemini, Claude, Grok, Perplexity and Copilot in parallel, logs the model versions, and compares visibility at three layers: mention, recommendation, and citation. Instead of pretending there’s a single ‘true’ answer, we show you how each engine talks about you and where you’re strong or weak."
+  },
+  {
+    question: "What exactly do you track in an AI answer?",
+    answer: "We track whether you’re named, whether you’re recommended as a pick, whether your domain is cited, and whether your pages are in the crawl pool but rejected. We also capture which non‑you sources got cited alongside or instead of you, so you see the full competitive and ecosystem context—not just your own score."
+  },
+  {
+    question: "Can we limit scans to India or specific regions?",
+    answer: "Yes. Location is explicit, not implied. We inject geo parameters into our prompt templates and log them with each run, so you can see how visibility differs for India versus other regions and avoid mixing local and global results in the same charts."
+  }
+];
 ---
 
 <Layout
@@ -115,5 +139,6 @@ const includes = [
       </div>
     </div>
   </FeatureDetail>
+  <FAQ customFaqs={faqs} title="AI Visibility Tracker — FAQs" subtitle="Focus: methodology, non‑determinism, prompts, multi‑engine runs." />
   <CTA />
 </Layout>

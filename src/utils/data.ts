@@ -1,6 +1,8 @@
 import type { Plan, FAQ, Stat, PageMeta } from "../types/types";
 
+
 // ─── Pricing Plans ──────────────────────────────────────────
+
 
 export const plans: Plan[] = [
   {
@@ -86,44 +88,66 @@ export const plans: Plan[] = [
   },
 ];
 
+
 // ─── FAQs ───────────────────────────────────────────────────
+
 
 export const faqs: FAQ[] = [
   {
-    question: "How does Generative Engine Optimization differ from traditional SEO?",
-    answer: "Traditional SEO is about fighting for a position on a list of blue links. Generative Engine Optimization is about structuring your content so an AI model chooses it as the definitive answer. While having great SEO is a solid foundation, it is not the whole picture. We know from recent industry analysis that 71 percent of sources appear on only one AI platform. To win in this new environment, your content needs to provide unique data that the AI does not already have in its training weights. In fact, <a href='https://fuelonline.com/how-to-get-cited-in-chatgpt-search-seo-strategy/' target='_blank' rel='noopener noreferrer' class='text-primary underline'>data from 2026 GEO studies</a> reveals that pages with a fact to word ratio of 1 to 80 are 4.2 times more likely to be cited in ChatGPT.",
+    question: "Isn’t AI visibility data unreliable because LLMs are non-deterministic?",
+    answer:
+      "We agree that you can’t trust a single manual prompt. AI answers change based on history, location, and model updates. PhantomRank stabilises this by tracking a fixed set of buyer-style prompts across multiple engines and runs, then measuring semantic resonance instead of exact wording. When the phrasing changes but the meaning stays the same, our scores remain stable and trendable.",
   },
   {
-    question: "Why is my client ranking on page one of Google but completely invisible in ChatGPT and Perplexity?",
-    answer: "We hear this frustration from agencies every day. Ranking high on Google does not guarantee an AI citation because AI models use entirely different retrieval pipelines. First, you might be caught in the mention source divide. A brand might be talked about widely online, but <a href='https://drli.blog/posts/citation-attention/' target='_blank' rel='noopener noreferrer' class='text-primary underline'>Dr Robert Li's recent meta analysis</a> shows that only 3 to 27 brands per industry actually earn authoritative source citations. Second, you should check your technical setup. Many websites unintentionally block AI crawlers like OAI SearchBot or PerplexityBot at the server or CDN level. If these bots cannot crawl your clients site, they simply cannot cite them.",
+    question: "How is PhantomRank different from tools that just give me an ‘AI visibility score’?",
+    answer:
+      "We don’t sell a single black-box score. PhantomRank splits behaviour into three layers: Mentions (you appear in the text), Citations (your domain is linked), and Crawl Pool (your page was crawled but not cited). On top of that we track intent coverage—category awareness, recommendation, and brand-direct—so you can see where in the journey you are actually winning and where you are only present but not chosen.",
   },
   {
-    question: "If AI answers generate fewer clicks, how do we prove the ROI of tracking AI visibility?",
-    answer: "It is true that AI citations generate a lower click through rate than traditional search. Industry experts call this the authority traffic paradox. But the traffic you do get is highly qualified, and getting cited actually boosts your overall search performance. <a href='https://www.seerinteractive.com' target='_blank' rel='noopener noreferrer' class='text-primary underline'>Research from Seer Interactive</a> found that when your brand is cited in a Google AI Overview, you actually get 35 percent more organic clicks and 91 percent more paid clicks compared to when you are not cited at all. If your clients are not cited during the research phase, their competitors are winning the business before a click even happens.",
+    question: "Why do your reports sometimes differ from what I see when I ask ChatGPT or Perplexity manually?",
+    answer:
+      "Manual tests inherit your account history, device, and location, so results can feel random. PhantomRank runs clean, standardised sessions with explicit geo-targets and fixed prompt sets. We also log the full crawl pool where possible—the pages AI engines read before answering—so even if the surface text you see manually is slightly different, we can show whether your site is consistently being retrieved and how that changes over time.",
   },
   {
-    question: "What specific content formats do AI search engines actually prefer to cite?",
-    answer: "AI engines look for extreme clarity and extractability. They heavily favor the Bottom Line Up Front approach. You should structure your answers in self contained blocks of 40 to 60 words placed directly under question based headings. They also rely heavily on community consensus to validate facts. Data shows that Reddit accounts for nearly 47 percent of <a href='https://wellows.com/blog/perplexity-search-visibility-tips/' target='_blank' rel='noopener noreferrer' class='text-primary underline'>Perplexity citations</a> and appears in over 140 percent of ChatGPT prompts. You need to back up your claims with proper Article and FAQ schema markup so the machines can easily read and verify your data.",
+    question: "Can PhantomRank control AI answers or guarantee that my brand will be recommended?",
+    answer:
+      "No, and we are explicit about that. You can’t control a neural network the way you tweak classic rankings. PhantomRank treats AI engines as searchers. We show you if they can crawl you, how they describe you, which competitors keep winning recommendations, and which information gaps force the model to cite someone else. It’s a diagnostic and alignment layer, not a promise of control.",
   },
   {
-    question: "Which AI platforms does PhantomRank monitor and how is the data collected?",
-    answer: "PhantomRank actively tracks visibility across the exact platforms that are reshaping digital discovery today. This includes ChatGPT, which recently surpassed 100 million weekly active users in India alone and 700 million globally. We also track Perplexity, a platform that has reached 30 million monthly users with searches growing by 40 percent every single month. Furthermore, we monitor Gemini, Claude, Grok, and Microsoft Copilot. We use programmatic querying to ask these engines buyer intent questions that are highly relevant to your clients, giving your agency real time data on exactly when and where your brands are recommended.",
+    question: "Is this just SEO with a new name? Why should I care about AI visibility on top of traditional SEO?",
+    answer:
+      "SEO tells you how you rank on lists of links. AI visibility tells you whether assistants recommend you when buyers ask questions like “Which X should I use?” We regularly see brands with strong Google rankings that are completely absent from ChatGPT, Gemini, or Perplexity answers. PhantomRank exists to measure that recommendation surface—how often you are named, recommended, and cited—and to turn it into content and positioning actions, not to replace SEO.",
   },
   {
-    question: "How do we optimize specifically for Anthropic Claude?",
-    answer: "Claude requires a very unique approach because it operates on a Constitutional AI framework that prioritizes honesty and harmlessness. While it drives a smaller volume of traffic, <a href='https://www.convertmate.io/research/claude-visibility' target='_blank' rel='noopener noreferrer' class='text-primary underline'>ConvertMate research from 2026</a> reveals that Claude users generate an exceptional 4.56 dollar average session value, which is the highest among all major AI assistants. To get cited by Claude, your content must be highly objective. Providing balanced comparisons or including explicit risk and limitation sections actually gives you a 1.7 times citation boost. Claude also uses Brave Search instead of Google or Bing for live web retrieval, so you must ensure your clients sites are indexed there as well.",
+    question: "What do I actually do if my visibility drops or if PhantomRank flags ‘crawled but not cited’ pages?",
+    answer:
+      "We don’t just flash a red number. When visibility drops, PhantomRank runs an Information Gain Gap analysis to find the topics where AI is relying on vague, outdated, or competitor-heavy sources. For crawled-but-not-cited URLs, we highlight relevance and structure issues so your content team knows which pages to rewrite and what missing evidence, comparisons, or schema to add. The output is a concrete content roadmap, not just a dashboard.",
   },
   {
-    question: "Does technical SEO still matter for Generative Engine Optimization?",
-    answer: "Yes, technical health is the absolute baseline for AI visibility. If an AI crawler experiences a timeout or cannot parse your site structure, it simply moves on to the next candidate. We know that pages using clear headings and schema show <a href='https://www.airops.com/blog/how-to-test-content-visibility-in-perplexity-and-chatgpt' target='_blank' rel='noopener noreferrer' class='text-primary underline'>2.8 times higher citation rates</a> than poorly structured pages. You must ensure your clients have impeccable Article, FAQ, and Organization schema markup so the AI can easily map your specific insights to the users query. Furthermore, metrics like site speed and stability remain critical because fast sites increase the confidence score for retrieval agents.",
+    question: "Is PhantomRank overkill if I only manage a few websites? Can’t I just do this manually?",
+    answer:
+      "You can absolutely test 5–10 prompts manually across a couple of engines. The problem is scale and consistency. Once you want to track 50+ prompts across 5 engines, handle geo-targeting, extract citations, benchmark competitors, and run semantic similarity math, you’re effectively assigning a full-time analyst. PhantomRank automates that loop so freelancers and small agencies get the same depth of data without having to build their own pipelines.",
   },
   {
-    question: "Can we use PhantomRank to reverse engineer what competitors are doing right in AI search?",
-    answer: "Absolutely. Competitor intelligence is built into every plan we offer. PhantomRank reveals exactly which domains and community platforms AI models are recommending instead of your clients. Because AI models synthesize data from multiple places, you are often competing against forums, review aggregators, and direct competitors all at once. By seeing exactly who is stealing your Share of Voice, your agency can adjust content strategies to reclaim those lost citations and prove your strategic value.",
+    question: "Which AI platforms and geographies does PhantomRank actually track?",
+    answer:
+      "PhantomRank queries the main engines that shape buyer research today: ChatGPT, Gemini, Claude, Grok, Perplexity, and Copilot. All of them run through a standardised API layer so the data is comparable. We also inject explicit location parameters into our prompts, which lets you see how a brand appears in India versus other regions instead of relying on a single global surface.",
+  },
+  {
+    question: "How do you keep the data useful when AI models update so often?",
+    answer:
+      "Every scan in PhantomRank logs the exact model version used for each engine. When your visibility shifts, we correlate changes with model upgrades, content changes on your site, and shifts in citation sources. Combined with scheduled weekly scans, this helps you separate model noise from real reputation movement so you don’t panic over every small fluctuation.",
+  },
+  {
+    question: "Is PhantomRank just hyping ‘AI visibility’ to sell SaaS?",
+    answer:
+      "We share the skepticism about hype. AI search is another referral channel, not magic. PhantomRank doesn’t sell secret tricks or “AI SEO hacks”. We expose what the engines already say about your brand, how they source that information, and where they choose competitors over you. The value we add is structured measurement and clear next steps, not fear-based marketing.",
   },
 ];
 
+
 // ─── Social Proof Stats ─────────────────────────────────────
+
 
 export const stats: Stat[] = [
   { label: "AI Engines Tracked", value: "14" },
@@ -132,36 +156,45 @@ export const stats: Stat[] = [
   { label: "Agencies on PhantomRank", value: "4" },
 ];
 
+
 // ─── Page Meta (SEO) ────────────────────────────────────────
+
 
 export const pageMeta: Record<string, PageMeta> = {
   home: {
     title: "PhantomRank — Search Intelligence for Brands & Agencies",
-    description: "PhantomRank is a search intelligence platform that shows how AI assistants and search engines talk about your brand. Brands and agencies use PhantomRank to track AI share of voice, citations, and answer placement across ChatGPT, Perplexity, Gemini, Claude, and other AI tools.",
+    description:
+      "PhantomRank is a search intelligence platform that shows how AI assistants and search engines talk about your brand. Brands and agencies use PhantomRank to track AI share of voice, citations, and answer placement across ChatGPT, Perplexity, Gemini, Claude, and other AI tools.",
   },
   features: {
     title: "Features",
-    description: "Explore PhantomRank's search intelligence and AI visibility features — from competitor benchmarking and multi-engine scanning to Reddit intelligence and predictive analytics.",
+    description:
+      "Explore PhantomRank's search intelligence and AI visibility features — from competitor benchmarking and multi-engine scanning to Reddit intelligence and predictive analytics.",
   },
   "use-cases": {
     title: "Industry Use Cases",
-    description: "Discover how marketing agencies use PhantomRank to track and improve AI visibility for clients across 20+ industries.",
+    description:
+      "Discover how marketing agencies use PhantomRank to track and improve AI visibility for clients across 20+ industries.",
   },
   pricing: {
     title: "Pricing",
-    description: "PhantomRank pricing plans for agencies of every size — from free single-brand tracking to enterprise-grade unlimited AI visibility monitoring. All plans in INR.",
+    description:
+      "PhantomRank pricing plans for agencies of every size — from free single-brand tracking to enterprise-grade unlimited AI visibility monitoring. All plans in INR.",
   },
   resources: {
     title: "Resources",
-    description: "Learn about AI visibility tracking, Answer Engine Optimisation (AEO), and how to get your brand cited by AI search engines. Guides, articles, and tools for Indian agencies.",
+    description:
+      "Learn about AI visibility tracking, Answer Engine Optimisation (AEO), and how to get your brand cited by AI search engines. Guides, articles, and tools for Indian agencies.",
   },
   signup: {
     title: "Get Access",
-    description: "Sign up for PhantomRank and start tracking your brand's AI visibility across ChatGPT, Perplexity, Gemini, Claude, Grok, and Copilot.",
+    description:
+      "Sign up for PhantomRank and start tracking your brand's AI visibility across ChatGPT, Perplexity, Gemini, Claude, Grok, and Copilot.",
   },
   about: {
     title: "About Us",
-    description: "PhantomRank is building the visibility layer for AI search — helping Indian marketing agencies track and improve how brands appear in AI-generated answers.",
+    description:
+      "PhantomRank is building the visibility layer for AI search — helping Indian marketing agencies track and improve how brands appear in AI-generated answers.",
   },
   terms: {
     title: "Terms & Conditions",
@@ -169,46 +202,57 @@ export const pageMeta: Record<string, PageMeta> = {
   },
   privacy: {
     title: "Privacy Policy",
-    description: "How PhantomRank collects, uses, and protects your data. Our privacy policy for users and agency clients.",
+    description:
+      "How PhantomRank collects, uses, and protects your data. Our privacy policy for users and agency clients.",
   },
   "features/ai-visibility-tracker": {
     title: "AI Visibility Tracker",
-    description: "Track how often your brand is mentioned and cited across ChatGPT, Perplexity, Gemini, Claude, Grok, and Copilot with PhantomRank's AI Visibility Tracker.",
+    description:
+      "Track how often your brand is mentioned and cited across ChatGPT, Perplexity, Gemini, Claude, Grok, and Copilot with PhantomRank's AI Visibility Tracker.",
   },
   "features/industry-metrics": {
     title: "Industry Metrics",
-    description: "Benchmark your AI visibility against industry averages. See where your brand stands compared to your category with PhantomRank's Industry Metrics.",
+    description:
+      "Benchmark your AI visibility against industry averages. See where your brand stands compared to your category with PhantomRank's Industry Metrics.",
   },
   "features/community-manager": {
     title: "Community Manager",
-    description: "Scan Reddit for brand mentions, category conversations, and competitor comparisons in real time with PhantomRank's Community Manager.",
+    description:
+      "Scan Reddit for brand mentions, category conversations, and competitor comparisons in real time with PhantomRank's Community Manager.",
   },
   "features/agentic-crm": {
     title: "Agentic Customer Journey & CRM Brain",
-    description: "Map how AI-driven customer journeys reference your brand at every touchpoint. Coming soon to PhantomRank.",
+    description:
+      "Map how AI-driven customer journeys reference your brand at every touchpoint. Coming soon to PhantomRank.",
   },
   "features/hyper-personalized-engines": {
     title: "Hyper-Personalised Engines",
-    description: "Generate content variations optimised for how each AI engine structures its answers. Coming soon to PhantomRank.",
+    description:
+      "Generate content variations optimised for how each AI engine structures its answers. Coming soon to PhantomRank.",
   },
   "features/content-creative-production": {
     title: "AI-Native Content & Creative Production",
-    description: "Produce AI-citation-ready content — articles, briefs, and creatives designed to be picked up by LLMs. Coming soon to PhantomRank.",
+    description:
+      "Produce AI-citation-ready content — articles, briefs, and creatives designed to be picked up by LLMs. Coming soon to PhantomRank.",
   },
   "features/trend-prediction": {
     title: "Trend Prediction",
-    description: "Forecast emerging topics and queries before they trend inside AI search engines. Coming soon to PhantomRank.",
+    description:
+      "Forecast emerging topics and queries before they trend inside AI search engines. Coming soon to PhantomRank.",
   },
   "features/content-performance-prediction": {
     title: "Content Performance Prediction",
-    description: "Predict how likely a piece of content is to be cited by AI engines before you publish. Coming soon to PhantomRank.",
+    description:
+      "Predict how likely a piece of content is to be cited by AI engines before you publish. Coming soon to PhantomRank.",
   },
   "features/influencer-vetting": {
     title: "Influencer Vetting & Fraud Detection",
-    description: "Evaluate influencer credibility and detect engagement fraud using AI-powered signals. Coming soon to PhantomRank.",
+    description:
+      "Evaluate influencer credibility and detect engagement fraud using AI-powered signals. Coming soon to PhantomRank.",
   },
   "features/budget-optimization": {
     title: "Predictive Journey & Budget Optimisation",
-    description: "Allocate marketing spend based on predicted AI visibility ROI across channels. Coming soon to PhantomRank.",
+    description:
+      "Allocate marketing spend based on predicted AI visibility ROI across channels. Coming soon to PhantomRank.",
   },
 };

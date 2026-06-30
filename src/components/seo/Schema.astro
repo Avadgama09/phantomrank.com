@@ -13,10 +13,21 @@ interface Props {
     | "Organization"
     | "SoftwareApplication"
     | "FAQPage"
+    | "Article"
     | "BreadcrumbList";
   data?: {
     faqs?: FAQ[];
     breadcrumbs?: BreadcrumbItem[];
+    article?: {
+      title: string;
+      description?: string;
+      datePublished?: string;
+      dateModified?: string;
+      authorName?: string;
+      publisherName?: string;
+      publisherLogo?: string;
+      image?: string;
+    };
   };
 }
 
@@ -55,8 +66,34 @@ if (type === "WebSite") {
       "@type": "AggregateOffer",
       priceCurrency: "INR",
       lowPrice: "0",
-      highPrice: "29999",
-      offerCount: "5",
+      highPrice: "30000",
+      offerCount: "4",
+    },
+  };
+} else if (type === "Article" && data.article) {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: data.article.title,
+    description: data.article.description || siteConfig.description,
+    image: data.article.image || new URL(siteConfig.ogImage, siteConfig.url).toString(),
+    datePublished: data.article.datePublished || new Date("2026-06-30").toISOString(),
+    dateModified: data.article.dateModified || new Date().toISOString(),
+    author: {
+      "@type": "Person",
+      name: data.article.authorName || siteConfig.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: data.article.publisherName || siteConfig.name,
+      logo: {
+        "@type": "ImageObject",
+        url: data.article.publisherLogo || new URL("/favicon.svg", siteConfig.url).toString(),
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": Astro.url.href,
     },
   };
 } else if (type === "FAQPage" && data.faqs?.length) {

@@ -1,6 +1,7 @@
 ---
 // src/layouts/ArticleLayout.astro — Article page with sibling-articles sidebar
 import Layout from "./Layout.astro";
+import Schema from "../components/seo/Schema.astro";
 
 interface SiblingArticle {
   slug: string;
@@ -39,6 +40,7 @@ const hasMore = totalArticles > 5;
 ---
 
 <Layout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <Schema type="Article" data={{ article: { title, description } }} />
   <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
     <a
       href={`/learn/${hubSlug}/${clusterSlug}`}

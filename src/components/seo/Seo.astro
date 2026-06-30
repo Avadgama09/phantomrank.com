@@ -20,9 +20,12 @@ const {
 
 const ogImageSrc = typeof ogImage === "string" ? ogImage : ogImage.src;
 
+const suffix = ` | ${siteConfig.name}`;
 const fullTitle =
   title && !ignoreTitleTemplate
-    ? `${title} | ${siteConfig.name}`
+    ? title.endsWith(suffix)
+      ? title
+      : `${title}${suffix}`
     : title || siteConfig.name;
 const canonicalURL =
   canonical ?? new URL(Astro.url.pathname, siteConfig.url).toString();

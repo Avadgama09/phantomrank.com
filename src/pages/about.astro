@@ -1,8 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { pageMeta } from "../utils/data";
+import { Icon } from "astro-icon/components";
 
-const meta = pageMeta.about;
+const meta = pageMeta.about || {
+  title: "About PhantomRank",
+  description: "Search intelligence platform for the AI era. Discover why we exist, how we work under the hood, and our commitment to transparency."
+};
 ---
 
 <Layout
@@ -13,15 +17,259 @@ const meta = pageMeta.about;
     { name: "About Us", href: "/about" },
   ]}
 >
-  <section class="mx-auto max-w-7xl px-4 py-32 sm:px-6 lg:px-8 text-center">
-    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
-      About PhantomRank
-    </h1>
-    <p class="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-      {meta.description}
-    </p>
-    <p class="mt-4 text-muted-foreground max-w-2xl mx-auto">
-      Full about page content coming soon.
-    </p>
+  {/* ── Hero Section ── */}
+  <section class="relative overflow-hidden py-20 md:py-32">
+    <div class="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+      <div class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
+        <Icon name="lucide:info" class="h-4 w-4" />
+        About PhantomRank
+      </div>
+      <h1 class="reveal text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl mb-6">
+        Why PhantomRank Exists
+      </h1>
+      <p class="reveal mx-auto max-w-3xl text-xl font-medium text-foreground/95 leading-relaxed">
+        PhantomRank exists to answer a simple but uncomfortable question for brands and agencies in 2026: 
+        <span class="text-primary block mt-2 font-semibold">“How do AI assistants talk about us when buyers ask for recommendations?”</span>
+      </p>
+    </div>
+  </section>
+
+  {/* ── Intro Details ── */}
+  <section class="pb-20">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-8 bg-card/50 border border-border p-8 md:p-12 rounded-3xl backdrop-blur-sm">
+        <div>
+          <p class="text-base text-muted-foreground leading-relaxed">
+            Buyers don’t just “Google and click” anymore. They ask ChatGPT, Gemini, Claude, Perplexity, Copilot and Grok what to use, which bank is safer, which SaaS tool is reliable, or which agency they should talk to. Your brand either appears in those answers, as a recommendation or citation, or it doesn’t.
+          </p>
+        </div>
+        <div>
+          <p class="text-base text-muted-foreground leading-relaxed">
+            Most teams are blind to this layer. Existing “AI visibility” tools tend to hide their methods behind a single score, or feel like experimental dashboards that are hard to trust. PhantomRank exists to turn that black box into a measurable, transparent surface.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── What PhantomRank Is ── */}
+  <section class="py-20 bg-base-200/40 border-y border-border">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-16">
+        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          What PhantomRank Is
+        </h2>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          A search intelligence platform built for the AI era. It shows how AI assistants and search engines talk about your brand, and turns that behaviour into data you can actually act on.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="reveal bg-card border border-border p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center mb-6">
+              <Icon name="lucide:bar-chart-3" class="w-5 h-5" />
+            </div>
+            <h3 class="text-xl font-bold text-foreground mb-3">Track Visibility</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Track how often you’re mentioned, recommended, and cited across ChatGPT, Gemini, Claude, Grok, Perplexity and Copilot.
+            </p>
+          </div>
+        </div>
+
+        <div class="reveal bg-card border border-border p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center mb-6">
+              <Icon name="lucide:search-code" class="w-5 h-5" />
+            </div>
+            <h3 class="text-xl font-bold text-foreground mb-3">Identify Gaps</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              See when your pages are crawled but not cited, revealing content and relevance gaps that prevent your brand from being recommended.
+            </p>
+          </div>
+        </div>
+
+        <div class="reveal bg-card border border-border p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6">
+              <Icon name="lucide:git-pull-request" class="w-5 h-5" />
+            </div>
+            <h3 class="text-xl font-bold text-foreground mb-3">Upstream Mapping</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Benchmark against competitors and map which upstream domains (gov, media, reviews, communities) are feeding the AI’s knowledge base.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal mt-12 text-center text-sm text-muted-foreground">
+        In short, PhantomRank is <span class="text-foreground font-semibold">“Google Analytics for AI search”</span>, focused on what assistants say and cite, not just where you rank.
+      </div>
+    </div>
+  </section>
+
+  {/* ── How It Works Under the Hood ── */}
+  <section class="py-20">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-16">
+        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          How PhantomRank Works Under the Hood
+        </h2>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          We care deeply about how the data is produced, not just how it looks in a chart. PhantomRank runs on a multi‑engine, multi‑prompt pipeline designed to be transparent and repeatable.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+          <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            Multi‑engine scans
+          </h3>
+          <p class="text-muted-foreground text-sm leading-relaxed">
+            We query the major AI engines in parallel—ChatGPT, Gemini, Claude, Grok and Perplexity—through a standardised API layer, and log the exact model versions used for each run. This makes cross‑engine comparisons meaningful instead of anecdotal.
+          </p>
+        </div>
+
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+          <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            Buyer‑journey prompts, not just keywords
+          </h3>
+          <p class="text-muted-foreground text-sm leading-relaxed">
+            For each brand, we generate conversational prompts that mirror the buyer journey (Top‑of‑Funnel exploration, Middle‑of‑Funnel comparisons, Bottom‑of‑Funnel shortlists). Your team can review and edit these prompts, personas and intents so the “test” reflects real customer language, not our guess.
+          </p>
+        </div>
+
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+          <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            Three‑layer visibility + semantic resonance
+          </h3>
+          <p class="text-muted-foreground text-sm leading-relaxed">
+            Every answer is analysed at three layers: Mentions (are you named), Citations (is your domain linked), and Crawl Pool (were your pages crawled but rejected). On top of that, our Odin engine embeds the AI’s response into vector space and compares it to your brand’s DNA cluster to measure how accurately the assistant describes you.
+          </p>
+        </div>
+
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+          <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            Industry and supply‑chain audits
+          </h3>
+          <p class="text-muted-foreground text-sm leading-relaxed">
+            Beyond individual brands, PhantomRank’s Industry Metrics and Generative Supply Chain Optimisation features audit entire verticals. They build competitive leaderboards, extract buying criteria, and map out which upstream domains—regulators, news, reviews, and communities—actually feed the AI’s knowledge base.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Built for Agencies, Not Hype ── */}
+  <section class="py-20 bg-base-200/40 border-y border-border">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal mb-12 text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          Built for Agencies, Not Hype
+        </h2>
+        <p class="mt-4 text-base text-muted-foreground">
+          PhantomRank is being shaped with agencies first. Much of our roadmap comes directly from agency workflows: what data needs to be in a client‑ready report, how visibility ties into existing SEO and content processes, and where CRM signals should feed back into brand perception.
+        </p>
+      </div>
+
+      <div class="reveal bg-card border border-border rounded-3xl p-8 md:p-10">
+        <h3 class="text-xl font-bold text-foreground mb-6">
+          We’re deliberate about what we refuse to do:
+        </h3>
+        <ul class="space-y-6">
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-error/10 text-error flex items-center justify-center shrink-0 mt-0.5">
+              <Icon name="lucide:x" class="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <span class="font-semibold text-foreground block">No false promises of control</span>
+              <span class="text-muted-foreground text-sm">We don’t promise control over AI answers; we focus on measuring and explaining them.</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-error/10 text-error flex items-center justify-center shrink-0 mt-0.5">
+              <Icon name="lucide:x" class="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <span class="font-semibold text-foreground block">No black box scoring</span>
+              <span class="text-muted-foreground text-sm">We don’t hide prompts, engines or logs behind a single opaque score. Every data point is auditable.</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-error/10 text-error flex items-center justify-center shrink-0 mt-0.5">
+              <Icon name="lucide:x" class="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <span class="font-semibold text-foreground block">No keyword ranking mentalities</span>
+              <span class="text-muted-foreground text-sm">We don’t treat AI visibility as keyword rankings; we treat it as recommendations, citations and reputation.</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-error/10 text-error flex items-center justify-center shrink-0 mt-0.5">
+              <Icon name="lucide:x" class="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <span class="font-semibold text-foreground block">No "AI SEO secrets"</span>
+              <span class="text-muted-foreground text-sm">We don’t sell tricks. We treat AI as another referral and research channel alongside search, social and communities.</span>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-8 pt-8 border-t border-border text-center text-sm font-medium text-foreground">
+          Our role is to be the feedback layer on top of what teams already do—SEO, content, PR, community work—not to replace those disciplines.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Where We Are & Where We're Going ── */}
+  <section class="py-20 pb-32">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr] gap-12 items-start">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight text-foreground">
+            Where We Are & Where We’re Going
+          </h2>
+          <p class="mt-4 text-muted-foreground text-sm leading-relaxed">
+            Today, PhantomRank tracks multiple brands and thousands of AI queries across several engines, with a handful of early agencies using it in live client work.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+          <h3 class="text-lg font-semibold text-foreground">
+            On the technical side, we’re actively shipping:
+          </h3>
+          <div class="space-y-4">
+            <div class="border-l-2 border-primary pl-4 py-1">
+              <h4 class="font-bold text-foreground text-sm">CRM Integrations</h4>
+              <p class="text-xs text-muted-foreground mt-1">
+                CRM integration into the brand DNA cluster, so real win/loss notes and sales transcripts influence how AI perception is measured.
+              </p>
+            </div>
+            <div class="border-l-2 border-primary pl-4 py-1">
+              <h4 class="font-bold text-foreground text-sm">Closed-Loop Content Generator</h4>
+              <p class="text-xs text-muted-foreground mt-1">
+                A generator that turns Information Gain Gap analysis into structured drafts designed for AI crawlers and schema‑rich formats.
+              </p>
+            </div>
+            <div class="border-l-2 border-primary pl-4 py-1">
+              <h4 class="font-bold text-foreground text-sm">Weekly Scheduled Scans</h4>
+              <p class="text-xs text-muted-foreground mt-1">
+                Automated weekly scans that track changes in AI Share of Voice and Sentiment Alignment over time, so visibility can be monitored like web analytics.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal mt-16 p-8 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-primary/20 text-center">
+        <p class="text-base font-semibold text-foreground">
+          The goal is simple: make “how AI sees us” as measurable, honest and actionable as web analytics, and give agencies a clear, transparent way to use that insight in their everyday work.
+        </p>
+      </div>
+    </div>
   </section>
 </Layout>

@@ -1,0 +1,126 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import FeatureDetail from "../../components/sections/FeatureDetail.astro";
+import CTA from "../../components/sections/CTA.astro";
+import FAQ from "../../components/sections/FAQ.astro";
+import { features } from "../../utils/features";
+
+const feature = features.find((f) => f.slug === "gso")!;
+
+const insight =
+  "Fixing your own content and beating direct competitors is only half the story. In every industry, AI assistants lean on a wider supply chain of information — regulators, media, review sites, directories, marketplaces, and communities like Reddit — to decide what’s true and who to trust. PhantomRank’s Generative Supply Chain Optimisation (GSO) shows which upstream domains actually shape AI’s view of your vertical, how attractive and risky the sector looks through AI’s eyes, and where your brand needs to show up to move future answers in your favour.";
+
+const outputs = [
+  "Visibility Block report summarising competitive tiers, rising and declining brands, key differentiation axes, and common myths or misconceptions AI repeats about your vertical.",
+  "Sources Block map that traces the digital research journey for the sector — which domain types (regulator sites, review platforms, industry media, marketplaces, communities, company sites) AI relies on most, and how that mix changes across topics.",
+  "Perception Block analysis that feeds AI’s sector knowledge into familiar strategy frameworks like PESTEL, Porter’s Five Forces, and basic unit‑economics/risk views, so you see how AI perceives the maturity, attractiveness, and risk profile of the market.",
+  "Source Domain Share dashboard showing the percentage of citations coming from each domain type (government/regulator, media, review sites, directories, marketplaces, communities, company sites) for a given industry cluster.",
+  "Industry Maturity, Attractiveness, Optimism, and Dominant Risk ratings — simple enums backed by heuristic classifiers that translate qualitative AI text into structured signals.",
+  "Upstream Playbook highlighting the specific channels to prioritise (e.g., Reddit threads, regulator documentation, high‑trust review sites, specialist directories) if you want to change how AI answers future questions in that vertical.",
+  "Myths & Misconceptions list where AI is currently wrong, vague, or oversimplified about the industry, giving you ready‑made angles for thought‑leadership and educational content.",
+  "Exportable GSO audit package — CSV tables for source shares and brand tiers, plus JSON for full block‑level data that you can plug into internal strategy docs or dashboards.",
+];
+
+const howItWorks = [
+  "Choose an Industry Cluster — Start by selecting a predefined cluster that matches your focus area, such as UPI Consumer Payments (India), Retail Personal Banking, SaaS CRM, or Multi‑specialty Hospitals. These clusters come with tuned prompts that reflect how buyers and regulators actually talk about those sectors.",
+  "Run the 3 GSO Blocks — PhantomRank executes a 24‑prompt catalogue across three blocks: Visibility (10 prompts), Sources (6 prompts), and Perception (8 prompts). Instead of asking one generic question, it probes the vertical from multiple angles — competitive tiers, research surfaces, regulatory context, risks, and economic signals.",
+  "Parse Sources & Domains — As AI answers each prompt, GSO parses every cited URL and classifies it into domain types using pattern matching (e.g., gov/regulator, media, review, directory, marketplace, community, company). This builds a Source Domain Share view that shows exactly which surfaces AI leans on to “understand” the sector.",
+  "Apply Heuristic Classifiers — GSO applies standardised parsers to AI’s narrative responses and converts them into structured enums: Industry Maturity (Emerging/Growth/Mature/Declining), Industry Attractiveness (High/Medium/Low), AI Optimism (Positive/Neutral/Negative), and Dominant Risk Type (Regulation/Tech/Macro/Customer/Operational).",
+  "Synthesize the Upstream Map — The system then combines the Visibility findings (tiers, rising/declining brands, differentiation axes, common myths) with the Sources and Perception data. The result is an upstream map: which domains drive AI’s understanding, which narratives are entrenched, and where the biggest leverage points sit.",
+  "Deliver the GSO Report — Finally, GSO presents the analysis in a structured report: block‑level summaries, domain share charts, framework‑based perception views, and a plain‑language Upstream Playbook. You can export the underlying data to CSV/JSON or turn key findings into campaigns, PR plans, and content briefs.",
+];
+
+const useCases = [
+  {
+    scenario: "Designing an AI‑era channel strategy",
+    outcome:
+      "Use GSO to see which surfaces actually influence AI answers in your vertical — regulator portals vs review sites vs Reddit threads. Shift budget and effort towards the domains that dominate Source Domain Share instead of assuming that blog posts alone will move the needle.",
+  },
+  {
+    scenario: "Planning thought‑leadership and PR campaigns",
+    outcome:
+      "Mine the Myths & Misconceptions and Perception blocks to find where AI is currently confused or outdated about your sector. Build campaigns and long‑form content that correct those narratives on the exact domains AI relies on, turning your brand into a primary reference over time.",
+  },
+  {
+    scenario: "Supporting C‑level and board‑level strategy",
+    outcome:
+      "Bring an AI‑first view of the market into leadership discussions: how mature the industry looks, how attractive AI thinks it is, what risks dominate, and which brands it sees as rising. Use this to stress‑test expansion plans, new product ideas, or repositioning work.",
+  },
+  {
+    scenario: "Aligning SEO, content, and comms around AI",
+    outcome:
+      "Instead of separate teams guessing at what to do, use GSO’s upstream map to align everyone. SEO sees which domains to earn links from, content sees which frameworks and topics to explore, and comms sees which regulators and media outlets matter most for AI’s knowledge graph.",
+  },
+  {
+    scenario: "Choosing where to intervene first",
+    outcome:
+      "Combine Industry Metrics and GSO: run an Industry Metrics audit for your niche, then overlay GSO’s Source Domain Share and risk views. This tells you not just where your brand is weak, but where the sector’s information supply chain is weak — and which interventions could move both AI perception and real‑world demand.",
+  },
+  {
+    scenario: "Market‑entry and new‑vertical scouting",
+    outcome:
+      "Before entering a new vertical or geography, run GSO to understand how AI currently sees that sector. If AI’s view is pessimistic, highly regulated, or dominated by entrenched brands, you can adjust expectations and strategy long before you spend heavily on campaigns.",
+  },
+];
+
+const includes = [
+  "Predefined industry clusters for key verticals (e.g., payments, retail banking, SaaS, healthcare), with domain‑specific prompt catalogues.",
+  "24‑prompt GSO catalogue split across three analytical blocks: 10 Visibility prompts, 6 Sources prompts, and 8 Perception prompts.",
+  "Source Domain classification into gov/regulator, media, review, directory, marketplace, community, and company site categories.",
+  "Source Domain Share metrics showing percentage of citations per domain type for the selected cluster.",
+  "Heuristic classifiers that convert qualitative AI text into structured enums for Industry Maturity, Industry Attractiveness, AI Optimism, and Dominant Risk Type.",
+  "Visibility Block outputs covering competitive tiers, rising/declining brands, differentiation axes, and recurring myths or misconceptions.",
+  "Perception Block outputs that map AI’s narrative into PESTEL, Porter’s Five Forces, and basic unit‑economics/risk views.",
+  "Upstream Playbook recommendations summarising which domains and narratives to influence first if you want to change future AI answers.",
+  "CSV export for key tables (Source Domain Share, brand tiers, myth lists) and JSON export for full block‑level GSO data.",
+  "Compatibility with AI Visibility and Industry Metrics audits, so you can use GSO as the upstream lens on the same sector.",
+];
+
+const faqs = [
+  {
+    question: "What does Generative Supply Chain Optimisation actually do?",
+    answer: "GSO maps the digital “supply chain” of information that feeds AI models in your vertical. Instead of only looking at your own pages, PhantomRank runs a 24‑prompt catalog across Visibility, Sources, and Perception blocks to see which domains AI relies on—gov sites, media, reviews, marketplaces, communities like Reddit, and competitor sites—and how that mix shapes the way assistants talk about your industry."
+  },
+  {
+    question: "Why isn’t it enough to just optimise our own website for AI search?",
+    answer: "AI answers are built from many upstream sources at once: regulatory portals, news, review platforms, community threads, and competitor documentation. If 40% of citations in your cluster come from gov sites and 30% from Reddit, then polishing your blog alone won’t move the needle. GSO shows you that source domain share so you can decide where to seed expertise—whether that means better regulatory explainers, stronger presence in review sites, or participating in the right community threads."
+  },
+  {
+    question: "How does GSO tell us which external sites we should prioritise?",
+    answer: "For every industry cluster, GSO classifies cited URLs into domain types like gov, media, review, directory, marketplace, community, and company. It then calculates Source Domain Share—what percentage of the AI’s knowledge base comes from each type. If the data shows AI leaning heavily on one marketplace or a handful of review sites, you know exactly where to focus listings, partnerships, and content, instead of guessing across the entire internet."
+  },
+  {
+    question: "Can GSO help us understand whether a vertical is attractive or too risky to invest in?",
+    answer: "Yes. The Perception block runs structured prompts through PESTEL, Porter’s Five Forces, and unit economics lenses to infer industry maturity (emerging, growth, mature, declining), attractiveness (high, medium, low), AI optimism (positive, neutral, negative), and dominant risk type (regulation, tech, macro, customer, operational). That gives CMOs and founders an AI‑informed view of where the model sees opportunity or pressure before they commit budget."
+  },
+  {
+    question: "How is GSO different from the Industry Metrics feature?",
+    answer: "Industry Metrics is micro‑competitive: it compares your brand against 15–20 named competitors on share of voice, share of synthesis, and answer placement for buyer prompts. GSO is macro‑ecosystem: it looks at the entire information supply chain behind those answers—who the AI trusts, which domains it leans on, how it frames the vertical’s risks and maturity. Together, they show both who you compete with and which upstream sources you need to influence."
+  },
+  {
+    question: "What do we actually do with GSO outputs inside our existing SEO/content/PR work?",
+    answer: "GSO is designed as a planning brief, not a vanity chart. Teams use Source Domain Share to decide where to invest in content and relationships (for example, a specific regulator portal, a key review platform, or a community), and they use the Perception findings to pick themes—clarifying misunderstood risks, correcting myths, or publishing the explainer AI is currently missing. In practice, GSO becomes the AI feedback layer on top of your existing SEO, content, and PR planning."
+  }
+];
+---
+
+<Layout
+  title="GSO — Generative Supply Chain Optimisation for AI Search | PhantomRank"
+  description="Map the upstream information supply chain that feeds AI models. See which domains shape AI’s view of your vertical, how attractive and risky the sector looks, and where to intervene so future answers move in your favour."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Features", href: "/features" },
+    { name: "GSO", href: "/features/gso" },
+  ]}
+>
+  <FeatureDetail
+    feature={feature}
+    insight={insight}
+    outputs={outputs}
+    howItWorks={howItWorks}
+    useCases={useCases}
+    includes={includes}
+  />
+  <FAQ customFaqs={faqs} title="GSO — FAQs" subtitle="Focus: upstream sources, domain share, narrative perception, strategic alignment." />
+  <CTA />
+</Layout>
