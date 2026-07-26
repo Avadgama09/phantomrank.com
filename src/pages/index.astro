@@ -4,6 +4,7 @@ import Schema from "../components/seo/Schema.astro";
 import Hero from "../components/sections/Hero.astro";
 import Problem from "../components/sections/Problem.astro";
 import HowItWorks from "../components/sections/HowItWorks.astro";
+import Workflow from "../components/sections/Workflow.astro";
 import Features from "../components/sections/Features.astro";
 import SocialProof from "../components/sections/SocialProof.astro";
 import FAQ from "../components/sections/FAQ.astro";
@@ -27,25 +28,27 @@ const meta = pageMeta.home;
     <Schema type="FAQPage" data={{ faqs }} />
   </Fragment>
 
+  <!-- Scene 1: The World Changed -->
   <Hero />
 
-  <!-- AI Visibility Analysis Dashboard Mockup -->
-  <div class="reveal mx-auto max-w-5xl px-4 pb-24 sm:px-6 lg:px-8">
-    <div class="mockup-window border border-border bg-muted/30 shadow-2xl">
-      <div class="bg-background border-t border-border">
-        <img
-          src="/images/features/ai-visibility-tracker/VisibilityAnalysis.webp"
-          alt="AI Visibility Analysis Dashboard"
-          class="w-full h-auto"
-        />
-      </div>
-    </div>
-  </div>
-
+  <!-- Scene 2: You're Invisible -->
   <Problem />
+
+  <!-- Scene 3: Here's Why (The AI Search Stack) -->
   <HowItWorks />
-  <Features variant="preview" />
+
+  <!-- Scene 4: The Discovery Workflow -->
+  <Workflow />
+
+  <!-- Scene 5: Imagine Using It (The Reveal) -->
+  <Features />
+
+  <!-- Scene 6: Evidence -->
   <SocialProof />
+
+  <!-- Scene 7: Clarification -->
   <FAQ />
+
+  <!-- Scene 8: Let's Start -->
   <CTA />
 </Layout>

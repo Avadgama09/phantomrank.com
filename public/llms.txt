@@ -10,10 +10,10 @@
 - [Learn Hub](https://www.phantomrank.com/learn): In-depth guides and articles about Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO).
 - [Sign Up](https://www.phantomrank.com/signup): Request access to start tracking your brand's AI search engine visibility.
 
-## Selected Playbooks
+## Learn Hub Categories
 
-- [SaaS & Software Playbook](https://www.phantomrank.com/use-cases/saas-software): Playbook for SaaS brands to monitor AI recommendations and feature citations.
-- [Ecommerce & Retail Playbook](https://www.phantomrank.com/use-cases/ecommerce-retail): Track and optimize product citations and brand recommendations.
-- [Fintech & Banking Playbook](https://www.phantomrank.com/use-cases/fintech-banking): Build and track visibility for financial institutions in AI assistant outputs.
-- [Healthcare & Pharma Playbook](https://www.phantomrank.com/use-cases/healthcare-pharma): Playbook for healthcare brands to ensure accuracy and presence in AI-generated answers.
-- [Real Estate Playbook](https://www.phantomrank.com/use-cases/real-estate): Monitor real estate brand citations and geographical recommendations across AI engines.
+- [AI-Powered SEO](https://www.phantomrank.com/learn/ai-powered-seo): Guides on building search and content strategies optimized for AI engine visibility and citations.
+- [AI Search Agency Strategy](https://www.phantomrank.com/learn/ai-search-agency-strategy): Playbooks for marketing agencies to package, sell, and report on client AI search performance.
+- [AI Visibility Tracking](https://www.phantomrank.com/learn/ai-visibility-tracking): How to monitor brand citations, mentions, and share of voice across conversational models.
+- [Answer Engine Optimization (AEO)](https://www.phantomrank.com/learn/answer-engine-optimization): Optimizing websites for conversational search platforms and AI answer generation.
+- [Generative Engine Optimization (GEO)](https://www.phantomrank.com/learn/generative-engine-optimization): Specific optimization techniques to earn organic citations inside AI results.

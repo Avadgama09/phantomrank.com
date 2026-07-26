@@ -1,104 +1,87 @@
 ---
-import { faqs as defaultFaqs } from "../../utils/data";
-
-interface Props {
-  customFaqs?: { question: string; answer: string }[];
-  title?: string;
-  subtitle?: string;
-  id?: string;
-}
-
-const {
-  customFaqs,
-  title = "Frequently asked questions",
-  subtitle = "Everything you need to know about search intelligence, AI visibility, and how PhantomRank fits into your SEO, GEO, and AEO workflows.",
-  id = "faq"
-} = Astro.props;
-
-const displayFaqs = customFaqs || defaultFaqs;
+// Scene 7: Clarification
+// Experience: Elegant rhythm, avoiding endless accordions.
+// Visual: Question -> Short sharp answer -> Learn More link.
 ---
 
-<section id={id} class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-  <div class="text-center mb-16">
-    <div
-      class="reveal inline-flex items-center gap-2 px-3 py-1 text-primary text-lg font-semibold"
-    >
-      FAQ
+<section id="scene-clarification" class="relative bg-background border-t border-border py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-24 md:w-1/2">
+      <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
+        TODO: Copy provided by ChatGPT
+      </h2>
+      <p class="text-xl text-muted-foreground font-light">
+        TODO: Copy provided by ChatGPT
+      </p>
     </div>
-    <h2
-      class="reveal text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
-    >
-      {title}
-    </h2>
-    <p class="reveal text-xl text-muted-foreground max-w-2xl mx-auto">
-      {subtitle}
-    </p>
-  </div>
 
-  <div class="mx-auto max-w-3xl divide-y divide-border">
-    {displayFaqs.map((faq, index) => (
-      <div class="reveal faq-item" data-faq-index={index}>
-        <button
-          class="faq-trigger flex w-full items-center justify-between gap-4 py-6 text-left"
-          aria-expanded="false"
-        >
-          <h3 class="text-lg font-semibold text-foreground pr-4">
-            {faq.question}
-          </h3>
-          <svg
-            class="faq-icon h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-200"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
-        </button>
-        <div class="faq-content hidden pb-6">
-          <p class="text-muted-foreground" set:html={faq.answer} />
-        </div>
+    <!-- Rhythmic Grid Layout (No Accordions) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24 faq-grid">
+      
+      <div class="faq-block opacity-0 transform translate-y-8">
+        <h3 class="text-xl font-medium text-foreground mb-4">TODO: Copy provided by ChatGPT</h3>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          TODO: Copy provided by ChatGPT
+        </p>
+        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
+          Learn more
+          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
       </div>
-    ))}
+
+      <div class="faq-block opacity-0 transform translate-y-8">
+        <h3 class="text-xl font-medium text-foreground mb-4">TODO: Copy provided by ChatGPT</h3>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          TODO: Copy provided by ChatGPT
+        </p>
+        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
+          Learn more
+          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+
+      <div class="faq-block opacity-0 transform translate-y-8">
+        <h3 class="text-xl font-medium text-foreground mb-4">TODO: Copy provided by ChatGPT</h3>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          TODO: Copy provided by ChatGPT
+        </p>
+        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
+          Learn more
+          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+
+      <div class="faq-block opacity-0 transform translate-y-8">
+        <h3 class="text-xl font-medium text-foreground mb-4">TODO: Copy provided by ChatGPT</h3>
+        <p class="text-muted-foreground leading-relaxed mb-6">
+          TODO: Copy provided by ChatGPT
+        </p>
+        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
+          Learn more
+          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+
+    </div>
   </div>
 </section>
 
 <script>
-  const setupFAQ = () => {
-    const items = document.querySelectorAll(".faq-item");
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-    items.forEach((item) => {
-      const trigger = item.querySelector(".faq-trigger");
-      const content = item.querySelector(".faq-content");
-      const icon = item.querySelector(".faq-icon");
+  gsap.registerPlugin(ScrollTrigger);
 
-      trigger?.addEventListener("click", () => {
-        const isOpen = trigger.getAttribute("aria-expanded") === "true";
-
-        // Close all other items
-        items.forEach((otherItem) => {
-          const otherTrigger = otherItem.querySelector(".faq-trigger");
-          const otherContent = otherItem.querySelector(".faq-content");
-          const otherIcon = otherItem.querySelector(".faq-icon");
-          otherTrigger?.setAttribute("aria-expanded", "false");
-          otherContent?.classList.add("hidden");
-          otherIcon?.classList.remove("rotate-45");
-        });
-
-        // Toggle current item
-        if (!isOpen) {
-          trigger.setAttribute("aria-expanded", "true");
-          content?.classList.remove("hidden");
-          icon?.classList.add("rotate-45");
-        }
-      });
-    });
-  };
-
-  setupFAQ();
-  document.addEventListener("astro:page-load", setupFAQ);
+  gsap.to(".faq-block", {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".faq-grid",
+      start: "top 75%",
+      toggleActions: "play none none reverse",
+    }
+  });
 </script>

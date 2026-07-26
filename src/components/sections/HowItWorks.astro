@@ -1,123 +1,89 @@
 ---
-// HowItWorks copy is inline — only used once on the homepage
+// Scene 3: Here's Why — The AI Search Stack
+// Experience: Teaching the category.
+// Visual: A structured, visual breakdown comparing the legacy stack against the AI stack.
+// Motion: Step-by-step GSAP reveal as the user scrolls, making the paradigm shift undeniable.
 ---
 
-<section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-  <div class="text-center mb-16">
-    <div
-      class="reveal inline-flex items-center gap-2 px-3 py-1 text-primary text-lg font-semibold"
-    >
-      How It Works
-    </div>
-    <h2
-      class="reveal text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
-    >
-      From brand input to search intelligence
-    </h2>
-    <p class="reveal text-xl text-muted-foreground max-w-2xl mx-auto">
-      PhantomRank runs structured queries across AI assistants and search
-      engines to turn brand inputs into actionable search intelligence. Track
-      when you’re recommended, when you’re invisible, and how you stack up
-      against competitors.
-    </p>
-  </div>
-
-  <div class="relative grid gap-8 md:grid-cols-3">
-    <!-- Connector line (desktop only) -->
-    <div
-      class="absolute top-16 left-[16.67%] right-[16.67%] hidden md:block h-px bg-border"
-    >
-    </div>
-
-    <!-- Step 1 -->
-    <div class="reveal text-center">
-      <div class="relative mx-auto mb-6">
-        <div
-          class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 border-2 border-primary text-primary text-xl font-bold"
-        >
-          1
-        </div>
-      </div>
-      <h3 class="text-lg font-semibold text-foreground mb-2">
-        Input brand, industry, and competitors
-      </h3>
-      <p class="text-muted-foreground max-w-xs mx-auto">
-        Enter your brand or client name, industry, and top competitors.
-        PhantomRank builds intent-based prompts and keyword sets that reflect
-        real buyer journeys.
+<section id="scene-stack" class="relative bg-background border-t border-border py-24 md:py-40">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-24 stack-header">
+      <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
+        TODO: Copy provided by ChatGPT
+      </h2>
+      <p class="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
+        TODO: Copy provided by ChatGPT
       </p>
     </div>
 
-    <!-- Step 2 -->
-    <div class="reveal text-center">
-      <div class="relative mx-auto mb-6">
-        <div
-          class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 border-2 border-primary text-primary text-xl font-bold"
-        >
-          2
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 max-w-5xl mx-auto">
+      
+      <!-- Legacy Stack -->
+      <div class="flex flex-col items-center">
+        <div class="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-12">Legacy Search</div>
+        
+        <div class="stack-item-legacy flex flex-col items-center opacity-0 transform translate-y-8">
+          <div class="text-xl font-medium text-foreground">Google</div>
+          <div class="w-px h-12 bg-border my-4"></div>
+        </div>
+        
+        <div class="stack-item-legacy flex flex-col items-center opacity-0 transform translate-y-8">
+          <div class="text-xl font-medium text-foreground">SEO</div>
+          <div class="w-px h-12 bg-border my-4"></div>
+        </div>
+        
+        <div class="stack-item-legacy flex flex-col items-center opacity-0 transform translate-y-8">
+          <div class="text-xl font-medium text-foreground">Website</div>
         </div>
       </div>
-      <h3 class="text-lg font-semibold text-foreground mb-2">
-        We query AI assistants and search
-      </h3>
-      <p class="text-muted-foreground max-w-xs mx-auto">
-        We run targeted questions across Perplexity and other AI assistants
-        (ChatGPT, Gemini, and Claude coming soon), alongside traditional search.
-        Every citation, mention, and context signal is captured and scored.
-      </p>
-    </div>
 
-    <!-- Step 3 -->
-    <div class="reveal text-center">
-      <div class="relative mx-auto mb-6">
-        <div
-          class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 border-2 border-primary text-primary text-xl font-bold"
-        >
-          3
+      <!-- Divider for mobile -->
+      <div class="w-full h-px bg-border md:hidden"></div>
+
+      <!-- AI Stack -->
+      <div class="flex flex-col items-center">
+        <div class="text-sm font-medium text-primary uppercase tracking-widest mb-12">The AI Stack</div>
+        
+        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
+          <div class="text-xl font-medium text-foreground">Retrieval</div>
+          <div class="w-px h-12 bg-primary/30 my-4"></div>
+        </div>
+        
+        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
+          <div class="text-xl font-medium text-foreground">Reasoning</div>
+          <div class="w-px h-12 bg-primary/30 my-4"></div>
+        </div>
+        
+        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
+          <div class="text-xl font-medium text-foreground">Citation</div>
+          <div class="w-px h-12 bg-primary/30 my-4"></div>
+        </div>
+        
+        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
+          <div class="text-xl font-bold text-foreground">Recommendation</div>
         </div>
       </div>
-      <h3 class="text-lg font-semibold text-foreground mb-2">
-        Get client-ready search intelligence
-      </h3>
-      <p class="text-muted-foreground max-w-xs mx-auto">
-        See exactly where your brand appears, which competitors AI prefers, and
-        which topics you’re absent from. Turn these insights into content plans,
-        GEO/AEO experiments, and client-ready reports.
-      </p>
-    </div>
-  </div>
 
-  <!-- User Journey Mockup -->
-  <div class="reveal mx-auto max-w-5xl px-4 mt-16">
-    <div class="mockup-window border border-border bg-muted/30 shadow-2xl">
-      <div class="bg-background border-t border-border">
-        <img
-          src="/images/features/ai-visibility-tracker/userjourney1.webp"
-          alt="User Journey Mapping"
-          class="w-full h-auto"
-        />
-      </div>
     </div>
-  </div>
-
-  <div class="reveal text-center mt-12">
-    <a
-      href="/use-cases"
-      class="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
-    >
-      See use cases for brands & agencies
-      <svg
-        class="h-4 w-4"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
-      </svg>
-    </a>
   </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#scene-stack",
+      start: "top 60%",
+      end: "center center",
+      scrub: false,
+    }
+  });
+
+  tl.fromTo(".stack-header", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" })
+    .to(".stack-item-legacy", { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" })
+    .to(".stack-item-ai", { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" }, "-=0.4");
+</script>

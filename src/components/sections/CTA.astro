@@ -1,55 +1,55 @@
 ---
-// CTA copy is inline — only used once on the homepage
+// Scene 8: Let's Start
+// Experience: A final moment of tension and decision.
+// Visual: Crisp, editorial call to action. No generic gradients.
 ---
 
-<section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-  <div
-    class="reveal relative overflow-hidden rounded-2xl border border-border bg-card p-8 sm:p-16 text-center"
-  >
-    <div
-      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)]"
-    >
-    </div>
-
-    <div class="relative">
-      <h2
-        class="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
-      >
-        Start tracking your
-        <span
-          class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
-        >
-          AI visibility
-        </span>
-        today
+<section id="scene-cta" class="relative bg-background py-32 border-t border-border">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+    
+    <div class="cta-content opacity-0 transform translate-y-8">
+      <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-foreground mb-8 leading-tight">
+        TODO: Copy provided by ChatGPT
       </h2>
-
-      <p class="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
-        brand stands
+      
+      <p class="text-xl text-muted-foreground font-light mb-12 max-w-2xl mx-auto">
+        TODO: Copy provided by ChatGPT
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <div class="aura aura-silver rounded-full inline-block" style="--aura-radius: 9999px;">
-          <a
-            href="/signup"
-            class="rounded-full bg-zinc-950 text-zinc-100 border border-zinc-800 px-8 py-3.5 text-sm font-semibold transition-all hover:bg-zinc-900 hover:text-white"
-          >
-            Get Access
-          </a>
-        </div>
-        {
-          /*
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
         <a
-          href="/dashboard"
-          class="rounded-full bg-foreground/10 px-8 py-3.5 text-sm font-semibold text-foreground transition-all hover:bg-foreground/20"
+          href="/signup"
+          class="inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-background bg-foreground hover:bg-foreground/90 transition-colors rounded-full"
         >
-          Try the Live Demo
+          TODO: Copy provided by ChatGPT
         </a>
-        */
-        }
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-foreground bg-transparent border border-border hover:bg-muted/50 transition-colors rounded-full"
+        >
+          TODO: Copy provided by ChatGPT
+        </a>
       </div>
-
-      <p class="mt-4 text-xs text-muted-foreground"></p>
     </div>
+
   </div>
 </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to(".cta-content", {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: "#scene-cta",
+      start: "top 75%",
+      toggleActions: "play none none reverse",
+    }
+  });
+</script>

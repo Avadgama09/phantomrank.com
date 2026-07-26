@@ -1,0 +1,173 @@
+---
+// Scene 4: Here's The System — The Discovery Workflow
+// Experience: Explaining the technical reality.
+// Visual: An interactive workflow showing how AI actually discovers brands.
+// Motion: The user scrubs through this pipeline via scroll, watching the data flow.
+---
+
+<section id="scene-workflow" class="relative bg-background border-t border-border py-32 overflow-hidden">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-32">
+      <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
+        TODO: Copy provided by ChatGPT
+      </h2>
+    </div>
+
+    <!-- The Workflow Pipeline -->
+    <div class="relative max-w-4xl mx-auto workflow-container">
+      <!-- The central line that fills up -->
+      <div class="absolute left-[27px] top-0 bottom-0 w-[2px] bg-border md:left-1/2 md:-translate-x-1/2 z-0"></div>
+      <div class="workflow-progress absolute left-[27px] top-0 w-[2px] bg-foreground md:left-1/2 md:-translate-x-1/2 z-0 origin-top h-0"></div>
+
+      <!-- Nodes -->
+      <div class="workflow-nodes flex flex-col gap-24 relative z-10">
+        
+        <div class="workflow-node flex flex-row md:justify-center items-center gap-8 group">
+          <div class="hidden md:flex w-1/2 justify-end text-right pr-12 opacity-0 transform translate-x-8 node-text">
+            <div>
+              <div class="text-lg font-medium text-foreground">Website</div>
+              <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+            </div>
+          </div>
+          <div class="w-14 h-14 rounded-full bg-background border-2 border-border flex items-center justify-center node-circle transition-colors duration-300">
+            <span class="w-2 h-2 rounded-full bg-border node-dot"></span>
+          </div>
+          <div class="flex md:hidden w-[calc(100%-4rem)] flex-col opacity-0 transform -translate-x-8 node-text-mobile">
+            <div class="text-lg font-medium text-foreground">Website</div>
+            <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+          </div>
+          <div class="hidden md:block w-1/2 pl-12"></div>
+        </div>
+
+        <div class="workflow-node flex flex-row md:justify-center items-center gap-8 group">
+          <div class="hidden md:block w-1/2 pr-12"></div>
+          <div class="w-14 h-14 rounded-full bg-background border-2 border-border flex items-center justify-center node-circle transition-colors duration-300">
+            <span class="w-2 h-2 rounded-full bg-border node-dot"></span>
+          </div>
+          <div class="flex md:w-1/2 flex-col w-[calc(100%-4rem)] md:pl-12 opacity-0 transform -translate-x-8 node-text">
+            <div class="text-lg font-medium text-foreground">Crawler</div>
+            <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+          </div>
+        </div>
+
+        <div class="workflow-node flex flex-row md:justify-center items-center gap-8 group">
+          <div class="hidden md:flex w-1/2 justify-end text-right pr-12 opacity-0 transform translate-x-8 node-text">
+            <div>
+              <div class="text-lg font-medium text-foreground">Retrieval</div>
+              <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+            </div>
+          </div>
+          <div class="w-14 h-14 rounded-full bg-background border-2 border-border flex items-center justify-center node-circle transition-colors duration-300">
+            <span class="w-2 h-2 rounded-full bg-border node-dot"></span>
+          </div>
+          <div class="flex md:hidden w-[calc(100%-4rem)] flex-col opacity-0 transform -translate-x-8 node-text-mobile">
+            <div class="text-lg font-medium text-foreground">Retrieval</div>
+            <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+          </div>
+          <div class="hidden md:block w-1/2 pl-12"></div>
+        </div>
+
+        <div class="workflow-node flex flex-row md:justify-center items-center gap-8 group">
+          <div class="hidden md:block w-1/2 pr-12"></div>
+          <div class="w-14 h-14 rounded-full bg-background border-2 border-border flex items-center justify-center node-circle transition-colors duration-300">
+            <span class="w-2 h-2 rounded-full bg-border node-dot"></span>
+          </div>
+          <div class="flex md:w-1/2 flex-col w-[calc(100%-4rem)] md:pl-12 opacity-0 transform -translate-x-8 node-text">
+            <div class="text-lg font-medium text-foreground">AI Models</div>
+            <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+          </div>
+        </div>
+
+        <div class="workflow-node flex flex-row md:justify-center items-center gap-8 group">
+          <div class="hidden md:flex w-1/2 justify-end text-right pr-12 opacity-0 transform translate-x-8 node-text">
+            <div>
+              <div class="text-lg font-medium text-foreground">Generated Answer</div>
+              <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+            </div>
+          </div>
+          <div class="w-14 h-14 rounded-full bg-background border-2 border-border flex items-center justify-center node-circle transition-colors duration-300">
+            <span class="w-2 h-2 rounded-full bg-border node-dot"></span>
+          </div>
+          <div class="flex md:hidden w-[calc(100%-4rem)] flex-col opacity-0 transform -translate-x-8 node-text-mobile">
+            <div class="text-lg font-medium text-foreground">Generated Answer</div>
+            <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+          </div>
+          <div class="hidden md:block w-1/2 pl-12"></div>
+        </div>
+
+        <div class="workflow-node flex flex-row md:justify-center items-center gap-8 group">
+          <div class="hidden md:block w-1/2 pr-12"></div>
+          <div class="w-14 h-14 rounded-full bg-background border-2 border-border flex items-center justify-center node-circle transition-colors duration-300">
+            <span class="w-2 h-2 rounded-full bg-border node-dot"></span>
+          </div>
+          <div class="flex md:w-1/2 flex-col w-[calc(100%-4rem)] md:pl-12 opacity-0 transform -translate-x-8 node-text">
+            <div class="text-lg font-medium text-foreground">Sources & Citations</div>
+            <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+          </div>
+        </div>
+
+        <div class="workflow-node flex flex-row md:justify-center items-center gap-8 group">
+          <div class="hidden md:flex w-1/2 justify-end text-right pr-12 opacity-0 transform translate-x-8 node-text">
+            <div>
+              <div class="text-lg font-medium text-primary">Brand Visibility</div>
+              <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+            </div>
+          </div>
+          <div class="w-14 h-14 rounded-full bg-background border-2 border-primary flex items-center justify-center node-circle transition-colors duration-300 shadow-[0_0_15px_rgba(var(--primary),0.5)]">
+            <span class="w-2 h-2 rounded-full bg-primary node-dot"></span>
+          </div>
+          <div class="flex md:hidden w-[calc(100%-4rem)] flex-col opacity-0 transform -translate-x-8 node-text-mobile">
+            <div class="text-lg font-medium text-primary">Brand Visibility</div>
+            <div class="text-sm text-muted-foreground mt-1">TODO: Copy provided by ChatGPT</div>
+          </div>
+          <div class="hidden md:block w-1/2 pl-12"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Fill the central line based on scroll
+  gsap.to(".workflow-progress", {
+    height: "100%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".workflow-container",
+      start: "top center",
+      end: "bottom center",
+      scrub: true,
+    }
+  });
+
+  // Reveal each node as it comes into view
+  const nodes = gsap.utils.toArray(".workflow-node");
+  nodes.forEach((node: any) => {
+    const text = node.querySelector(".node-text");
+    const mobileText = node.querySelector(".node-text-mobile");
+    const circle = node.querySelector(".node-circle");
+    const dot = node.querySelector(".node-dot");
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: node,
+        start: "top 60%",
+        toggleActions: "play none none reverse",
+      }
+    });
+
+    tl.to(circle, { borderColor: "var(--foreground)", duration: 0.3 })
+      .to(dot, { backgroundColor: "var(--foreground)", duration: 0.3 }, "<")
+      .to(text, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, "<");
+      
+    if (mobileText) {
+      tl.to(mobileText, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, "<");
+    }
+  });
+</script>
