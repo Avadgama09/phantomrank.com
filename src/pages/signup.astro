@@ -27,7 +27,7 @@ const meta = pageMeta.signup;
         >
           Let's get your agency
           <span
-            class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+            class="text-primary"
           >
             AI-search ready
           </span>
@@ -245,6 +245,33 @@ const meta = pageMeta.signup;
       </div>
     </div>
   </section>
+
+<script>
+  import { gsap } from "gsap";
+
+  function setup() {
+    gsap.utils.toArray(".reveal").forEach((elem: any, i) => {
+      gsap.fromTo(
+        elem,
+        { autoAlpha: 0, y: 30 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          delay: i * 0.1,
+          ease: "power2.out",
+        }
+      );
+    });
+  }
+
+  // Run on initial load
+  setup();
+
+  // Run on subsequent Astro page navigations
+  document.addEventListener("astro:page-load", setup);
+</script>
+
 </Layout>
 
 <script>

@@ -126,7 +126,7 @@ const isPreview = variant === "preview";
   </div>
 
   <div
-    class="tabs tabs-boxed bg-white/5 border border-white/10 p-1.5 rounded-2xl mx-auto w-fit mb-12 flex gap-2"
+    class="tabs tabs-boxed bg-card/50 border border-border/50 p-1.5 rounded-2xl mx-auto w-fit mb-12 flex gap-2 backdrop-blur-sm"
   >
     <!-- Brands Tab -->
     <input
@@ -423,3 +423,37 @@ const isPreview = variant === "preview";
     )
   }
 </section>
+
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function setup() {
+    gsap.utils.toArray(".reveal").forEach((elem: any) => {
+      gsap.fromTo(
+        elem,
+        { autoAlpha: 0, y: 30 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+  }
+
+  // Run on initial load
+  setup();
+
+  // Run on subsequent Astro page navigations
+  document.addEventListener("astro:page-load", setup);
+</script>

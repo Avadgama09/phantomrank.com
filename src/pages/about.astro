@@ -65,7 +65,7 @@ const meta = pageMeta.about || {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="reveal bg-card border border-border p-8 rounded-2xl flex flex-col justify-between">
+        <div class="reveal group bg-card border border-border p-8 rounded-2xl flex flex-col justify-between hover:border-primary/30 transition-colors">
           <div>
             <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center mb-6">
               <Icon name="lucide:bar-chart-3" class="w-5 h-5" />
@@ -77,7 +77,7 @@ const meta = pageMeta.about || {
           </div>
         </div>
 
-        <div class="reveal bg-card border border-border p-8 rounded-2xl flex flex-col justify-between">
+        <div class="reveal group bg-card border border-border p-8 rounded-2xl flex flex-col justify-between hover:border-primary/30 transition-colors">
           <div>
             <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center mb-6">
               <Icon name="lucide:search-code" class="w-5 h-5" />
@@ -89,7 +89,7 @@ const meta = pageMeta.about || {
           </div>
         </div>
 
-        <div class="reveal bg-card border border-border p-8 rounded-2xl flex flex-col justify-between">
+        <div class="reveal group bg-card border border-border p-8 rounded-2xl flex flex-col justify-between hover:border-primary/30 transition-colors">
           <div>
             <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-6">
               <Icon name="lucide:git-pull-request" class="w-5 h-5" />
@@ -121,7 +121,7 @@ const meta = pageMeta.about || {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30 hover:bg-card/50 transition-colors">
           <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-primary"></span>
             Multi‑engine scans
@@ -131,7 +131,7 @@ const meta = pageMeta.about || {
           </p>
         </div>
 
-        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30 hover:bg-card/50 transition-colors">
           <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-primary"></span>
             Buyer‑journey prompts, not just keywords
@@ -141,7 +141,7 @@ const meta = pageMeta.about || {
           </p>
         </div>
 
-        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30 hover:bg-card/50 transition-colors">
           <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-primary"></span>
             Three‑layer visibility + semantic resonance
@@ -151,7 +151,7 @@ const meta = pageMeta.about || {
           </p>
         </div>
 
-        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30">
+        <div class="reveal border border-border/60 p-8 rounded-2xl bg-card/30 hover:bg-card/50 transition-colors">
           <h3 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-primary"></span>
             Industry and supply‑chain audits
@@ -272,4 +272,38 @@ const meta = pageMeta.about || {
       </div>
     </div>
   </section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function setup() {
+    gsap.utils.toArray(".reveal").forEach((elem: any) => {
+      gsap.fromTo(
+        elem,
+        { autoAlpha: 0, y: 30 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+  }
+
+  // Run on initial load
+  setup();
+
+  // Run on subsequent Astro page navigations
+  document.addEventListener("astro:page-load", setup);
+</script>
+
 </Layout>
