@@ -1,66 +1,145 @@
 ---
+import { Icon } from 'astro-icon/components';
 ---
 
-<section id="scene-stack" class="relative bg-background border-t border-border py-24 md:py-40">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-24 stack-header">
-      <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
-        The paradigm has shifted
-      </h2>
-      <p class="text-xl text-muted-foreground font-light max-w-2xl mx-auto">
-        Search is no longer just about Google, SEO, and your website. The AI Search Stack relies on retrieval, reasoning, citation, and recommendation.
-      </p>
-    </div>
+<section id="scene-how-it-works" class="relative bg-background border-t border-border py-32 overflow-hidden">
+  
+  <!-- Interactive Dot Distortion Background -->
+  <canvas
+    id="dot-distortion-canvas-2"
+    class="absolute inset-0 z-0 pointer-events-none opacity-30 dark:opacity-40 mix-blend-screen"
+  ></canvas>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,var(--background)_100%)] z-0 pointer-events-none"></div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 max-w-5xl mx-auto">
-      
-      <!-- Legacy Stack -->
-      <div class="flex flex-col items-center">
-        <div class="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-12">Legacy Search</div>
-        
-        <div class="stack-item-legacy flex flex-col items-center opacity-0 transform translate-y-8">
-          <div class="text-xl font-medium text-foreground">Google</div>
-          <div class="w-px h-12 bg-border my-4"></div>
-        </div>
-        
-        <div class="stack-item-legacy flex flex-col items-center opacity-0 transform translate-y-8">
-          <div class="text-xl font-medium text-foreground">SEO</div>
-          <div class="w-px h-12 bg-border my-4"></div>
-        </div>
-        
-        <div class="stack-item-legacy flex flex-col items-center opacity-0 transform translate-y-8">
-          <div class="text-xl font-medium text-foreground">Website</div>
-        </div>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-40">
+
+    <!-- 1. Visibility Layers (3-step stack) -->
+    <div class="visibility-layers-section relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
+          How PhantomRank measures AI search visibility
+        </h2>
+        <p class="text-xl text-muted-foreground font-light max-w-3xl mx-auto">
+          Classic SEO tracks blue links. AI search visibility is different — it's about whether AI mentions you, cites you, or quietly chooses someone else. PhantomRank's Brand-level AI Visibility Tracker breaks that behavior into three layers:
+        </p>
       </div>
 
-      <!-- Divider for mobile -->
-      <div class="w-full h-px bg-border md:hidden"></div>
-
-      <!-- AI Stack -->
-      <div class="flex flex-col items-center">
-        <div class="text-sm font-medium text-primary uppercase tracking-widest mb-12">The AI Stack</div>
-        
-        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
-          <div class="text-xl font-medium text-foreground">Retrieval</div>
-          <div class="w-px h-12 bg-primary/30 my-4"></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <!-- Card 1 -->
+        <div class="layer-card bg-card border border-border rounded-2xl p-8 opacity-0 transform translate-y-8 hover:border-primary/50 transition-colors shadow-sm">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-primary">
+            <Icon name="lucide:eye" class="w-6 h-6" />
+          </div>
+          <h3 class="text-xl font-medium text-foreground mb-3">Mentions</h3>
+          <p class="text-muted-foreground font-light">AI answers where your brand is named.</p>
         </div>
-        
-        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
-          <div class="text-xl font-medium text-foreground">Reasoning</div>
-          <div class="w-px h-12 bg-primary/30 my-4"></div>
+        <!-- Card 2 -->
+        <div class="layer-card bg-card border border-border rounded-2xl p-8 opacity-0 transform translate-y-8 hover:border-primary/50 transition-colors shadow-sm">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-primary">
+            <Icon name="lucide:link" class="w-6 h-6" />
+          </div>
+          <h3 class="text-xl font-medium text-foreground mb-3">Citations</h3>
+          <p class="text-muted-foreground font-light">Answers where your domain is actually linked as a source.</p>
         </div>
-        
-        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
-          <div class="text-xl font-medium text-foreground">Citation</div>
-          <div class="w-px h-12 bg-primary/30 my-4"></div>
-        </div>
-        
-        <div class="stack-item-ai flex flex-col items-center opacity-0 transform translate-y-8">
-          <div class="text-xl font-bold text-foreground">Recommendation</div>
+        <!-- Card 3 -->
+        <div class="layer-card bg-card border border-border rounded-2xl p-8 opacity-0 transform translate-y-8 hover:border-primary/50 transition-colors shadow-sm">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6 text-primary">
+            <Icon name="lucide:link-2-off" class="w-6 h-6" />
+          </div>
+          <h3 class="text-xl font-medium text-foreground mb-3">Crawl pool</h3>
+          <p class="text-muted-foreground font-light">Answers where AI crawled your page, read it, and still cited a competitor instead. This is the gap most tools miss entirely.</p>
         </div>
       </div>
-
     </div>
+
+    <!-- 2. Competitive AI visibility (Metrics grid) -->
+    <div class="competitive-visibility-section relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
+          Competitive AI visibility in your category
+        </h2>
+        <p class="text-xl text-muted-foreground font-light max-w-3xl mx-auto">
+          Use Industry Metrics to audit your niche and see who AI assistants call Leaders, Challengers, and Niche players — then overlay your Brand-level AI Visibility Tracker to see exactly where you're ahead or behind.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div class="metric-card bg-card/30 border border-border rounded-2xl p-8 text-center opacity-0 scale-95 hover:bg-card transition-colors">
+          <div class="text-4xl font-light text-primary mb-4 pb-4 border-b border-border/50 inline-block px-4">AI SoV</div>
+          <h3 class="text-lg font-medium text-foreground mb-2">AI Share of Voice</h3>
+          <p class="text-sm text-muted-foreground">Who gets mentioned most.</p>
+        </div>
+        <div class="metric-card bg-card/30 border border-border rounded-2xl p-8 text-center opacity-0 scale-95 hover:bg-card transition-colors">
+          <div class="text-4xl font-light text-primary mb-4 pb-4 border-b border-border/50 inline-block px-4">SoS</div>
+          <h3 class="text-lg font-medium text-foreground mb-2">Share of Synthesis</h3>
+          <p class="text-sm text-muted-foreground">Who gets cited as a primary source, not just named.</p>
+        </div>
+        <div class="metric-card bg-card/30 border border-border rounded-2xl p-8 text-center opacity-0 scale-95 hover:bg-card transition-colors">
+          <div class="text-4xl font-light text-primary mb-4 pb-4 border-b border-border/50 inline-block px-4">P&S</div>
+          <h3 class="text-lg font-medium text-foreground mb-2">Answer Placement & Sentiment</h3>
+          <p class="text-sm text-muted-foreground">How prominently, and how positively, AI describes each brand.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Multi-engine workflow (Horizontal Timeline) -->
+    <div class="multi-engine-section relative z-10">
+      <div class="text-center mb-20">
+        <h2 class="text-3xl md:text-4xl font-medium tracking-tight text-foreground mb-6">
+          Multi-engine AI visibility, one workflow
+        </h2>
+        <p class="text-lg text-muted-foreground font-light max-w-4xl mx-auto">
+          PhantomRank runs conversational, buyer-journey prompts across ChatGPT, Gemini, Claude, Grok, and Perplexity simultaneously — same prompts, same time window, so the comparison is fair. It logs every answer, citation, and crawl-pool result, then uses vector math (semantic resonance) to check how closely those answers match your brand's actual positioning.
+        </p>
+      </div>
+
+      <div class="relative max-w-5xl mx-auto">
+        <!-- Connecting Line (Desktop) -->
+        <div class="hidden md:block absolute top-6 left-[12.5%] right-[12.5%] h-[2px] bg-border z-0"></div>
+        <div class="hidden md:block timeline-progress absolute top-6 left-[12.5%] h-[2px] bg-primary z-0 w-0"></div>
+
+        <!-- Connecting Line (Mobile) -->
+        <div class="md:hidden absolute left-6 top-6 bottom-6 w-[2px] bg-border z-0"></div>
+        <div class="md:hidden timeline-progress-mobile absolute left-6 top-6 w-[2px] bg-primary z-0 h-0"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6 relative z-10">
+          
+          <div class="timeline-step flex md:flex-col items-start md:items-center text-left md:text-center opacity-0 transform translate-y-8">
+            <div class="w-12 h-12 shrink-0 rounded-full bg-background border-2 border-primary text-primary flex items-center justify-center font-medium text-lg mb-0 md:mb-6 shadow-[0_0_15px_rgba(var(--primary),0.2)]">1</div>
+            <div class="ml-6 md:ml-0">
+              <h4 class="text-base font-medium text-foreground mb-2">Run buyer-journey prompts</h4>
+              <p class="text-sm text-muted-foreground font-light">ToFu, MoFu, and BoFu questions across multiple AI engines at once.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-step flex md:flex-col items-start md:items-center text-left md:text-center opacity-0 transform translate-y-8">
+            <div class="w-12 h-12 shrink-0 rounded-full bg-background border-2 border-primary text-primary flex items-center justify-center font-medium text-lg mb-0 md:mb-6 shadow-[0_0_15px_rgba(var(--primary),0.2)]">2</div>
+            <div class="ml-6 md:ml-0">
+              <h4 class="text-base font-medium text-foreground mb-2">Log answers, citations, crawl pool</h4>
+              <p class="text-sm text-muted-foreground font-light">Capture what AI says, which domains it links, and which pages it quietly crawls.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-step flex md:flex-col items-start md:items-center text-left md:text-center opacity-0 transform translate-y-8">
+            <div class="w-12 h-12 shrink-0 rounded-full bg-background border-2 border-primary text-primary flex items-center justify-center font-medium text-lg mb-0 md:mb-6 shadow-[0_0_15px_rgba(var(--primary),0.2)]">3</div>
+            <div class="ml-6 md:ml-0">
+              <h4 class="text-base font-medium text-foreground mb-2">Compute semantic resonance</h4>
+              <p class="text-sm text-muted-foreground font-light">Use vector math to compare AI descriptions against your brand DNA.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-step flex md:flex-col items-start md:items-center text-left md:text-center opacity-0 transform translate-y-8">
+            <div class="w-12 h-12 shrink-0 rounded-full bg-background border-2 border-primary text-primary flex items-center justify-center font-medium text-lg mb-0 md:mb-6 shadow-[0_0_15px_rgba(var(--primary),0.2)]">4</div>
+            <div class="ml-6 md:ml-0">
+              <h4 class="text-base font-medium text-foreground mb-2">Compare brands fairly</h4>
+              <p class="text-sm text-muted-foreground font-light">Same prompts, same time window, so you and your competitors are measured on identical runs.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -70,16 +149,204 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const tl = gsap.timeline({
+  // 1. Visibility Layers GSAP
+  gsap.to(".layer-card", {
+    y: 0,
+    opacity: 1,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: "power2.out",
     scrollTrigger: {
-      trigger: "#scene-stack",
-      start: "top 60%",
-      end: "center center",
-      scrub: false,
+      trigger: ".visibility-layers-section",
+      start: "top 75%",
+      toggleActions: "play none none reverse",
     }
   });
 
-  tl.fromTo(".stack-header", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" })
-    .to(".stack-item-legacy", { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" })
-    .to(".stack-item-ai", { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" }, "-=0.4");
+  // 2. Metrics Grid GSAP
+  gsap.to(".metric-card", {
+    scale: 1,
+    opacity: 1,
+    duration: 0.6,
+    stagger: 0.15,
+    ease: "back.out(1.5)",
+    scrollTrigger: {
+      trigger: ".competitive-visibility-section",
+      start: "top 75%",
+      toggleActions: "play none none reverse",
+    }
+  });
+
+  // 3. Horizontal Timeline GSAP
+  const timelineTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".multi-engine-section",
+      start: "top 75%",
+      toggleActions: "play none none reverse",
+    }
+  });
+
+  timelineTl.to(".timeline-step", {
+    y: 0,
+    opacity: 1,
+    duration: 0.6,
+    stagger: 0.2,
+    ease: "power2.out"
+  }, 0)
+  
+  // Desktop line animation
+  ScrollTrigger.matchMedia({
+    "(min-width: 768px)": function() {
+      gsap.to(".timeline-progress", {
+        width: "75%", 
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".multi-engine-section",
+          start: "center 80%",
+          end: "bottom 80%",
+          scrub: true,
+        }
+      });
+    },
+    // Mobile line animation
+    "(max-width: 767px)": function() {
+      gsap.to(".timeline-progress-mobile", {
+        height: "100%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".multi-engine-section",
+          start: "top center",
+          end: "bottom center",
+          scrub: true,
+        }
+      });
+    }
+  });
+
+  // --- Dot Distortion Canvas Effect ---
+  const initCanvas = () => {
+    const canvas = document.getElementById("dot-distortion-canvas-2") as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    const section = document.getElementById("scene-how-it-works");
+    if (!section) return;
+
+    let width = 0;
+    let height = 0;
+    let dots: { baseX: number; baseY: number; x: number; y: number }[] = [];
+
+    // Configuration
+    const spacing = 22; // Space between dots
+    const radius = 1.2; // Size of dots
+    const mouseRadius = 150; // How far the mouse repels
+    const repelForce = 35; // How strongly dots are pushed
+
+    let mouse = { x: -1000, y: -1000 };
+    let animationFrameId: number;
+
+    const createDots = () => {
+      dots = [];
+      const rows = Math.ceil(height / spacing) + 1;
+      const cols = Math.ceil(width / spacing) + 1;
+
+      const offsetX = (width - (cols - 1) * spacing) / 2;
+      const offsetY = (height - (rows - 1) * spacing) / 2;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const x = offsetX + c * spacing;
+          const y = offsetY + r * spacing;
+          dots.push({ baseX: x, baseY: y, x, y });
+        }
+      }
+    };
+
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      width = section.clientWidth;
+      height = section.clientHeight;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.scale(dpr, dpr);
+      createDots();
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = section.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(59, 130, 246, 0.4)"; // Slightly more subtle than hero
+
+      const time = performance.now() * 0.001;
+
+      for (let i = 0; i < dots.length; i++) {
+        const dot = dots[i];
+        const dx = mouse.x - dot.baseX;
+        const dy = mouse.y - dot.baseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        let targetX = dot.baseX;
+        let targetY = dot.baseY;
+
+        targetX += Math.sin(time + dot.baseX * 0.01) * 2;
+        targetY += Math.cos(time + dot.baseY * 0.01) * 2;
+
+        if (dist < mouseRadius) {
+          const force = (mouseRadius - dist) / mouseRadius;
+          const angle = Math.atan2(dy, dx);
+          targetX -= Math.cos(angle) * force * repelForce;
+          targetY -= Math.sin(angle) * force * repelForce;
+        }
+
+        dot.x += (targetX - dot.x) * 0.15;
+        dot.y += (targetY - dot.y) * 0.15;
+
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener("resize", resize);
+    section.addEventListener("mousemove", handleMouseMove);
+    section.addEventListener("mouseleave", handleMouseLeave);
+
+    resize();
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      section.removeEventListener("mousemove", handleMouseMove);
+      section.removeEventListener("mouseleave", handleMouseLeave);
+      cancelAnimationFrame(animationFrameId);
+    };
+  };
+
+  let cleanupCanvas2: (() => void) | undefined;
+  
+  const setupCanvas2 = () => {
+    if (cleanupCanvas2) cleanupCanvas2();
+    cleanupCanvas2 = initCanvas();
+  };
+
+  setupCanvas2();
+  document.addEventListener("astro:page-load", setupCanvas2);
 </script>

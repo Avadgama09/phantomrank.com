@@ -5,12 +5,13 @@
   <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
     
     <div class="cta-content opacity-0 transform translate-y-8">
-      <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-foreground mb-8 leading-tight">
-        Start tracking your <span class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">AI visibility</span> today
+      <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-foreground mb-8 leading-tight flex flex-col md:block items-center justify-center">
+        <span class="block">Stop guessing what</span>
+        <span class="block"><span id="ai-word-cycler" class="inline-block text-center md:text-left bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">ChatGPT</span> says about you.</span>
       </h2>
       
       <p class="text-xl text-muted-foreground font-light mb-12 max-w-2xl mx-auto">
-        PhantomRank shows how AI assistants and search engines talk about your brand.
+        PhantomRank gives you the diagnostics, competitor benchmarks, and concrete content strategy to build visibility where your next buyers are actually looking.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -18,13 +19,13 @@
           href="/signup"
           class="inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-background bg-foreground hover:bg-foreground/90 transition-colors rounded-full"
         >
-          Get Access
+          Get a demo
         </a>
         <a
           href="/contact"
           class="inline-flex items-center justify-center px-8 py-4 text-sm font-medium text-foreground bg-transparent border border-border hover:bg-muted/50 transition-colors rounded-full"
         >
-          See Use Cases
+          Explore pricing
         </a>
       </div>
     </div>
@@ -49,4 +50,33 @@
       toggleActions: "play none none reverse",
     }
   });
+
+  // Word Cycler
+  const engines = ["ChatGPT", "Perplexity", "Gemini", "Claude", "Grok", "Moonshot AI", "Nemotron"];
+  let currentIndex = 0;
+  const cycler = document.getElementById("ai-word-cycler");
+
+  function cycleWord() {
+    gsap.to(cycler, {
+      opacity: 0,
+      y: -15,
+      duration: 0.4,
+      delay: 2.5,
+      ease: "power2.in",
+      onComplete: () => {
+        currentIndex = (currentIndex + 1) % engines.length;
+        if (cycler) {
+          cycler.innerText = engines[currentIndex];
+        }
+        gsap.fromTo(cycler, 
+          { opacity: 0, y: 15 }, 
+          { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", onComplete: cycleWord }
+        );
+      }
+    });
+  }
+
+  if (cycler) {
+    gsap.delayedCall(1, cycleWord);
+  }
 </script>

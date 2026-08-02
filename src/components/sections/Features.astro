@@ -3,6 +3,13 @@
 
 <section id="scene-reveal" class="relative bg-background border-t border-border pt-32 pb-48 overflow-hidden">
   
+  <!-- Interactive Dot Distortion Background -->
+  <canvas
+    id="dot-distortion-canvas-3"
+    class="absolute inset-0 z-0 pointer-events-none opacity-30 dark:opacity-40 mix-blend-screen"
+  ></canvas>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,var(--background)_100%)] z-0 pointer-events-none"></div>
+
   <div class="text-center mb-16 relative z-20">
     <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
       From observation to intervention
@@ -56,18 +63,68 @@
     <div class="capability flex flex-col md:flex-row items-center gap-16">
       <div class="md:w-1/2">
         <h3 class="text-3xl font-medium text-foreground mb-4">See how AIs talk about you</h3>
-        <p class="text-lg text-muted-foreground font-light mb-8">We run your category queries across ChatGPT, Gemini, Claude, Grok, and Perplexity, covering real buyer intents. Then we collapse noisy answers into clear states — absent, mentioned, recommended, or endorsed.</p>
+        <p class="text-lg text-muted-foreground font-light mb-8">See your visibility layers at a glance: mentions, citations, crawl-pool gaps, and your semantic resonance score — for one brand, across five AI engines.</p>
       </div>
-      <div class="md:w-1/2 relative h-80 w-full bg-muted/20 rounded-2xl border border-border overflow-hidden citation-viz">
+      <div class="md:w-1/2 relative h-[500px] w-full bg-muted/20 rounded-2xl border border-border overflow-hidden citation-viz">
+        
+        <!-- Connection Lines -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <style>
+            .connection-line {
+              stroke: hsl(var(--primary) / 0.4);
+              stroke-width: 1.5;
+              stroke-dasharray: 6 6;
+              animation: flow 20s linear infinite;
+              opacity: 0;
+            }
+            @keyframes flow {
+              to { stroke-dashoffset: -200; }
+            }
+          </style>
+          <line x1="50%" y1="50%" x2="50%" y2="15%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="73%" y2="23%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="84%" y2="44%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="80%" y2="68%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="62%" y2="83%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="38%" y2="83%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="20%" y2="68%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="16%" y2="44%" class="connection-line" />
+          <line x1="50%" y1="50%" x2="27%" y2="23%" class="connection-line" />
+        </svg>
+
         <!-- Interactive citations flying in -->
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div class="w-24 h-24 rounded-full bg-background border border-border flex items-center justify-center z-10 shadow-lg">
+        <div class="absolute inset-0 pointer-events-none">
+          <div class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-background border border-border flex items-center justify-center z-20 shadow-[0_0_30px_rgba(var(--primary),0.15)] font-medium text-foreground">
             Brand
           </div>
-          <div class="citation-node absolute top-[20%] left-[20%] bg-card text-xs px-3 py-1 rounded-full border border-border opacity-0">Reddit</div>
-          <div class="citation-node absolute bottom-[20%] left-[30%] bg-card text-xs px-3 py-1 rounded-full border border-border opacity-0">Forbes</div>
-          <div class="citation-node absolute top-[30%] right-[20%] bg-card text-xs px-3 py-1 rounded-full border border-border opacity-0">G2</div>
-          <div class="citation-node absolute bottom-[30%] right-[25%] bg-card text-xs px-3 py-1 rounded-full border border-border opacity-0">TechCrunch</div>
+          
+          <div class="citation-node absolute top-[15%] left-[50%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Twitterlogo.svg" alt="Twitter" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[23%] left-[73%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/G2Reviewlogo.svg" alt="G2 Review" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[44%] left-[84%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Instagramlogo.svg" alt="Instagram" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[68%] left-[80%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Metalogo.svg" alt="Meta" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[83%] left-[62%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Quoralogo.svg" alt="Quora" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[83%] left-[38%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Redditlogo.svg" alt="Reddit" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[68%] left-[20%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Sourceforgelogo.svg" alt="Sourceforge" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[44%] left-[16%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Threadslogo.svg" alt="Threads" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
+          <div class="citation-node absolute top-[23%] left-[27%] bg-card p-3 rounded-full border border-border opacity-0 shadow-sm flex items-center justify-center z-10">
+            <img src="/images/Logo/Facebooklogo.svg" alt="Facebook" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+          </div>
         </div>
       </div>
     </div>
@@ -76,7 +133,7 @@
     <div class="capability flex flex-col md:flex-row-reverse items-center gap-16">
       <div class="md:w-1/2">
         <h3 class="text-3xl font-medium text-foreground mb-4">See where you're winning or losing</h3>
-        <p class="text-lg text-muted-foreground font-light mb-8">We measure your AI Share of Voice, Share of Synthesis, and Answer Placement Score against 15-20 competitors. Each audit surfaces the buying criteria AIs actually use and 5 concrete information gaps.</p>
+        <p class="text-lg text-muted-foreground font-light mb-8">A live leaderboard of your category: AI Share of Voice, Share of Synthesis, and Answer Placement, benchmarked against 15–20 competitors.</p>
       </div>
       <div class="md:w-1/2 relative w-full bg-muted/20 rounded-2xl border border-border p-8 leaderboard-viz">
         <div class="space-y-4">
@@ -100,7 +157,7 @@
     <div class="capability flex flex-col md:flex-row items-center gap-16">
       <div class="md:w-1/2">
         <h3 class="text-3xl font-medium text-foreground mb-4">See where to intervene upstream</h3>
-        <p class="text-lg text-muted-foreground font-light mb-8">We trace which domains AIs rely on in your category. You get a clear upstream playbook: which sites to win as citations, which communities to seed, and which proof assets to ship first.</p>
+        <p class="text-lg text-muted-foreground font-light mb-8">Information gaps turned into a content calendar — the exact topics AI is currently answering badly, ranked by opportunity.</p>
       </div>
       <div class="md:w-1/2 relative h-80 w-full bg-muted/20 rounded-2xl border border-border p-8 overflow-hidden threads-viz">
         <div class="thread bg-background border border-border p-4 rounded-lg mb-4 transform translate-y-8 opacity-0 shadow-sm">
@@ -163,7 +220,7 @@
       opacity: 1,
       x: 0,
       y: 0,
-      duration: 1,
+      duration: 1.2,
       ease: "elastic.out(1, 0.5)",
       scrollTrigger: {
         trigger: ".citation-viz",
@@ -172,8 +229,25 @@
       }
     });
   });
+
+  gsap.to(".connection-line", {
+    opacity: 1,
+    duration: 1,
+    stagger: 0.1,
+    scrollTrigger: {
+      trigger: ".citation-viz",
+      start: "top 70%",
+      toggleActions: "play none none reverse",
+    }
+  });
+
   // Setup initial state for citations randomly outwards
-  gsap.set(".citation-node", { x: () => gsap.utils.random(-100, 100), y: () => gsap.utils.random(-100, 100) });
+  gsap.set(".citation-node", { 
+    x: () => gsap.utils.random(-150, 150), 
+    y: () => gsap.utils.random(-150, 150),
+    xPercent: -50,
+    yPercent: -50
+  });
 
   // 3. Leaderboard Viz
   gsap.to(".lb-row", {
@@ -202,4 +276,131 @@
       toggleActions: "play none none reverse",
     }
   });
+
+  // --- Dot Distortion Canvas Effect ---
+  const initCanvas = () => {
+    const canvas = document.getElementById("dot-distortion-canvas-3") as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
+    const section = document.getElementById("scene-reveal");
+    if (!section) return;
+
+    let width = 0;
+    let height = 0;
+    let dots: { baseX: number; baseY: number; x: number; y: number }[] = [];
+
+    // Configuration
+    const spacing = 22; // Space between dots
+    const radius = 1.2; // Size of dots
+    const mouseRadius = 150; // How far the mouse repels
+    const repelForce = 35; // How strongly dots are pushed
+
+    let mouse = { x: -1000, y: -1000 };
+    let animationFrameId: number;
+
+    const createDots = () => {
+      dots = [];
+      const rows = Math.ceil(height / spacing) + 1;
+      const cols = Math.ceil(width / spacing) + 1;
+
+      const offsetX = (width - (cols - 1) * spacing) / 2;
+      const offsetY = (height - (rows - 1) * spacing) / 2;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const x = offsetX + c * spacing;
+          const y = offsetY + r * spacing;
+          dots.push({ baseX: x, baseY: y, x, y });
+        }
+      }
+    };
+
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      width = section.clientWidth;
+      height = section.clientHeight;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.scale(dpr, dpr);
+      createDots();
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = section.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(59, 130, 246, 0.4)"; 
+
+      const time = performance.now() * 0.001;
+
+      for (let i = 0; i < dots.length; i++) {
+        const dot = dots[i];
+        const dx = mouse.x - dot.baseX;
+        const dy = mouse.y - dot.baseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        let targetX = dot.baseX;
+        let targetY = dot.baseY;
+
+        targetX += Math.sin(time + dot.baseX * 0.01) * 2;
+        targetY += Math.cos(time + dot.baseY * 0.01) * 2;
+
+        if (dist < mouseRadius) {
+          const force = (mouseRadius - dist) / mouseRadius;
+          const angle = Math.atan2(dy, dx);
+          targetX -= Math.cos(angle) * force * repelForce;
+          targetY -= Math.sin(angle) * force * repelForce;
+        }
+
+        dot.x += (targetX - dot.x) * 0.15;
+        dot.y += (targetY - dot.y) * 0.15;
+
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener("resize", resize);
+    section.addEventListener("mousemove", handleMouseMove);
+    section.addEventListener("mouseleave", handleMouseLeave);
+
+    resize();
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      section.removeEventListener("mousemove", handleMouseMove);
+      section.removeEventListener("mouseleave", handleMouseLeave);
+      cancelAnimationFrame(animationFrameId);
+    };
+  };
+
+  let cleanupCanvas3: (() => void) | undefined;
+  
+  const setupCanvas3 = () => {
+    if (cleanupCanvas3) cleanupCanvas3();
+    cleanupCanvas3 = initCanvas();
+  };
+
+  setupCanvas3();
+  document.addEventListener("astro:page-load", setupCanvas3);
 </script>

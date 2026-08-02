@@ -1,126 +1,374 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import FeatureDetail from "../../components/sections/FeatureDetail.astro";
 import CTA from "../../components/sections/CTA.astro";
 import FAQ from "../../components/sections/FAQ.astro";
 import { features } from "../../utils/features";
+import { Icon } from "astro-icon/components";
+import DotBackground from "../../components/ui/DotBackground.astro";
 
 const feature = features.find((f) => f.slug === "gso")!;
 
 const insight =
-  "Fixing your own content and beating direct competitors is only half the story. In every industry, AI assistants lean on a wider supply chain of information — regulators, media, review sites, directories, marketplaces, and communities like Reddit — to decide what’s true and who to trust. PhantomRank’s Generative Supply Chain Optimisation (GSO) shows which upstream domains actually shape AI’s view of your vertical, how attractive and risky the sector looks through AI’s eyes, and where your brand needs to show up to move future answers in your favour.";
+  "Fixing your own content is only half the story. AI assistants lean on a wide supply chain of information — regulators, media, review sites, directories, and communities like Reddit. GSO shows which upstream domains shape AI’s view of your vertical and where your brand needs to show up.";
 
 const outputs = [
-  "Visibility Block report summarising competitive tiers, rising and declining brands, key differentiation axes, and common myths or misconceptions AI repeats about your vertical.",
-  "Sources Block map that traces the digital research journey for the sector — which domain types (regulator sites, review platforms, industry media, marketplaces, communities, company sites) AI relies on most, and how that mix changes across topics.",
-  "Perception Block analysis that feeds AI’s sector knowledge into familiar strategy frameworks like PESTEL, Porter’s Five Forces, and basic unit‑economics/risk views, so you see how AI perceives the maturity, attractiveness, and risk profile of the market.",
-  "Source Domain Share dashboard showing the percentage of citations coming from each domain type (government/regulator, media, review sites, directories, marketplaces, communities, company sites) for a given industry cluster.",
-  "Industry Maturity, Attractiveness, Optimism, and Dominant Risk ratings — simple enums backed by heuristic classifiers that translate qualitative AI text into structured signals.",
-  "Upstream Playbook highlighting the specific channels to prioritise (e.g., Reddit threads, regulator documentation, high‑trust review sites, specialist directories) if you want to change how AI answers future questions in that vertical.",
-  "Myths & Misconceptions list where AI is currently wrong, vague, or oversimplified about the industry, giving you ready‑made angles for thought‑leadership and educational content.",
-  "Exportable GSO audit package — CSV tables for source shares and brand tiers, plus JSON for full block‑level data that you can plug into internal strategy docs or dashboards.",
+  { title: "Visibility Block", desc: "Competitive tiers, rising brands, differentiation axes, and common myths AI repeats." },
+  { title: "Sources Block", desc: "Map of domain types (regulator, media, reviews, communities) AI relies on most." },
+  { title: "Perception Block", desc: "Maps AI’s sector knowledge into PESTEL and Porter’s Five Forces frameworks." },
+  { title: "Source Domain Share", desc: "Percentage of citations coming from each domain type in a given cluster." },
+  { title: "Industry Labels", desc: "Structured enums for Maturity, Attractiveness, Optimism, and Dominant Risk." },
+  { title: "Upstream Playbook", desc: "Targeted channels (e.g., Reddit, high‑trust review sites) to influence first." },
+  { title: "Myths & Misconceptions", desc: "Topics where AI is currently wrong, vague, or oversimplified about the industry." },
+  { title: "Exportable Audits", desc: "CSV for source shares and JSON for full block‑level data." },
 ];
 
 const howItWorks = [
-  "Choose an Industry Cluster — Start by selecting a predefined cluster that matches your focus area, such as UPI Consumer Payments (India), Retail Personal Banking, SaaS CRM, or Multi‑specialty Hospitals. These clusters come with tuned prompts that reflect how buyers and regulators actually talk about those sectors.",
-  "Run the 3 GSO Blocks — PhantomRank executes a 24‑prompt catalogue across three blocks: Visibility (10 prompts), Sources (6 prompts), and Perception (8 prompts). Instead of asking one generic question, it probes the vertical from multiple angles — competitive tiers, research surfaces, regulatory context, risks, and economic signals.",
-  "Parse Sources & Domains — As AI answers each prompt, GSO parses every cited URL and classifies it into domain types using pattern matching (e.g., gov/regulator, media, review, directory, marketplace, community, company). This builds a Source Domain Share view that shows exactly which surfaces AI leans on to “understand” the sector.",
-  "Apply Heuristic Classifiers — GSO applies standardised parsers to AI’s narrative responses and converts them into structured enums: Industry Maturity (Emerging/Growth/Mature/Declining), Industry Attractiveness (High/Medium/Low), AI Optimism (Positive/Neutral/Negative), and Dominant Risk Type (Regulation/Tech/Macro/Customer/Operational).",
-  "Synthesize the Upstream Map — The system then combines the Visibility findings (tiers, rising/declining brands, differentiation axes, common myths) with the Sources and Perception data. The result is an upstream map: which domains drive AI’s understanding, which narratives are entrenched, and where the biggest leverage points sit.",
-  "Deliver the GSO Report — Finally, GSO presents the analysis in a structured report: block‑level summaries, domain share charts, framework‑based perception views, and a plain‑language Upstream Playbook. You can export the underlying data to CSV/JSON or turn key findings into campaigns, PR plans, and content briefs.",
+  { title: "Choose a Cluster", desc: "Select a predefined cluster (e.g., SaaS CRM, Retail Banking) tuned with sector-specific prompts." },
+  { title: "Run the Blocks", desc: "Executes 24 prompts across Visibility, Sources, and Perception blocks." },
+  { title: "Parse Sources", desc: "Classifies every cited URL into domain types (gov, media, review, community, etc.)." },
+  { title: "Apply Classifiers", desc: "Converts AI’s narrative into structured enums like Maturity, Risk, and Attractiveness." },
+  { title: "Synthesize Map", desc: "Combines Visibility findings with Sources to build the upstream map of the sector." },
+  { title: "Deliver Report", desc: "Presents block summaries, domain share charts, and a plain-language Upstream Playbook." },
 ];
 
 const useCases = [
-  {
-    scenario: "Designing an AI‑era channel strategy",
-    outcome:
-      "Use GSO to see which surfaces actually influence AI answers in your vertical — regulator portals vs review sites vs Reddit threads. Shift budget and effort towards the domains that dominate Source Domain Share instead of assuming that blog posts alone will move the needle.",
-  },
-  {
-    scenario: "Planning thought‑leadership and PR campaigns",
-    outcome:
-      "Mine the Myths & Misconceptions and Perception blocks to find where AI is currently confused or outdated about your sector. Build campaigns and long‑form content that correct those narratives on the exact domains AI relies on, turning your brand into a primary reference over time.",
-  },
-  {
-    scenario: "Supporting C‑level and board‑level strategy",
-    outcome:
-      "Bring an AI‑first view of the market into leadership discussions: how mature the industry looks, how attractive AI thinks it is, what risks dominate, and which brands it sees as rising. Use this to stress‑test expansion plans, new product ideas, or repositioning work.",
-  },
-  {
-    scenario: "Aligning SEO, content, and comms around AI",
-    outcome:
-      "Instead of separate teams guessing at what to do, use GSO’s upstream map to align everyone. SEO sees which domains to earn links from, content sees which frameworks and topics to explore, and comms sees which regulators and media outlets matter most for AI’s knowledge graph.",
-  },
-  {
-    scenario: "Choosing where to intervene first",
-    outcome:
-      "Combine Industry Metrics and GSO: run an Industry Metrics audit for your niche, then overlay GSO’s Source Domain Share and risk views. This tells you not just where your brand is weak, but where the sector’s information supply chain is weak — and which interventions could move both AI perception and real‑world demand.",
-  },
-  {
-    scenario: "Market‑entry and new‑vertical scouting",
-    outcome:
-      "Before entering a new vertical or geography, run GSO to understand how AI currently sees that sector. If AI’s view is pessimistic, highly regulated, or dominated by entrenched brands, you can adjust expectations and strategy long before you spend heavily on campaigns.",
-  },
+  { scenario: "Designing a channel strategy", outcome: "Shift budget towards the domain types (like reviews or Reddit) that dominate Source Domain Share." },
+  { scenario: "Planning PR campaigns", outcome: "Build campaigns that correct Myths & Misconceptions on the exact domains AI relies on." },
+  { scenario: "Supporting C-level strategy", outcome: "Bring an AI‑first view of market maturity, attractiveness, and dominant risks to the board." },
+  { scenario: "Aligning cross-functional teams", outcome: "SEO, Content, and Comms teams finally share the same upstream roadmap for AI influence." },
+  { scenario: "Choosing interventions", outcome: "Combine with Industry Metrics to see both where your brand is weak, and where the sector’s supply chain is weak." },
+  { scenario: "Market‑entry scouting", outcome: "Run GSO before entering a vertical to see if AI's view of the market is pessimistic or heavily regulated." },
 ];
 
 const includes = [
-  "Predefined industry clusters for key verticals (e.g., payments, retail banking, SaaS, healthcare), with domain‑specific prompt catalogues.",
-  "24‑prompt GSO catalogue split across three analytical blocks: 10 Visibility prompts, 6 Sources prompts, and 8 Perception prompts.",
-  "Source Domain classification into gov/regulator, media, review, directory, marketplace, community, and company site categories.",
-  "Source Domain Share metrics showing percentage of citations per domain type for the selected cluster.",
-  "Heuristic classifiers that convert qualitative AI text into structured enums for Industry Maturity, Industry Attractiveness, AI Optimism, and Dominant Risk Type.",
-  "Visibility Block outputs covering competitive tiers, rising/declining brands, differentiation axes, and recurring myths or misconceptions.",
-  "Perception Block outputs that map AI’s narrative into PESTEL, Porter’s Five Forces, and basic unit‑economics/risk views.",
-  "Upstream Playbook recommendations summarising which domains and narratives to influence first if you want to change future AI answers.",
-  "CSV export for key tables (Source Domain Share, brand tiers, myth lists) and JSON export for full block‑level GSO data.",
-  "Compatibility with AI Visibility and Industry Metrics audits, so you can use GSO as the upstream lens on the same sector.",
+  "Predefined industry clusters for key verticals",
+  "24‑prompt catalogue (Visibility, Sources, Perception)",
+  "Source Domain classification into 7 distinct categories",
+  "Source Domain Share percentage metrics",
+  "Heuristic classifiers for qualitative AI text into enums",
+  "PESTEL and Porter’s Five Forces mappings",
+  "Upstream Playbook recommendations",
+  "Export to CSV/JSON",
 ];
 
 const faqs = [
-  {
-    question: "What does Generative Supply Chain Optimisation actually do?",
-    answer: "GSO maps the digital “supply chain” of information that feeds AI models in your vertical. Instead of only looking at your own pages, PhantomRank runs a 24‑prompt catalog across Visibility, Sources, and Perception blocks to see which domains AI relies on—gov sites, media, reviews, marketplaces, communities like Reddit, and competitor sites—and how that mix shapes the way assistants talk about your industry."
-  },
-  {
-    question: "Why isn’t it enough to just optimise our own website for AI search?",
-    answer: "AI answers are built from many upstream sources at once: regulatory portals, news, review platforms, community threads, and competitor documentation. If 40% of citations in your cluster come from gov sites and 30% from Reddit, then polishing your blog alone won’t move the needle. GSO shows you that source domain share so you can decide where to seed expertise—whether that means better regulatory explainers, stronger presence in review sites, or participating in the right community threads."
-  },
-  {
-    question: "How does GSO tell us which external sites we should prioritise?",
-    answer: "For every industry cluster, GSO classifies cited URLs into domain types like gov, media, review, directory, marketplace, community, and company. It then calculates Source Domain Share—what percentage of the AI’s knowledge base comes from each type. If the data shows AI leaning heavily on one marketplace or a handful of review sites, you know exactly where to focus listings, partnerships, and content, instead of guessing across the entire internet."
-  },
-  {
-    question: "Can GSO help us understand whether a vertical is attractive or too risky to invest in?",
-    answer: "Yes. The Perception block runs structured prompts through PESTEL, Porter’s Five Forces, and unit economics lenses to infer industry maturity (emerging, growth, mature, declining), attractiveness (high, medium, low), AI optimism (positive, neutral, negative), and dominant risk type (regulation, tech, macro, customer, operational). That gives CMOs and founders an AI‑informed view of where the model sees opportunity or pressure before they commit budget."
-  },
-  {
-    question: "How is GSO different from the Industry Metrics feature?",
-    answer: "Industry Metrics is micro‑competitive: it compares your brand against 15–20 named competitors on share of voice, share of synthesis, and answer placement for buyer prompts. GSO is macro‑ecosystem: it looks at the entire information supply chain behind those answers—who the AI trusts, which domains it leans on, how it frames the vertical’s risks and maturity. Together, they show both who you compete with and which upstream sources you need to influence."
-  },
-  {
-    question: "What do we actually do with GSO outputs inside our existing SEO/content/PR work?",
-    answer: "GSO is designed as a planning brief, not a vanity chart. Teams use Source Domain Share to decide where to invest in content and relationships (for example, a specific regulator portal, a key review platform, or a community), and they use the Perception findings to pick themes—clarifying misunderstood risks, correcting myths, or publishing the explainer AI is currently missing. In practice, GSO becomes the AI feedback layer on top of your existing SEO, content, and PR planning."
-  }
+  { question: "What does Generative Supply Chain Optimisation actually do?", answer: "GSO maps the digital “supply chain” of information that feeds AI models in your vertical. Instead of only looking at your own pages, PhantomRank runs a 24‑prompt catalog across Visibility, Sources, and Perception blocks to see which domains AI relies on—gov sites, media, reviews, marketplaces, communities like Reddit, and competitor sites—and how that mix shapes the way assistants talk about your industry." },
+  { question: "Why isn’t it enough to just optimise our own website for AI search?", answer: "AI answers are built from many upstream sources at once. If 40% of citations in your cluster come from gov sites and 30% from Reddit, then polishing your blog alone won’t move the needle. GSO shows you that source domain share so you can decide where to seed expertise." },
+  { question: "How does GSO tell us which external sites we should prioritise?", answer: "For every industry cluster, GSO classifies cited URLs into domain types like gov, media, review, directory, marketplace, community, and company. It then calculates Source Domain Share—what percentage of the AI’s knowledge base comes from each type. If the data shows AI leaning heavily on one marketplace or a handful of review sites, you know exactly where to focus listings." },
+  { question: "Can GSO help us understand whether a vertical is attractive or too risky to invest in?", answer: "Yes. The Perception block runs structured prompts through PESTEL, Porter’s Five Forces, and unit economics lenses to infer industry maturity, attractiveness, AI optimism, and dominant risk type. That gives CMOs and founders an AI‑informed view of where the model sees opportunity or pressure before they commit budget." },
+  { question: "How is GSO different from the Industry Metrics feature?", answer: "Industry Metrics is micro‑competitive: it compares your brand against 15–20 named competitors. GSO is macro‑ecosystem: it looks at the entire information supply chain behind those answers—who the AI trusts, which domains it leans on, how it frames the vertical’s risks and maturity." },
+  { question: "What do we actually do with GSO outputs inside our existing SEO/content/PR work?", answer: "GSO is designed as a planning brief, not a vanity chart. Teams use Source Domain Share to decide where to invest in content and relationships, and they use the Perception findings to pick themes—clarifying misunderstood risks, correcting myths, or publishing the explainer AI is currently missing." }
+];
+
+const sourceMetrics = [
+  { name: "Source Domain Share", desc: "How much of AI’s citations come from gov, media, review platforms, directories, marketplaces, communities, and company sites.", icon: "lucide:pie-chart" },
+  { name: "Top Source Domains", desc: "The specific sites that appear again and again as sources in your vertical.", icon: "lucide:globe" },
+  { name: "Source Concentration", desc: "Whether AI relies on a few dominant sites or a long tail of smaller sources.", icon: "lucide:focus" },
+];
+
+const perceptionMetrics = [
+  { name: "Industry Maturity", desc: "Whether AI sees the vertical as emerging, in growth, mature, or declining.", value: "Growth" },
+  { name: "Industry Attractiveness", desc: "Whether AI frames the sector as high, medium, or low opportunity.", value: "High" },
+  { name: "AI Optimism", desc: "Whether AI’s narrative is mostly optimistic, neutral, or pessimistic about the future.", value: "Optimistic" },
+  { name: "Dominant Risk Type", desc: "Which risk AI emphasises: regulation, tech, macro, customer, or operational.", value: "Regulation" },
 ];
 ---
 
 <Layout
-  title="GSO — Generative Supply Chain Optimisation for AI Search | PhantomRank"
-  description="Map the upstream information supply chain that feeds AI models. See which domains shape AI’s view of your vertical, how attractive and risky the sector looks, and where to intervene so future answers move in your favour."
+  title="GSO — Generative Supply Chain Optimisation | PhantomRank"
+  description="Map the upstream information supply chain that feeds AI models. See which domains shape AI’s view of your vertical."
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Features", href: "/features" },
     { name: "GSO", href: "/features/gso" },
   ]}
 >
-  <FeatureDetail
-    feature={feature}
-    insight={insight}
-    outputs={outputs}
-    howItWorks={howItWorks}
-    useCases={useCases}
-    includes={includes}
-  />
+
+  {/* ── 1. COMPOSITE HERO: WHERE AI GETS INFO ── */}
+  <section id="gso-hero" class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 overflow-hidden">
+    <DotBackground containerId="gso-hero" />
+    <div class="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+      {/* Left Copy */}
+      <div class="reveal">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
+          GSO
+        </h1>
+        <p class="text-xl text-foreground font-medium mb-4 leading-relaxed">
+          See which sites and platforms AI relies on to understand your industry, and how it describes the sector’s maturity, attractiveness, and risks.
+        </p>
+        <p class="text-sm uppercase tracking-wider font-bold text-primary mb-8 border-l-2 border-primary pl-4">
+          GSO doesn’t look at your pages. It maps the upstream information supply chain that feeds AI answers for your vertical.
+        </p>
+        <div class="bg-card/50 rounded-2xl border border-border p-6 backdrop-blur-sm shadow-sm">
+          <p class="text-muted-foreground leading-relaxed text-sm md:text-base">
+            {insight}
+          </p>
+        </div>
+      </div>
+      
+      {/* Right Visual: Radial Source Map */}
+      <div class="reveal relative bg-zinc-950 rounded-3xl border border-zinc-800 p-8 h-[500px] flex items-center justify-center shadow-xl overflow-hidden group">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1),transparent_70%)] pointer-events-none"></div>
+        
+        <div class="relative w-full h-full max-w-[400px] max-h-[400px]">
+           {/* Center Node */}
+           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+              <div class="w-24 h-24 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center flex-col shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+                 <Icon name="lucide:network" class="w-6 h-6 text-primary mb-1" />
+                 <span class="text-[10px] font-bold text-white uppercase tracking-wider text-center leading-tight">Your<br/>Vertical</span>
+              </div>
+           </div>
+
+           {/* Orbit Rings */}
+           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border border-zinc-800/50 rounded-full animate-[spin_60s_linear_infinite]"></div>
+           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] border border-zinc-800/50 rounded-full animate-[spin_40s_linear_infinite_reverse]"></div>
+
+           {/* Communities Node (40%) */}
+           <div class="absolute top-[10%] left-[80%] -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 transition-transform">
+              <div class="flex flex-col items-center">
+                 <div class="w-12 h-12 rounded-full bg-blue-500/20 border border-blue-500 flex items-center justify-center backdrop-blur-md">
+                    <span class="text-xs font-bold text-blue-400">40%</span>
+                 </div>
+                 <div class="mt-2 text-center">
+                    <div class="text-[10px] font-bold text-zinc-300 uppercase tracking-wider">Communities</div>
+                    <div class="text-[9px] text-zinc-500">reddit.com, quora.com</div>
+                 </div>
+              </div>
+           </div>
+
+           {/* Review Platforms Node (30%) */}
+           <div class="absolute top-[80%] left-[20%] -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 transition-transform">
+              <div class="flex flex-col items-center">
+                 <div class="w-10 h-10 rounded-full bg-green-500/20 border border-green-500 flex items-center justify-center backdrop-blur-md">
+                    <span class="text-[10px] font-bold text-green-400">30%</span>
+                 </div>
+                 <div class="mt-2 text-center">
+                    <div class="text-[10px] font-bold text-zinc-300 uppercase tracking-wider">Reviews</div>
+                    <div class="text-[9px] text-zinc-500">g2.com, trustpilot.com</div>
+                 </div>
+              </div>
+           </div>
+
+           {/* Media Node (15%) */}
+           <div class="absolute top-[20%] left-[20%] -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 transition-transform">
+              <div class="flex flex-col items-center">
+                 <div class="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500 flex items-center justify-center backdrop-blur-md">
+                    <span class="text-[9px] font-bold text-amber-400">15%</span>
+                 </div>
+                 <div class="mt-2 text-center">
+                    <div class="text-[10px] font-bold text-zinc-300 uppercase tracking-wider">Media</div>
+                    <div class="text-[9px] text-zinc-500">techcrunch.com</div>
+                 </div>
+              </div>
+           </div>
+
+           {/* Regulator Node (10%) */}
+           <div class="absolute top-[80%] left-[80%] -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 transition-transform">
+              <div class="flex flex-col items-center">
+                 <div class="w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500 flex items-center justify-center backdrop-blur-md">
+                    <span class="text-[8px] font-bold text-purple-400">10%</span>
+                 </div>
+                 <div class="mt-2 text-center">
+                    <div class="text-[10px] font-bold text-zinc-300 uppercase tracking-wider">Regulator</div>
+                    <div class="text-[9px] text-zinc-500">fca.org.uk</div>
+                 </div>
+              </div>
+           </div>
+
+           {/* Others Node (5%) */}
+           <div class="absolute top-[50%] left-[5%] -translate-x-1/2 -translate-y-1/2 z-10 hover:scale-110 transition-transform">
+              <div class="flex flex-col items-center">
+                 <div class="w-6 h-6 rounded-full bg-zinc-500/20 border border-zinc-500 flex items-center justify-center backdrop-blur-md">
+                    <span class="text-[8px] font-bold text-zinc-400">5%</span>
+                 </div>
+                 <div class="mt-2 text-center">
+                    <div class="text-[10px] font-bold text-zinc-300 uppercase tracking-wider">Company Sites</div>
+                 </div>
+              </div>
+           </div>
+
+           {/* Connecting Lines (Simulated with simple SVG) */}
+           <svg class="absolute inset-0 w-full h-full z-0 opacity-20 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <line x1="50" y1="50" x2="80" y2="10" stroke="currentColor" class="text-blue-500" stroke-width="0.5" stroke-dasharray="2,2" />
+              <line x1="50" y1="50" x2="20" y2="80" stroke="currentColor" class="text-green-500" stroke-width="0.5" stroke-dasharray="2,2" />
+              <line x1="50" y1="50" x2="20" y2="20" stroke="currentColor" class="text-amber-500" stroke-width="0.5" stroke-dasharray="2,2" />
+              <line x1="50" y1="50" x2="80" y2="80" stroke="currentColor" class="text-purple-500" stroke-width="0.5" stroke-dasharray="2,2" />
+              <line x1="50" y1="50" x2="5" y2="50" stroke="currentColor" class="text-zinc-500" stroke-width="0.5" stroke-dasharray="2,2" />
+           </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 2. SOURCE METRICS STRIP ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="mb-12 max-w-3xl">
+      <h2 class="text-2xl font-bold text-foreground mb-4">Key source metrics GSO tracks</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {sourceMetrics.map(metric => (
+         <div class="bg-card border border-border p-6 rounded-2xl shadow-sm hover:border-primary/50 transition-colors group">
+            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+               <Icon name={metric.icon} class="w-5 h-5 text-primary" />
+            </div>
+            <h3 class="font-bold text-foreground mb-2">{metric.name}</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">{metric.desc}</p>
+         </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ── 3. PERCEPTION METRICS (HEALTH) ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+       <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">How AI sees the health of your sector</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+       {perceptionMetrics.map(metric => (
+          <div class="bg-muted/20 border border-border rounded-2xl p-6 shadow-sm">
+             <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">{metric.name}</div>
+             <div class="text-2xl font-bold text-foreground mb-4">{metric.value}</div>
+             <p class="text-xs text-muted-foreground leading-relaxed pt-4 border-t border-border/50">{metric.desc}</p>
+          </div>
+       ))}
+    </div>
+
+    <p class="text-center text-sm font-medium text-foreground bg-card border border-border rounded-xl p-4 max-w-3xl mx-auto shadow-sm">
+      Behind the scenes, GSO runs PESTEL and Five Forces‑style prompts to turn AI’s narrative into simple labels your strategy team can use.
+    </p>
+  </section>
+
+  {/* ── 4. UPSTREAM PLAYBOOK ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="mb-12 max-w-2xl">
+      <h2 class="text-3xl font-bold text-foreground mb-4">Upstream Playbook: where to show up first</h2>
+      <p class="text-lg text-muted-foreground">Actionable recommendations based on the domain mix AI currently trusts for your sector.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+       <div class="bg-card border border-border rounded-2xl p-6 shadow-sm hover:-translate-y-1 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
+          <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center justify-between">Source Mix <span class="text-blue-500">40%</span></div>
+          <h3 class="text-lg font-bold text-foreground mb-4 flex items-center gap-2"><Icon name="lucide:message-circle" class="w-5 h-5 text-blue-500" /> Communities</h3>
+          <div class="bg-muted/50 p-4 rounded-xl">
+             <p class="text-sm font-medium text-foreground">Participate in key Reddit and Quora threads.</p>
+          </div>
+       </div>
+
+       <div class="bg-card border border-border rounded-2xl p-6 shadow-sm hover:-translate-y-1 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
+          <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center justify-between">Source Mix <span class="text-green-500">30%</span></div>
+          <h3 class="text-lg font-bold text-foreground mb-4 flex items-center gap-2"><Icon name="lucide:star" class="w-5 h-5 text-green-500" /> Review Platforms</h3>
+          <div class="bg-muted/50 p-4 rounded-xl">
+             <p class="text-sm font-medium text-foreground">Prioritise G2, Capterra, and Trustpilot listings.</p>
+          </div>
+       </div>
+
+       <div class="bg-card border border-border rounded-2xl p-6 shadow-sm hover:-translate-y-1 transition-transform relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
+          <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center justify-between">Source Mix <span class="text-amber-500">15%</span></div>
+          <h3 class="text-lg font-bold text-foreground mb-4 flex items-center gap-2"><Icon name="lucide:newspaper" class="w-5 h-5 text-amber-500" /> Industry Media</h3>
+          <div class="bg-muted/50 p-4 rounded-xl">
+             <p class="text-sm font-medium text-foreground">Publish PR pieces and explainers that media can cite.</p>
+          </div>
+       </div>
+    </div>
+  </section>
+
+  {/* ── 5. METHODOLOGY BLOCK ── */}
+  <section class="relative mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">How GSO builds the map</h2>
+    <div class="bg-card border border-border rounded-3xl p-8 md:p-12 shadow-sm">
+      <ul class="space-y-6">
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Select an industry cluster (for example, payments, retail banking, SaaS, healthcare).</span>
+        </li>
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Run a 24‑prompt catalogue across three blocks: Visibility, Sources, and Perception.</span>
+        </li>
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Parse every cited URL and classify domains into gov, media, review, directory, marketplace, community, and company.</span>
+        </li>
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Convert AI’s narrative into simple enums: maturity, attractiveness, optimism, and dominant risk.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  {/* ── 6. CONDENSED LEGACY CONTENT ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    
+    <div class="grid lg:grid-cols-2 gap-12 mb-24">
+      {/* Outputs */}
+      <div class="reveal">
+        <h2 class="text-2xl font-bold text-foreground mb-8">What you'll see</h2>
+        <div class="grid grid-cols-2 gap-6">
+          {outputs.map((output) => (
+            <div class="flex flex-col gap-2">
+              <Icon name="lucide:layout-template" class="w-4 h-4 text-primary" />
+              <h3 class="font-bold text-foreground text-sm">{output.title}</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">{output.desc || output.list}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Includes */}
+      <div class="reveal">
+        <h2 class="text-2xl font-bold text-foreground mb-8">What's included</h2>
+        <div class="bg-card rounded-2xl border border-border p-6 shadow-sm">
+          <ul class="space-y-3">
+            {includes.map((item) => (
+              <li class="flex items-start gap-3 text-sm text-muted-foreground">
+                <Icon name="lucide:check" class="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {/* How it works pipeline */}
+    <div class="reveal mb-24 max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-foreground mb-8 text-center">Pipeline breakdown</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {howItWorks.map((step, index) => (
+           <div class="flex items-start gap-4 p-4 rounded-xl bg-card border border-border shadow-sm">
+             <div class="w-6 h-6 shrink-0 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-xs mt-0.5">
+               {index + 1}
+             </div>
+             <div>
+                <h3 class="font-bold text-foreground text-sm mb-1">{step.title}</h3>
+                <p class="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
+             </div>
+           </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Use Cases */}
+    <div class="reveal max-w-3xl mx-auto">
+      <h2 class="text-2xl font-bold text-foreground mb-8 text-center">Built for Agency Workflows</h2>
+      <ul class="space-y-4">
+        {useCases.map((uc) => (
+          <li class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 border-b border-border/50 pb-4 last:border-0">
+            <span class="font-bold text-foreground whitespace-nowrap">{uc.scenario}</span>
+            <span class="text-sm text-muted-foreground">{uc.outcome}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+  </section>
+
   <FAQ customFaqs={faqs} title="GSO — FAQs" subtitle="Focus: upstream sources, domain share, narrative perception, strategic alignment." />
   <CTA />
 </Layout>

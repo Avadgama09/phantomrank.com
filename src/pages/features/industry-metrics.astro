@@ -1,120 +1,476 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import FeatureDetail from "../../components/sections/FeatureDetail.astro";
 import CTA from "../../components/sections/CTA.astro";
 import FAQ from "../../components/sections/FAQ.astro";
 import { features } from "../../utils/features";
+import { Icon } from "astro-icon/components";
+import DotBackground from "../../components/ui/DotBackground.astro";
 
 const feature = features.find((f) => f.slug === "industry-metrics")!;
 
 const insight =
-  "Before you can improve a client's AI visibility, you need to know who already owns the conversation. Most teams jump straight into content or “AI SEO” without understanding which brands AI treats as leaders, what buying criteria it actually uses, and which shortlists your client is missing from. Industry Metrics turns that black box into a structured competitive leaderboard, so your strategy starts with real AI market intelligence instead of assumptions.";
+  "Before you can improve a client's AI visibility, you need to know who already owns the conversation. Most teams jump straight into content without understanding which brands AI treats as leaders, what buying criteria it uses, and which shortlists they are missing from.";
 
 const outputs = [
-  "AI Market Leaderboard ranking every brand that AI recognizes in your client’s space, with tier badges (Leader, Challenger, Niche), presence scores, and each brand’s core “fame claims”.",
-  "Buying Criteria Breakdown showing which factors AI uses to evaluate providers in this industry (e.g., price, reliability, integrations, support) and which brands it calls best‑in‑class for each.",
-  "Persona‑based AI Shortlists revealing which brands AI recommends for different buyer types (e.g., Budget‑focused, Quality‑driven, Scale/Enterprise) — with reasons pulled from the AI’s own explanations.",
-  "Client Overlay Card that shows whether your client appears in the AI landscape at all, their tier, which criteria they win, which shortlists they appear on, and which key criteria they’re missing entirely.",
-  "Answer Placement & Sentiment snapshot summarising how prominently AI recommends each brand and whether its language is neutral, cautiously positive, or strongly endorsing.",
-  "Source Classification report categorising every citation AI used into buckets like Community/Forum, Directory/Listing, Review Platform, Government/Regulator, Industry Media, and Brand/Company Site — so you see where authority really lives.",
-  "Information Gaps list highlighting topics where AI’s answers are vague, outdated, or contradictory, giving you a targeted list of opportunities to become the definitive source.",
-  "Exportable audit files — CSV for leaderboards and shortlists, plus JSON for full structured audit data that you can plug into client decks, Notion spaces, or BI tools.",
+  { title: "AI Market Leaderboard", desc: "Rankings with tier badges (Leader, Challenger, Niche), presence scores, and fame claims." },
+  { title: "Buying Criteria Breakdown", desc: "Factors AI uses to evaluate providers (price, reliability, integrations, etc.)." },
+  { title: "Persona‑based AI Shortlists", desc: "Brand recommendations for Budget, Quality, and Scale buyers, with AI's own reasoning." },
+  { title: "Client Overlay Card", desc: "Shows your client's tier, shortlist appearances, and missing criteria." },
+  { title: "Answer Placement & Sentiment", desc: "How prominently AI recommends brands and the sentiment of those recommendations." },
+  { title: "Source Classification", desc: "Categorized citations (Community, Review, Media, etc.) showing where authority lives." },
+  { title: "Information Gaps", list: "Topics where AI’s answers are vague, giving you targeted content opportunities." },
+  { title: "Exportable Audits", desc: "CSV for leaderboards and JSON for full structured audit data." },
 ];
 
 const howItWorks = [
-  "Brand & Sector Setup — Enter your client’s brand name and website domain. PhantomRank uses Tavily and our own parsers to auto‑enrich the profile: industry, geo, and a short description are pre‑filled so you don’t start from a blank form.",
-  "Review & Refine the Company Card — Confirm or edit the auto‑filled details. You can tighten the industry label (e.g., “Premium multi‑specialty hospital chain” instead of just “Healthcare”), specify the primary market region, and choose the buyer persona that best represents the typical decision‑maker.",
-  "Run the AI Landscape Audit — PhantomRank runs a 4‑stage pipeline against leading AI engines: mapping active brands, extracting buying criteria, generating persona‑specific shortlists, and performing an information‑gap scan on the AI’s own answers for that sector.",
-  "Landscape Mapping — The system groups brands into Leaders, Challengers, and Niche Specialists, and extracts each brand’s “fame claims” — the 1–2 things AI repeatedly associates with them. This tells you who AI thinks is winning and why.",
-  "Buying Criteria & Shortlists — For each buyer type, Industry Metrics identifies the top criteria AI uses (e.g., affordability, ease of use, compliance) and which brands it recommends as best‑in‑class. It then builds shortlists for Budget, Quality, and Scale personas so you see who gets recommended, in what order, and for what reasons.",
-  "Overlay & Export — Finally, PhantomRank overlays your client onto that map: their tier, criteria wins, missing criteria, and shortlist appearances. You can drill into competitors, inspect the sources AI used, and export everything to CSV/JSON for client‑facing decks or internal strategy docs.",
+  { title: "Brand & Sector Setup", desc: "Enter brand name and domain. We auto‑enrich industry, geo, and descriptions via Tavily." },
+  { title: "Review & Refine", desc: "Tighten the industry label, specify primary markets, and choose buyer personas." },
+  { title: "Run Landscape Audit", desc: "A 4‑stage pipeline maps active brands, extracts criteria, builds shortlists, and finds gaps." },
+  { title: "Landscape Mapping", desc: "Brands are grouped into tiers (Leaders, Challengers, Niche) and their 'fame claims' extracted." },
+  { title: "Criteria & Shortlists", desc: "Identifies top buying criteria and builds shortlists for Budget, Quality, and Scale personas." },
+  { title: "Overlay & Export", desc: "Overlays your client onto the map. Export everything to CSV/JSON for decks." },
 ];
 
 const useCases = [
-  {
-    scenario: "New client onboarding and discovery",
-    outcome:
-      "Run an Industry Metrics audit before the kickoff. Walk into the first meeting knowing which brands AI already treats as leaders, what criteria define the category, and where your client is invisible or under‑positioned. Use the leaderboard as a neutral “AI’s view of the market” to align everyone before you talk tactics.",
-  },
-  {
-    scenario: "Competitive positioning and messaging",
-    outcome:
-      "See exactly which buying criteria your client wins on and where competitors dominate. Use AI’s own descriptions of each brand’s strengths to refine positioning, adjust messaging, and decide which narratives to lean into — instead of guessing based on internal beliefs or traditional SERPs alone.",
-  },
-  {
-    scenario: "Content and SEO roadmap planning",
-    outcome:
-      "Use the Information Gaps and Missing Criteria outputs to build a content roadmap that matches what AI is actually missing. Instead of broad blog topics, you get a focused list of criteria and queries where high‑quality, structured content could turn your client into a primary source for future answers.",
-  },
-  {
-    scenario: "Authority source and PR planning",
-    outcome:
-      "With Source Classification, see whether AI leans more on reviews, directories, community threads, media, or official documents in your client’s category. Plan PR, listings, and review campaigns around the channels that actually move AI’s perception, not just the ones you’ve always used.",
-  },
-  {
-    scenario: "Quarterly business reviews (QBRs)",
-    outcome:
-      "Bring a visual AI Market Leaderboard to QBRs that shows how your client’s tier, criteria wins, and shortlist appearances have shifted over time. Export CSVs straight into slides and use them to frame why your content, PR, and review work matters for AI‑mediated demand.",
-  },
-  {
-    scenario: "Finding uncontested positioning space",
-    outcome:
-      "Identify buying criteria and niches where no single brand is strongly associated yet. Position your client to own those gaps — and track whether AI starts repeating that positioning back over time.",
-  },
+  { scenario: "New client discovery", outcome: "Walk into pitches knowing which brands AI treats as leaders and where the client is invisible." },
+  { scenario: "Competitive messaging", outcome: "Use AI’s descriptions of competitors' strengths to refine your client's positioning." },
+  { scenario: "Content roadmap planning", outcome: "Turn Information Gaps into a focused list of criteria to build definitive content around." },
+  { scenario: "Authority & PR planning", outcome: "Focus PR on the specific channels (reviews, communities, media) that actually influence AI." },
+  { scenario: "Quarterly business reviews", outcome: "Bring a visual AI Market Leaderboard to QBRs to prove how your work shifts AI demand." },
+  { scenario: "Uncontested positioning", outcome: "Identify buying criteria where no single brand is strongly associated yet, and own them." },
 ];
 
 const includes = [
-  "Auto‑enriched company profile via Tavily (brand name + domain → baseline industry, region, and description).",
-  "Support for multiple industry clusters with sector‑specific prompts and criteria extraction.",
-  "Standardised buyer personas for shortlist analysis (e.g., Budget, Quality, Scale) so comparisons stay consistent.",
-  "AI Market Leaderboard with presence scores, tier classification (Leader/Challenger/Niche), and fame claims per brand.",
-  "Buying Criteria analysis with best‑in‑class brands per criterion, plus the reasoning extracted from AI answers.",
-  "Client Overlay view showing your client’s tier, criteria wins, shortlist appearances, and missing criteria in one place.",
-  "Missing Criteria and Information Gap detection, highlighting where competitors win and where AI’s knowledge is thin or outdated.",
-  "Persona‑based AI Shortlists ranked by buyer type, with explanations for why each brand appears.",
-  "Source Classification across at least six source types (Community/Forum, Directory/Listing, Review Platform, Government/Regulator, Industry Media, Brand/Company Site).",
-  "CSV export for leaderboards and shortlists, ready for client decks and spreadsheets.",
-  "Structured JSON export for complete audit data, suitable for internal analysis or custom dashboards.",
-  "Editable company card so you can override any auto‑filled detail before running the audit.",
+  "Auto‑enriched company profiles via Tavily",
+  "Sector‑specific prompts and criteria extraction",
+  "Standardised buyer personas (Budget, Quality, Scale)",
+  "AI Market Leaderboard with tier classifications",
+  "Buying Criteria analysis and reasoning",
+  "Client Overlay view for missing criteria",
+  "Information Gap detection",
+  "Source Classification across 6+ source types",
 ];
 
 const faqs = [
-  {
-    question: "How do Industry Metrics avoid mixing apples and oranges when comparing brands?",
-    answer: "We run a simultaneous 4‑call pipeline for your brand and 15–20 competitors using the exact same prompts, engines, and time windows. Landscape, buying criteria, shortlists, and information gaps are all generated in one batch. That way your Share of Voice, Share of Synthesis, and Answer Placement Scores are comparable because they come from the same model runs, not from separate, unaligned tests."
-  },
-  {
-    question: "Can I see which competitors and domains AI models prefer over us?",
-    answer: "Yes. Industry Metrics shows which brands are flagged as Leaders, Challengers, and Niche players, plus which domains—gov sites, media, reviews, communities, company sites—keep getting cited as evidence. It’s a way to see who is actually winning the recommendation layer and which ecosystems (Reddit, review platforms, directories) you need to participate in."
-  },
-  {
-    question: "Is Industry Metrics just a nice chart, or does it translate into actions?",
-    answer: "Every industry audit ends with an Information Gain Gap analysis: five topics where the AI’s knowledge is thin, vague, or outdated. Those gaps become a content calendar for your team. If AI keeps citing old sources for a key buying criterion, you know exactly which ‘definitive guide’ you need to publish next to shift the benchmarks."
-  },
-  {
-    question: "How often should we run Industry Metrics to get meaningful trends?",
-    answer: "Most teams run a deeper industry audit every 6–12 weeks, then rely on lighter weekly scans for monitoring. PhantomRank stores historical runs so you can see how filling information gaps affects your Share of Synthesis and Answer Placement over time, instead of reacting to single snapshots."
-  }
+  { question: "How do Industry Metrics avoid mixing apples and oranges when comparing brands?", answer: "We run a simultaneous 4‑call pipeline for your brand and 15–20 competitors using the exact same prompts, engines, and time windows. Landscape, buying criteria, shortlists, and information gaps are all generated in one batch. That way your Share of Voice, Share of Synthesis, and Answer Placement Scores are comparable because they come from the same model runs, not from separate, unaligned tests." },
+  { question: "Can I see which competitors and domains AI models prefer over us?", answer: "Yes. Industry Metrics shows which brands are flagged as Leaders, Challengers, and Niche players, plus which domains—gov sites, media, reviews, communities, company sites—keep getting cited as evidence. It’s a way to see who is actually winning the recommendation layer and which ecosystems (Reddit, review platforms, directories) you need to participate in." },
+  { question: "Is Industry Metrics just a nice chart, or does it translate into actions?", answer: "Every industry audit ends with an Information Gain Gap analysis: five topics where the AI’s knowledge is thin, vague, or outdated. Those gaps become a content calendar for your team. If AI keeps citing old sources for a key buying criterion, you know exactly which ‘definitive guide’ you need to publish next to shift the benchmarks." },
+  { question: "How often should we run Industry Metrics to get meaningful trends?", answer: "Most teams run a deeper industry audit every 6–12 weeks, then rely on lighter weekly scans for monitoring. PhantomRank stores historical runs so you can see how filling information gaps affects your Share of Synthesis and Answer Placement over time, instead of reacting to single snapshots." }
+];
+
+const keyMetrics = [
+  { name: "Tier Classification", desc: "Whether AI treats a brand as a Leader, Challenger, or Niche player.", icon: "lucide:award" },
+  { name: "AI Share of Voice (SoV)", desc: "How often each brand is mentioned across the tracked AI answers.", icon: "lucide:bar-chart" },
+  { name: "Share of Synthesis (SoS)", desc: "How often each brand’s domain is cited as a source, not just named.", icon: "lucide:pie-chart" },
+  { name: "Answer Placement Score (APS)", desc: "How high each brand appears in AI’s recommendations (top, middle, bottom).", icon: "lucide:list-ordered" },
+  { name: "Answer Sentiment", desc: "Whether AI’s descriptions are mostly positive, neutral, or negative.", icon: "lucide:message-square" },
+  { name: "Fame Claims", desc: "The 1–2 differentiators AI keeps repeating for each brand.", icon: "lucide:megaphone" },
+  { name: "Persona‑Based Shortlists", desc: "Which brands AI recommends for Budget, Quality, and Scale buyers.", icon: "lucide:users" },
+  { name: "Information Gaps", desc: "Topics and criteria where AI’s knowledge is thin or outdated.", icon: "lucide:alert-circle" },
 ];
 ---
 
 <Layout
-  title="Industry Metrics — AI Market Leaderboard & Competitive Landscape Audit | PhantomRank"
-  description="See who AI already treats as leaders in your client's category, what criteria drive those recommendations, and where your client fits. Industry Metrics turns AI answers into a competitive map your team can actually act on."
+  title="Industry Metrics | PhantomRank"
+  description="See who AI treats as leaders in your category and build competitive intelligence based on real AI answers."
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Features", href: "/features" },
     { name: "Industry Metrics", href: "/features/industry-metrics" },
   ]}
 >
-  <FeatureDetail
-    feature={feature}
-    insight={insight}
-    outputs={outputs}
-    howItWorks={howItWorks}
-    useCases={useCases}
-    includes={includes}
-  />
+
+  {/* ── 1. COMPOSITE HERO: AI VIEW OF MARKET ── */}
+  <section id="im-hero" class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 overflow-hidden">
+    <DotBackground containerId="im-hero" />
+    <div class="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+      {/* Left Copy */}
+      <div class="reveal">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
+          Industry Metrics
+        </h1>
+        <p class="text-xl text-foreground font-medium mb-4 leading-relaxed">
+          See how AI describes your market, which brands it treats as leaders, and where your client actually sits in that landscape.
+        </p>
+        <p class="text-sm uppercase tracking-wider font-bold text-primary mb-8 border-l-2 border-primary pl-4">
+          Industry Metrics turns AI answers into a live competitive map: tiers, buying criteria, shortlists, and content gaps.
+        </p>
+        <div class="bg-card/50 rounded-2xl border border-border p-6 backdrop-blur-sm shadow-sm">
+          <p class="text-muted-foreground leading-relaxed text-sm md:text-base">
+            {insight}
+          </p>
+        </div>
+      </div>
+      
+      {/* Right Visual: Stylized Leaderboard */}
+      <div class="reveal relative bg-muted/20 rounded-3xl border border-border p-6 sm:p-8 overflow-hidden h-[500px] flex flex-col justify-center shadow-sm">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(59,130,246,0.1),transparent_70%)] pointer-events-none"></div>
+        
+        <div class="relative z-10 w-full space-y-6">
+           {/* Leader Tier */}
+           <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-green-500 mb-3 flex items-center gap-1.5"><Icon name="lucide:crown" class="w-3.5 h-3.5" /> Leaders</div>
+              <div class="space-y-3">
+                 <div class="bg-background border border-border rounded-xl p-3 shadow-md flex items-center justify-between gap-4">
+                    <div class="flex-1">
+                       <div class="font-bold text-sm text-foreground mb-1">HubSpot</div>
+                       <div class="w-full bg-muted rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full w-[85%]"></div></div>
+                    </div>
+                    <div class="text-[10px] bg-card border border-border px-2 py-1 rounded text-muted-foreground">Known for: Scale, Ease of Use</div>
+                 </div>
+                 <div class="bg-background border border-border rounded-xl p-3 shadow-md flex items-center justify-between gap-4">
+                    <div class="flex-1">
+                       <div class="font-bold text-sm text-foreground mb-1">Salesforce</div>
+                       <div class="w-full bg-muted rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full w-[78%]"></div></div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           
+           {/* Challenger Tier */}
+           <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-blue-500 mb-3 flex items-center gap-1.5"><Icon name="lucide:swords" class="w-3.5 h-3.5" /> Challengers</div>
+              <div class="bg-background border border-border rounded-xl p-3 shadow-md flex items-center justify-between gap-4 transform rotate-1 border-primary/30">
+                 <div class="flex-1">
+                    <div class="font-bold text-sm text-foreground mb-1 flex items-center gap-2">Your Client <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span></div>
+                    <div class="w-full bg-muted rounded-full h-1.5"><div class="bg-blue-500 h-1.5 rounded-full w-[45%]"></div></div>
+                 </div>
+                 <div class="text-[10px] bg-primary/10 border border-primary/20 text-primary px-2 py-1 rounded font-medium">Known for: Integrations</div>
+              </div>
+           </div>
+           
+           {/* Niche Tier */}
+           <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-amber-500 mb-3 flex items-center gap-1.5"><Icon name="lucide:target" class="w-3.5 h-3.5" /> Niche</div>
+              <div class="bg-background border border-border rounded-xl p-3 shadow-md flex items-center justify-between gap-4 opacity-70">
+                 <div class="flex-1">
+                    <div class="font-bold text-sm text-foreground mb-1">Pipedrive</div>
+                    <div class="w-full bg-muted rounded-full h-1.5"><div class="bg-amber-500 h-1.5 rounded-full w-[25%]"></div></div>
+                 </div>
+                 <div class="text-[10px] bg-card border border-border px-2 py-1 rounded text-muted-foreground">Known for: Visual Pipelines</div>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 2. COMPETITIVE METRICS STRIP ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="mb-12 text-center max-w-2xl mx-auto">
+      <h2 class="text-2xl font-bold text-foreground">Key competitive metrics Industry Metrics tracks</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {keyMetrics.map(metric => (
+         <div class="p-5 border-l-2 border-border hover:border-primary transition-colors">
+            <div class="flex items-center gap-2 mb-2">
+               <Icon name={metric.icon} class="w-4 h-4 text-muted-foreground" />
+               <h3 class="font-bold text-sm text-foreground">{metric.name}</h3>
+            </div>
+            <p class="text-xs text-muted-foreground leading-relaxed">{metric.desc}</p>
+         </div>
+      ))}
+    </div>
+  </section>
+
+  {/* ── 3. HOW AI RANKS BRANDS ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="grid md:grid-cols-5 gap-12 items-center">
+       
+       <div class="md:col-span-3 bg-zinc-950 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl">
+          <div class="grid grid-cols-3 gap-6">
+             {/* Leaders */}
+             <div class="space-y-4">
+                <div class="text-xs font-bold uppercase tracking-wider text-green-400 border-b border-zinc-800 pb-2">Leaders</div>
+                <div class="space-y-3">
+                   <div>
+                      <div class="text-xs text-zinc-300 mb-1 flex justify-between"><span>Brand A</span> <span class="text-zinc-500">82%</span></div>
+                      <div class="h-1 bg-zinc-800 rounded-full"><div class="h-full bg-green-500 rounded-full w-[82%]"></div></div>
+                   </div>
+                   <div>
+                      <div class="text-xs text-zinc-300 mb-1 flex justify-between"><span>Brand B</span> <span class="text-zinc-500">71%</span></div>
+                      <div class="h-1 bg-zinc-800 rounded-full"><div class="h-full bg-green-500/70 rounded-full w-[71%]"></div></div>
+                   </div>
+                </div>
+             </div>
+             {/* Challengers */}
+             <div class="space-y-4">
+                <div class="text-xs font-bold uppercase tracking-wider text-blue-400 border-b border-zinc-800 pb-2">Challengers</div>
+                <div class="space-y-3">
+                   <div>
+                      <div class="text-xs text-zinc-300 mb-1 flex justify-between"><span>Brand C</span> <span class="text-zinc-500">45%</span></div>
+                      <div class="h-1 bg-zinc-800 rounded-full"><div class="h-full bg-blue-500 rounded-full w-[45%]"></div></div>
+                   </div>
+                   <div>
+                      <div class="text-xs text-zinc-300 mb-1 flex justify-between"><span>Brand D</span> <span class="text-zinc-500">38%</span></div>
+                      <div class="h-1 bg-zinc-800 rounded-full"><div class="h-full bg-blue-500/70 rounded-full w-[38%]"></div></div>
+                   </div>
+                </div>
+             </div>
+             {/* Niche */}
+             <div class="space-y-4">
+                <div class="text-xs font-bold uppercase tracking-wider text-amber-400 border-b border-zinc-800 pb-2">Niche</div>
+                <div class="space-y-3">
+                   <div>
+                      <div class="text-xs text-zinc-300 mb-1 flex justify-between"><span>Brand E</span> <span class="text-zinc-500">22%</span></div>
+                      <div class="h-1 bg-zinc-800 rounded-full"><div class="h-full bg-amber-500 rounded-full w-[22%]"></div></div>
+                   </div>
+                   <div>
+                      <div class="text-xs text-zinc-300 mb-1 flex justify-between"><span>Brand F</span> <span class="text-zinc-500">14%</span></div>
+                      <div class="h-1 bg-zinc-800 rounded-full"><div class="h-full bg-amber-500/70 rounded-full w-[14%]"></div></div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+
+       <div class="md:col-span-2">
+          <h2 class="text-3xl font-bold text-foreground mb-6">How AI Market Leaderboard works</h2>
+          <ul class="space-y-6">
+            <li class="flex items-start gap-3 text-muted-foreground text-sm">
+               <Icon name="lucide:check" class="w-4 h-4 text-primary mt-0.5 shrink-0" />
+               We run a fixed set of buyer prompts across AI engines for your category.
+            </li>
+            <li class="flex items-start gap-3 text-muted-foreground text-sm">
+               <Icon name="lucide:check" class="w-4 h-4 text-primary mt-0.5 shrink-0" />
+               We extract every brand mentioned and cited, then group them into tiers.
+            </li>
+            <li class="flex items-start gap-3 text-muted-foreground text-sm">
+               <Icon name="lucide:check" class="w-4 h-4 text-primary mt-0.5 shrink-0" />
+               We compute SoV, SoS, APS, and sentiment for each brand from the same runs.
+            </li>
+          </ul>
+       </div>
+
+    </div>
+  </section>
+
+  {/* ── 4. BUYING CRITERIA & PERSONA SHORTLISTS ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">What AI thinks buyers care about</h2>
+      <p class="text-lg text-muted-foreground">
+         Industry Metrics reads how AI compares providers and pulls out the buying criteria and shortlists it uses for different buyer types.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-4 gap-8 lg:gap-12 items-start mb-8">
+       {/* Left: Criteria */}
+       <div class="bg-card border border-border p-6 rounded-2xl shadow-sm lg:col-span-1">
+          <div class="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">Extracted Criteria</div>
+          <ul class="space-y-4">
+             <li class="flex items-center gap-3 text-sm font-medium text-foreground"><Icon name="lucide:dollar-sign" class="w-4 h-4 text-muted-foreground" /> Price / Affordability</li>
+             <li class="flex items-center gap-3 text-sm font-medium text-foreground"><Icon name="lucide:shield-check" class="w-4 h-4 text-muted-foreground" /> Reliability</li>
+             <li class="flex items-center gap-3 text-sm font-medium text-foreground"><Icon name="lucide:puzzle" class="w-4 h-4 text-primary" /> Integrations</li>
+             <li class="flex items-center gap-3 text-sm font-medium text-foreground"><Icon name="lucide:headset" class="w-4 h-4 text-muted-foreground" /> Support Quality</li>
+             <li class="flex items-center gap-3 text-sm font-medium text-foreground"><Icon name="lucide:settings" class="w-4 h-4 text-muted-foreground" /> Ease of Setup</li>
+          </ul>
+       </div>
+       
+       {/* Right: Shortlists */}
+       <div class="lg:col-span-3 grid md:grid-cols-3 gap-6">
+          
+          <div class="bg-muted/20 border border-border rounded-2xl p-5 shadow-sm">
+             <div class="text-xs font-bold uppercase tracking-wider text-foreground mb-4 border-b border-border pb-2 flex items-center justify-between">Budget Persona <Icon name="lucide:wallet" class="w-3.5 h-3.5 text-muted-foreground" /></div>
+             <div class="space-y-3">
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">Zoho CRM</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Highly affordable for small teams"</div>
+                </div>
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">Freshsales</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Great entry-level pricing"</div>
+                </div>
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">Pipedrive</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Cost-effective pipelines"</div>
+                </div>
+             </div>
+          </div>
+
+          <div class="bg-muted/20 border border-border rounded-2xl p-5 shadow-sm">
+             <div class="text-xs font-bold uppercase tracking-wider text-foreground mb-4 border-b border-border pb-2 flex items-center justify-between">Quality Persona <Icon name="lucide:gem" class="w-3.5 h-3.5 text-muted-foreground" /></div>
+             <div class="space-y-3">
+                <div class="bg-card border border-border rounded-lg p-2.5 border-primary/30">
+                   <div class="text-sm font-bold text-primary flex justify-between">Your Client <Icon name="lucide:check-circle" class="w-3 h-3 mt-0.5" /></div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Best-in-class integrations"</div>
+                </div>
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">HubSpot</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Seamless UX and features"</div>
+                </div>
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">Salesforce</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Most robust ecosystem"</div>
+                </div>
+             </div>
+          </div>
+
+          <div class="bg-muted/20 border border-border rounded-2xl p-5 shadow-sm">
+             <div class="text-xs font-bold uppercase tracking-wider text-foreground mb-4 border-b border-border pb-2 flex items-center justify-between">Scale Persona <Icon name="lucide:trending-up" class="w-3.5 h-3.5 text-muted-foreground" /></div>
+             <div class="space-y-3">
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">Salesforce</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Unmatched enterprise scale"</div>
+                </div>
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">Microsoft Dynamics</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Deep stack integration"</div>
+                </div>
+                <div class="bg-card border border-border rounded-lg p-2.5">
+                   <div class="text-sm font-bold text-foreground">Oracle CX</div>
+                   <div class="text-[10px] text-muted-foreground mt-1 line-clamp-1 italic">"Complex global deployments"</div>
+                </div>
+             </div>
+          </div>
+
+       </div>
+    </div>
+    
+    <p class="text-center text-sm font-medium text-foreground bg-primary/5 border border-primary/20 rounded-xl p-4 max-w-3xl mx-auto">
+      This is how you see which criteria you win, where competitors dominate, and which criteria no one owns yet.
+    </p>
+  </section>
+
+  {/* ── 5. INFORMATION GAPS ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+       <h2 class="text-3xl font-bold text-foreground mb-4">Where the market — and AI — has gaps</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+       {/* Card 1 */}
+       <div class="bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-primary/50 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+             <span class="px-2 py-1 bg-amber-500/10 text-amber-500 text-[9px] uppercase tracking-wider font-bold rounded">Info Gap</span>
+          </div>
+          <h3 class="text-sm font-bold text-foreground mb-2">Compliance for Indian SMBs</h3>
+          <p class="text-xs text-muted-foreground">AI answers are vague or outdated here.</p>
+       </div>
+       {/* Card 2 */}
+       <div class="bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-primary/50 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+             <span class="px-2 py-1 bg-blue-500/10 text-blue-500 text-[9px] uppercase tracking-wider font-bold rounded">Missing Criterion</span>
+          </div>
+          <h3 class="text-sm font-bold text-foreground mb-2">Migration support for agencies</h3>
+          <p class="text-xs text-muted-foreground">AI fails to list providers offering this.</p>
+       </div>
+       {/* Card 3 */}
+       <div class="bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-primary/50 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+             <span class="px-2 py-1 bg-amber-500/10 text-amber-500 text-[9px] uppercase tracking-wider font-bold rounded">Info Gap</span>
+          </div>
+          <h3 class="text-sm font-bold text-foreground mb-2">API limits on entry tiers</h3>
+          <p class="text-xs text-muted-foreground">AI answers are contradictory across engines.</p>
+       </div>
+       {/* Card 4 */}
+       <div class="bg-card border border-border rounded-2xl p-6 shadow-sm hover:border-primary/50 transition-colors border-primary/30 bg-primary/5">
+          <div class="flex items-center gap-2 mb-3">
+             <span class="px-2 py-1 bg-primary/20 text-primary text-[9px] uppercase tracking-wider font-bold rounded flex items-center gap-1"><Icon name="lucide:sparkles" class="w-3 h-3" /> Opportunity</span>
+          </div>
+          <h3 class="text-sm font-bold text-primary mb-2">ROI tracking for B2B tech</h3>
+          <p class="text-xs text-muted-foreground">No clear category winner defined by AI.</p>
+       </div>
+    </div>
+
+    <p class="text-center text-sm font-medium text-muted-foreground max-w-2xl mx-auto">
+      These gaps become your content roadmap: the exact topics where one good explainer can turn your client into the default source.
+    </p>
+  </section>
+
+  {/* ── 6. METHODOLOGY ── */}
+  <section class="relative mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">How Industry Metrics runs an audit</h2>
+    <div class="bg-card border border-border rounded-3xl p-8 md:p-12 shadow-sm">
+      <ul class="space-y-6">
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Define the sector and your client’s brand, then auto‑enrich with basic industry and region data.</span>
+        </li>
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Run a 4‑stage pipeline across AI engines: landscape, buying criteria, persona shortlists, information gaps.</span>
+        </li>
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Calculate shared metrics (SoV, SoS, APS, sentiment) for your client and 15–20 competitors from the same run.</span>
+        </li>
+        <li class="flex items-start gap-4 text-base md:text-lg text-muted-foreground leading-relaxed">
+           <Icon name="lucide:check-circle-2" class="w-6 h-6 text-primary mt-0.5 shrink-0" />
+           <span>Overlay your client on that map: tier, criteria wins, shortlist appearances, missing criteria.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  {/* ── 7. CONDENSED LEGACY CONTENT ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    
+    <div class="grid lg:grid-cols-2 gap-12 mb-24">
+      {/* Outputs */}
+      <div class="reveal">
+        <h2 class="text-2xl font-bold text-foreground mb-8">What you'll see</h2>
+        <div class="grid grid-cols-2 gap-6">
+          {outputs.map((output) => (
+            <div class="flex flex-col gap-2">
+              <Icon name="lucide:layout-template" class="w-4 h-4 text-primary" />
+              <h3 class="font-bold text-foreground text-sm">{output.title}</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">{output.desc || output.list}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Includes */}
+      <div class="reveal">
+        <h2 class="text-2xl font-bold text-foreground mb-8">What's included</h2>
+        <div class="bg-card rounded-2xl border border-border p-6 shadow-sm">
+          <ul class="space-y-3">
+            {includes.map((item) => (
+              <li class="flex items-start gap-3 text-sm text-muted-foreground">
+                <Icon name="lucide:check" class="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {/* How it works pipeline */}
+    <div class="reveal mb-24 max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-foreground mb-8 text-center">Pipeline breakdown</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {howItWorks.map((step, index) => (
+           <div class="flex items-start gap-4 p-4 rounded-xl bg-card border border-border shadow-sm">
+             <div class="w-6 h-6 shrink-0 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-xs mt-0.5">
+               {index + 1}
+             </div>
+             <div>
+                <h3 class="font-bold text-foreground text-sm mb-1">{step.title}</h3>
+                <p class="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
+             </div>
+           </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Use Cases */}
+    <div class="reveal max-w-3xl mx-auto">
+      <h2 class="text-2xl font-bold text-foreground mb-8 text-center">Built for Agency Workflows</h2>
+      <ul class="space-y-4">
+        {useCases.map((uc) => (
+          <li class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 border-b border-border/50 pb-4 last:border-0">
+            <span class="font-bold text-foreground whitespace-nowrap">{uc.scenario}</span>
+            <span class="text-sm text-muted-foreground">{uc.outcome}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+  </section>
+
   <FAQ customFaqs={faqs} title="Industry Metrics — FAQs" subtitle="Focus: competitive benchmarking, prompt sets, workflow transparency." />
   <CTA />
 </Layout>

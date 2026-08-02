@@ -1,9 +1,9 @@
 ---
+import { faqs } from '../../utils/data';
 ---
-
 <section id="scene-clarification" class="relative bg-background border-t border-border py-32">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mb-24 md:w-1/2">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
       <h2 class="text-3xl md:text-5xl font-medium tracking-tight text-foreground mb-6">
         Frequently asked questions
       </h2>
@@ -12,52 +12,22 @@
       </p>
     </div>
 
-    <!-- Rhythmic Grid Layout (No Accordions) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24 faq-grid">
+    <!-- Collapsible Accordion -->
+    <div class="faq-grid space-y-4">
       
-      <div class="faq-block opacity-0 transform translate-y-8">
-        <h3 class="text-xl font-medium text-foreground mb-4">What exactly does PhantomRank track?</h3>
-        <p class="text-muted-foreground leading-relaxed mb-6">
-          We track where your brand appears across ChatGPT, Gemini, Claude, Grok, and Perplexity when users search for your category or product type. We categorize your visibility into distinct states: absent, mentioned, recommended, or endorsed.
-        </p>
-        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
-          Learn more
-          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </a>
-      </div>
-
-      <div class="faq-block opacity-0 transform translate-y-8">
-        <h3 class="text-xl font-medium text-foreground mb-4">How is this different from traditional SEO tools?</h3>
-        <p class="text-muted-foreground leading-relaxed mb-6">
-          Traditional SEO tools track Google rankings and keyword volumes. PhantomRank tracks LLM recommendations and Answer Engine share of voice. Being #1 on Google doesn't guarantee ChatGPT will recommend you — we measure what AI actually says about you.
-        </p>
-        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
-          Learn more
-          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </a>
-      </div>
-
-      <div class="faq-block opacity-0 transform translate-y-8">
-        <h3 class="text-xl font-medium text-foreground mb-4">Can I track my competitors?</h3>
-        <p class="text-muted-foreground leading-relaxed mb-6">
-          Yes. You can track up to 20 competitors simultaneously. Our Answer Placement Score and Share of Synthesis metrics let you benchmark exactly who is winning the AI recommendation battle in your category.
-        </p>
-        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
-          Learn more
-          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </a>
-      </div>
-
-      <div class="faq-block opacity-0 transform translate-y-8">
-        <h3 class="text-xl font-medium text-foreground mb-4">Do you offer reports for agencies?</h3>
-        <p class="text-muted-foreground leading-relaxed mb-6">
-          Yes, PhantomRank is built for agencies. We provide white-label client-ready reports, multi-client workspace architecture, and priority onboarding to help you offer AI Search Intelligence as a core service to your clients.
-        </p>
-        <a href="#" class="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors group">
-          Learn more
-          <svg class="ml-1 w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </a>
-      </div>
+      {faqs.map((faq) => (
+        <div class="collapse collapse-plus border border-border bg-card faq-block opacity-0 transform translate-y-8 shadow-sm">
+          <input type="checkbox" class="peer" />
+          <div class="collapse-title text-lg font-medium text-foreground px-6 py-4 peer-checked:text-primary transition-colors">
+            {faq.question}
+          </div>
+          <div class="collapse-content px-6">
+            <p class="text-muted-foreground leading-relaxed pb-4">
+              {faq.answer}
+            </p>
+          </div>
+        </div>
+      ))}
 
     </div>
   </div>

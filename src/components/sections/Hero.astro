@@ -1,42 +1,75 @@
 ---
+import DotBackground from "../ui/DotBackground.astro";
 ---
----
-
-<section class="relative mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden" id="hero-section">
-  <!-- Interactive Dot Distortion Background -->
-  <canvas id="dot-distortion-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-40 dark:opacity-60 mix-blend-screen"></canvas>
-  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,var(--background)_100%)] z-0 pointer-events-none"></div>
+<section
+  class="relative mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
+  id="hero-section"
+>
+  <DotBackground containerId="hero-section" />
 
   <div class="text-center z-10">
-    <h1 class="text-5xl font-medium tracking-tight sm:text-7xl lg:text-8xl text-foreground max-w-5xl mx-auto leading-tight">
-      Search intelligence <br class="hidden sm:block" />
-      <span class="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-        for brands & agencies
+    <h1
+      class="text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-6xl mx-auto leading-tight"
+    >
+      <span class="block whitespace-nowrap">In the era of clickless search,</span>
+      <span
+        class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2"
+      >
+        AI visibility is your new competitive advantage
       </span>
     </h1>
 
-    <p class="mt-8 text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-      PhantomRank shows how AI assistants and search engines talk about your brand. See when you are recommended, when you are invisible, and how your AI share of voice changes as you publish new content and campaigns.
+    <p class="mt-8 text-xl text-muted-foreground max-w-3xl mx-auto font-light">
+      PhantomRank shows how AI engines like ChatGPT, Gemini, Perplexity, Grok, and NVIDIA mention your brand, link to your site, and compare you to competitors – so you can turn AI answers into a real edge, not a black box.
     </p>
 
-    <div class="mt-12">
+    <div class="mt-8 flex flex-col items-center justify-center gap-4">
+      <p class="text-sm text-muted-foreground/80 font-medium tracking-wide uppercase">
+        Tracking AI visibility across:
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10 opacity-70 grayscale transition-all duration-300 hover:grayscale-0">
+        <img src="/images/Logo/ChatGPTlogo.svg" alt="ChatGPT" class="h-6 w-auto" />
+        <img src="/images/Logo/Claudelogo.svg" alt="Claude" class="h-6 w-auto" />
+        <img src="/images/Logo/Gemini-ailogo.svg" alt="Gemini" class="h-6 w-auto" />
+        <img src="/images/Logo/GROKlogo.svg" alt="Grok" class="h-6 w-auto" />
+        <img src="/images/Logo/Nvidialogo.svg" alt="NVIDIA" class="h-6 w-auto" />
+        <img src="/images/Logo/Perplexitylogo.svg" alt="Perplexity" class="h-6 w-auto" />
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href="/signup"
+        class="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary/90 transition-colors duration-300"
+      >
+        See a sample AI visibility report
+      </a>
       <a
         href="/signup"
         class="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium text-foreground bg-transparent border border-border rounded-full hover:bg-muted transition-colors duration-300"
       >
-        Get Access
+        Book a 20-minute walkthrough
       </a>
     </div>
   </div>
 
   <!-- Tiny 20% glimpse of the product interface -->
-  <div class="mt-24 w-full max-w-5xl mx-auto relative hero-dashboard-glimpse transform-gpu">
+  <div
+    class="mt-24 w-full max-w-5xl mx-auto relative hero-dashboard-glimpse transform-gpu"
+  >
     <!-- Gradient fade out at the top and bottom to create the "glimpse" effect -->
-    <div class="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background z-10 pointer-events-none"></div>
-    
-    <div class="rounded-xl border border-border bg-card shadow-2xl overflow-hidden h-[300px] relative">
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background z-10 pointer-events-none"
+    >
+    </div>
+
+    <div
+      class="rounded-xl border border-border bg-card shadow-2xl overflow-hidden h-[300px] relative"
+    >
       <!-- Top nav bar mockup -->
-      <div class="h-12 border-b border-border flex items-center px-4 bg-muted/30">
+      <div
+        class="h-12 border-b border-border flex items-center px-4 bg-muted/30"
+      >
         <div class="flex gap-1.5">
           <div class="w-2.5 h-2.5 rounded-full bg-border"></div>
           <div class="w-2.5 h-2.5 rounded-full bg-border"></div>
@@ -61,145 +94,19 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // --- Dot Distortion Canvas Effect ---
-  const initCanvas = () => {
-    const canvas = document.getElementById("dot-distortion-canvas") as HTMLCanvasElement;
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
-
-    const section = document.getElementById("hero-section");
-    if (!section) return;
-
-    let width = 0;
-    let height = 0;
-    let dots: { baseX: number, baseY: number, x: number, y: number }[] = [];
-    
-    // Configuration
-    const spacing = 22; // Space between dots
-    const radius = 1.2; // Size of dots
-    const mouseRadius = 150; // How far the mouse repels
-    const repelForce = 35; // How strongly dots are pushed
-    
-    let mouse = { x: -1000, y: -1000 };
-    let animationFrameId: number;
-
-    const createDots = () => {
-      dots = [];
-      const rows = Math.ceil(height / spacing) + 1;
-      const cols = Math.ceil(width / spacing) + 1;
-      
-      const offsetX = (width - (cols - 1) * spacing) / 2;
-      const offsetY = (height - (rows - 1) * spacing) / 2;
-      
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const x = offsetX + c * spacing;
-          const y = offsetY + r * spacing;
-          dots.push({ baseX: x, baseY: y, x, y });
-        }
-      }
-    };
-
-    const resize = () => {
-      // Use devicePixelRatio for crisp rendering on retina displays
-      const dpr = window.devicePixelRatio || 1;
-      width = section.clientWidth;
-      height = section.clientHeight;
-      
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      
-      ctx.scale(dpr, dpr);
-      createDots();
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = section.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    };
-
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, width, height);
-      
-      // We'll use a dynamic primary-like color for the dots
-      // Assuming a modern blue/indigo hue often used in these AI tools
-      ctx.fillStyle = "rgba(59, 130, 246, 0.7)"; 
-      
-      const time = performance.now() * 0.001;
-      
-      for (let i = 0; i < dots.length; i++) {
-        const dot = dots[i];
-        
-        const dx = mouse.x - dot.baseX;
-        const dy = mouse.y - dot.baseY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        let targetX = dot.baseX;
-        let targetY = dot.baseY;
-        
-        // Ambient wave movement (noise simulation)
-        targetX += Math.sin(time + dot.baseX * 0.01) * 2;
-        targetY += Math.cos(time + dot.baseY * 0.01) * 2;
-        
-        // Mouse repulsion
-        if (dist < mouseRadius) {
-          const force = (mouseRadius - dist) / mouseRadius;
-          const angle = Math.atan2(dy, dx);
-          // Push away
-          targetX -= Math.cos(angle) * force * repelForce;
-          targetY -= Math.sin(angle) * force * repelForce;
-        }
-        
-        // Spring physics (easing towards target)
-        dot.x += (targetX - dot.x) * 0.15;
-        dot.y += (targetY - dot.y) * 0.15;
-        
-        // Draw dot
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    window.addEventListener("resize", resize);
-    section.addEventListener("mousemove", handleMouseMove);
-    section.addEventListener("mouseleave", handleMouseLeave);
-    
-    resize();
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      section.removeEventListener("mousemove", handleMouseMove);
-      section.removeEventListener("mouseleave", handleMouseLeave);
-      cancelAnimationFrame(animationFrameId);
-    };
-  };
-
-  // Initialize canvas on load and during view transitions
-  let cleanupCanvas: (() => void) | undefined;
-  
   const setup = () => {
-    if (cleanupCanvas) cleanupCanvas();
-    cleanupCanvas = initCanvas();
-
     // Subtle entrance animation for the hero text
     gsap.fromTo(
       ".text-center > *",
       { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: "power3.out", delay: 0.1 }
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "power3.out",
+        delay: 0.1,
+      },
     );
 
     // Parallax subtle effect on the dashboard glimpse

@@ -1,10 +1,14 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Features from "../../components/sections/Features.astro";
 import CTA from "../../components/sections/CTA.astro";
 import { pageMeta } from "../../utils/data";
+import { Icon } from "astro-icon/components";
+import DotBackground from "../../components/ui/DotBackground.astro";
 
-const meta = pageMeta.features;
+const meta = {
+  title: "Platform Features | PhantomRank",
+  description: "PhantomRank has three live modules: one for brand-level AI visibility, one for category-level benchmarking, and one for understanding where AI gets its information.",
+};
 ---
 
 <Layout
@@ -15,6 +19,426 @@ const meta = pageMeta.features;
     { name: "Features", href: "/features" },
   ]}
 >
-  <Features variant="full" />
+  {/* ── HERO SECTION ── */}
+  <section id="features-hero" class="relative bg-background pt-32 pb-24 overflow-hidden border-b border-border">
+     <DotBackground containerId="features-hero" />
+     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.1),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.15),transparent_50%)] pointer-events-none"></div>
+     
+     <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center reveal">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
+          Platform features
+        </h1>
+        <p class="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12">
+          PhantomRank has three live modules: one for brand‑level AI visibility, one for category‑level benchmarking, and one for understanding where AI gets its information.
+        </p>
+
+        {/* PILL CARDS */}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <a href="#ai-visibility-tracker" class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors">
+            <div class="flex items-center gap-2 mb-2">
+              <Icon name="lucide:radar" class="w-5 h-5 text-blue-400" />
+              <span class="font-bold text-foreground group-hover:text-primary transition-colors">AI Visibility Tracker</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-green-500/10 text-green-500 dark:text-green-400 px-2 py-0.5 rounded-full border border-green-500/20 ml-2">Live</span>
+            </div>
+            <p class="text-sm text-muted-foreground text-center">See why AI picks one brand over another.</p>
+          </a>
+          
+          <a href="#industry-metrics" class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors">
+            <div class="flex items-center gap-2 mb-2">
+              <Icon name="lucide:bar-chart-3" class="w-5 h-5 text-purple-400" />
+              <span class="font-bold text-foreground group-hover:text-primary transition-colors">Industry Metrics</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-green-500/10 text-green-500 dark:text-green-400 px-2 py-0.5 rounded-full border border-green-500/20 ml-2">Live</span>
+            </div>
+            <p class="text-sm text-muted-foreground text-center">See your position in the AI view of your market.</p>
+          </a>
+          
+          <a href="#gso" class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors">
+            <div class="flex items-center gap-2 mb-2">
+              <Icon name="lucide:share-2" class="w-5 h-5 text-pink-400" />
+              <span class="font-bold text-foreground group-hover:text-primary transition-colors">GSO</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-green-500/10 text-green-500 dark:text-green-400 px-2 py-0.5 rounded-full border border-green-500/20 ml-2">Live</span>
+            </div>
+            <p class="text-sm text-muted-foreground text-center">See which sites AI actually learns your market from.</p>
+          </a>
+        </div>
+     </div>
+  </section>
+
+  {/* ── SKEPTICS CALLOUT ── */}
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-16 reveal">
+    <div class="rounded-3xl bg-card border border-border p-8 md:p-10 relative overflow-hidden shadow-sm">
+      <div class="absolute top-0 left-0 w-2 h-full bg-primary"></div>
+      <h2 class="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
+        <Icon name="lucide:message-square-dashed" class="w-6 h-6 text-primary" />
+        How we think about AI visibility
+      </h2>
+      <ul class="space-y-4 mb-8">
+        <li class="flex items-start gap-3 text-lg text-muted-foreground">
+          <Icon name="lucide:minus" class="w-5 h-5 mt-1 shrink-0 opacity-50" />
+          <span>AI answers are not deterministic. A single prompt run is a sample, not a stable ranking.</span>
+        </li>
+        <li class="flex items-start gap-3 text-lg text-muted-foreground">
+          <Icon name="lucide:minus" class="w-5 h-5 mt-1 shrink-0 opacity-50" />
+          <span>API responses can differ from what users see in ChatGPT, Gemini, or Perplexity.</span>
+        </li>
+        <li class="flex items-start gap-3 text-lg text-muted-foreground">
+          <Icon name="lucide:minus" class="w-5 h-5 mt-1 shrink-0 opacity-50" />
+          <span>Today’s AI visibility tools can only model behaviour from repeated sampling; there is no official, first‑party metric yet.</span>
+        </li>
+      </ul>
+      <div class="p-5 bg-background rounded-xl border border-border">
+        <p class="text-foreground leading-relaxed font-medium">
+          PhantomRank is designed around those constraints. We track the same prompt sets over time across multiple engines and keep full answer and citation histories so you can see patterns, not just one‑off screenshots or a single score.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ── FEATURE 1: AI VISIBILITY TRACKER ── */}
+  <section id="ai-visibility-tracker" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 border-t border-border/50 reveal">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Visual Side */}
+      <div class="relative h-[450px] w-full bg-muted/20 rounded-3xl border border-border overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.1),transparent_70%)]"></div>
+        
+        {/* Mockup Answer Panel */}
+        <div class="absolute top-[10%] left-[5%] md:left-[10%] w-56 rounded-xl border border-border bg-card p-4 shadow-xl z-20 hidden md:block">
+           <div class="flex items-center gap-2 mb-3 border-b border-border/50 pb-3">
+              <div class="w-5 h-5 rounded bg-primary/20 flex items-center justify-center"><Icon name="lucide:sparkles" class="w-3 h-3 text-primary" /></div>
+              <div class="text-xs font-bold text-foreground uppercase tracking-wider">AI Answer</div>
+           </div>
+           <div class="space-y-3">
+              <div class="h-2 w-full bg-muted rounded"></div>
+              <div class="h-2 w-4/5 bg-muted rounded"></div>
+              
+              <div class="p-2.5 bg-primary/10 border border-primary/30 rounded-lg mt-4">
+                 <div class="flex items-center justify-between mb-1">
+                   <span class="text-xs font-bold text-foreground">Competitor A</span>
+                   <Icon name="lucide:check-circle-2" class="w-3.5 h-3.5 text-primary" />
+                 </div>
+                 <div class="text-[10px] text-muted-foreground leading-tight">Recommended as top choice.</div>
+              </div>
+              
+              <div class="p-2 bg-background border border-border rounded-lg opacity-70">
+                 <span class="text-[10px] font-medium text-foreground">Your Brand</span>
+                 <div class="mt-1.5 h-1 w-1/2 bg-muted rounded"></div>
+              </div>
+           </div>
+        </div>
+
+        {/* Flowchart Diagram */}
+        <div class="absolute inset-0 flex items-center justify-end pr-4 md:pr-12 pointer-events-none">
+          <svg class="absolute inset-0 w-full h-full z-0">
+             <path d="M 40% 50% L 60% 25%" stroke="hsl(var(--border))" stroke-dasharray="4" stroke-width="1.5" fill="none" class="opacity-50" />
+             <path d="M 40% 50% L 60% 50%" stroke="hsl(var(--primary))" stroke-dasharray="4" stroke-width="1.5" fill="none" />
+             <path d="M 40% 50% L 60% 75%" stroke="hsl(var(--destructive))" stroke-dasharray="4" stroke-width="1.5" fill="none" />
+          </svg>
+          
+          <div class="relative z-10 grid grid-cols-2 gap-x-12 md:gap-x-16 gap-y-12 items-center w-full max-w-sm ml-auto mr-4 md:mr-10">
+             <div class="col-start-1 row-start-2 text-center">
+                <div class="w-14 h-14 rounded-2xl bg-background border-2 border-border flex items-center justify-center shadow-lg mx-auto mb-3 relative">
+                  <Icon name="lucide:search" class="w-6 h-6 text-muted-foreground" />
+                  <div class="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full animate-pulse"></div>
+                </div>
+                <span class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Buyer Query</span>
+             </div>
+             
+             <div class="col-start-2 row-start-1 flex flex-col gap-1">
+               <div class="flex items-center">
+                 <div class="w-2.5 h-2.5 rounded-full bg-muted-foreground mr-3"></div>
+                 <div class="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Websites AI read</div>
+               </div>
+               <div class="bg-background border border-border rounded-lg p-2.5 text-xs shadow-sm font-medium ml-5">
+                 Competitor Blog
+               </div>
+             </div>
+
+             <div class="col-start-2 row-start-2 flex flex-col gap-1">
+               <div class="flex items-center">
+                 <div class="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)] mr-3"></div>
+                 <div class="text-[10px] font-bold uppercase tracking-wider text-primary">Shown to the buyer</div>
+               </div>
+               <div class="bg-primary/5 border border-primary/30 rounded-lg p-2.5 text-xs shadow-sm font-bold text-foreground ml-5">
+                 Competitor Product Page
+               </div>
+             </div>
+
+             <div class="col-start-2 row-start-3 flex flex-col gap-1">
+               <div class="flex items-center">
+                 <div class="w-2.5 h-2.5 rounded-full bg-destructive shadow-[0_0_10px_rgba(239,68,68,0.5)] mr-3"></div>
+                 <div class="text-[10px] font-bold uppercase tracking-wider text-destructive">Seen, then ignored</div>
+               </div>
+               <div class="bg-destructive/5 border border-destructive/30 rounded-lg p-2.5 text-xs shadow-sm font-medium text-foreground ml-5 opacity-80">
+                 Your Feature Page
+               </div>
+             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Copy Side */}
+      <div>
+        <div class="inline-block px-3 py-1 mb-4 rounded-full bg-primary/10 border border-primary/20 text-xs font-semibold text-primary uppercase tracking-wider">
+          How AI builds an answer about your brand
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          See why AI picks one brand over another
+        </h2>
+        <p class="text-lg text-muted-foreground leading-relaxed mb-8">
+          When someone asks AI for a solution, it reads multiple pages and only a few brands make it into the answer. The AI Visibility Tracker shows which sites were read, which ones were recommended, and where your own pages dropped out.
+        </p>
+        
+        {/* Methodology Block */}
+        <div class="bg-card border border-border rounded-2xl p-6 mb-8 shadow-sm">
+           <h3 class="font-bold text-foreground mb-4 flex items-center gap-2">
+             <Icon name="lucide:microscope" class="w-5 h-5 text-muted-foreground" />
+             How we measure AI visibility
+           </h3>
+           <ul class="space-y-3">
+             <li class="flex items-start gap-2 text-sm text-muted-foreground">
+               <span class="text-primary font-bold mt-0.5">•</span>
+               <span>We track the same set of buyer‑style questions over time instead of chasing single screenshots.</span>
+             </li>
+             <li class="flex items-start gap-2 text-sm text-muted-foreground">
+               <span class="text-primary font-bold mt-0.5">•</span>
+               <span>We log the full answer text, the brands mentioned, and the domains cited for each run.</span>
+             </li>
+             <li class="flex items-start gap-2 text-sm text-muted-foreground">
+               <span class="text-primary font-bold mt-0.5">•</span>
+               <span>We compare your results to named competitors on the same prompts and time windows.</span>
+             </li>
+           </ul>
+        </div>
+
+        <a href="/features/ai-visibility-tracker" class="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors">
+          View AI Visibility Tracker <Icon name="lucide:arrow-right" class="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ── FEATURE 2: INDUSTRY METRICS ── */}
+  <section id="industry-metrics" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 border-t border-border/50 reveal">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      
+      {/* Copy Side */}
+      <div class="order-2 lg:order-1">
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          See your position in the AI view of your market
+        </h2>
+        <p class="text-lg text-muted-foreground leading-relaxed mb-8">
+          Industry Metrics turns AI answers into a simple view of which brands are treated as leaders, which are growing, and which rarely show up.
+        </p>
+        
+        {/* Metrics Strip Grid */}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+           <div class="bg-card border border-border p-4 rounded-xl shadow-sm">
+             <div class="font-bold text-foreground mb-1 text-sm">AI Share of Voice (SoV)</div>
+             <p class="text-xs text-muted-foreground">Share of all mentions across your tracked AI questions.</p>
+           </div>
+           <div class="bg-card border border-border p-4 rounded-xl shadow-sm">
+             <div class="font-bold text-foreground mb-1 text-sm">Share of Synthesis (SoS)</div>
+             <p class="text-xs text-muted-foreground">Share of answers where your domain is cited as a source.</p>
+           </div>
+           <div class="bg-card border border-border p-4 rounded-xl shadow-sm">
+             <div class="font-bold text-foreground mb-1 text-sm">Answer Placement (APS)</div>
+             <p class="text-xs text-muted-foreground">How often AI places you at or near the top of its recommendations.</p>
+           </div>
+           <div class="bg-card border border-border p-4 rounded-xl shadow-sm">
+             <div class="font-bold text-foreground mb-1 text-sm">Sentiment Alignment (SAI)</div>
+             <p class="text-xs text-muted-foreground">Whether AI tends to describe you positively, neutrally, or as a risk.</p>
+           </div>
+        </div>
+
+        <a href="/features/industry-metrics" class="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors">
+          View Industry Metrics <Icon name="lucide:arrow-right" class="w-4 h-4" />
+        </a>
+      </div>
+
+      {/* Visual Side */}
+      <div class="order-1 lg:order-2 relative h-[450px] w-full bg-zinc-950 rounded-3xl border border-zinc-800 overflow-hidden shadow-2xl flex flex-col p-6">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 blur-[80px] pointer-events-none"></div>
+        
+        <div class="flex-1 flex flex-col justify-center max-w-sm mx-auto w-full relative z-10 space-y-6">
+          
+          {/* Leaders */}
+          <div>
+            <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center gap-2">
+               <div class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div> Leaders
+            </h4>
+            <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl p-3 flex items-center justify-between backdrop-blur-md">
+                <div class="flex items-center gap-3">
+                   <div class="w-7 h-7 rounded bg-zinc-200 flex items-center justify-center font-bold text-zinc-900 text-[10px]">C1</div>
+                   <span class="text-sm font-semibold text-zinc-200">Competitor 1</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs">
+                   <div class="flex flex-col items-end"><span class="text-[9px] text-zinc-500 uppercase font-bold">SoV</span> <span class="text-purple-400 font-bold">42%</span></div>
+                   <div class="flex flex-col items-end"><span class="text-[9px] text-zinc-500 uppercase font-bold">APS</span> <span class="text-green-400 font-bold">#1</span></div>
+                </div>
+            </div>
+          </div>
+          
+          {/* Challengers */}
+          <div>
+            <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center gap-2">
+               <div class="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></div> Challengers
+            </h4>
+            <div class="space-y-2">
+              <div class="bg-purple-500/10 border border-purple-500/30 rounded-xl p-3 flex items-center justify-between backdrop-blur-md relative overflow-hidden">
+                  <div class="absolute left-0 top-0 w-1 h-full bg-purple-500"></div>
+                  <div class="flex items-center gap-3 pl-1">
+                     <div class="w-7 h-7 rounded bg-purple-500 flex items-center justify-center font-bold text-white text-[10px]">YB</div>
+                     <span class="text-sm font-bold text-white">Your Brand</span>
+                  </div>
+                  <div class="flex items-center gap-3 text-xs">
+                     <div class="flex flex-col items-end"><span class="text-[9px] text-zinc-400 uppercase font-bold">SoV</span> <span class="text-purple-300 font-bold">18%</span></div>
+                     <div class="flex flex-col items-end"><span class="text-[9px] text-zinc-400 uppercase font-bold">APS</span> <span class="text-amber-400 font-bold">#3</span></div>
+                  </div>
+              </div>
+              <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl p-3 flex items-center justify-between backdrop-blur-md opacity-80">
+                  <div class="flex items-center gap-3">
+                     <div class="w-7 h-7 rounded bg-zinc-800 flex items-center justify-center font-bold text-zinc-400 text-[10px]">C2</div>
+                     <span class="text-sm font-medium text-zinc-300">Competitor 2</span>
+                  </div>
+                  <div class="flex items-center gap-3 text-xs">
+                     <div class="flex flex-col items-end"><span class="text-[9px] text-zinc-500 uppercase font-bold">SoV</span> <span class="text-zinc-400 font-bold">15%</span></div>
+                     <div class="flex flex-col items-end"><span class="text-[9px] text-zinc-500 uppercase font-bold">APS</span> <span class="text-zinc-400 font-bold">#4</span></div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+        {/* Caption */}
+        <div class="mt-auto border-t border-zinc-800 pt-4 text-center">
+          <p class="text-[11px] text-zinc-500 leading-relaxed max-w-sm mx-auto">
+            We treat this as a trend over time, not a single ‘rank’. The goal is to see if your visibility and citations are moving in the right direction across engines.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── FEATURE 3: GSO ── */}
+  <section id="gso" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 border-t border-border/50 reveal">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      
+      {/* Visual Side */}
+      <div class="relative h-[450px] w-full bg-muted/10 rounded-3xl border border-border overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center">
+          
+          {/* Network SVG Lines */}
+          <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0">
+            {/* Gov */}
+            <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="hsl(var(--border))" stroke-dasharray="4" stroke-width="1.5" />
+            {/* Reviews */}
+            <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="hsl(var(--primary))" stroke-width="2" />
+            {/* Communities */}
+            <line x1="50%" y1="50%" x2="75%" y2="75%" stroke="hsl(var(--border))" stroke-dasharray="4" stroke-width="1.5" />
+            {/* Company Sites */}
+            <line x1="50%" y1="50%" x2="25%" y2="75%" stroke="hsl(var(--border))" stroke-dasharray="4" stroke-width="1.5" />
+            {/* Media */}
+            <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="hsl(var(--border))" stroke-dasharray="4" stroke-width="1.5" />
+          </svg>
+
+          {/* Center Node */}
+          <div class="w-24 h-24 rounded-full bg-background border-2 border-border flex flex-col items-center justify-center z-10 shadow-lg relative">
+            <div class="absolute inset-0 rounded-full border border-primary/20 animate-ping opacity-20"></div>
+            <span class="text-sm font-bold text-foreground">Your</span>
+            <span class="text-sm font-bold text-foreground">Category</span>
+          </div>
+
+          {/* Orbiting Nodes */}
+          {/* Gov */}
+          <div class="absolute top-[10%] left-[50%] -translate-x-1/2 flex flex-col items-center z-10">
+             <div class="bg-card border border-border rounded-xl px-3 py-2 shadow-sm text-center mb-1">
+               <div class="text-[9px] uppercase font-bold tracking-wider text-muted-foreground mb-0.5">Regulators</div>
+               <div class="text-xs font-semibold text-foreground">Gov.uk</div>
+             </div>
+             <div class="bg-muted text-muted-foreground rounded-full px-2 py-0.5 text-[9px] font-bold">5%</div>
+          </div>
+          
+          {/* Reviews (Highlighted) */}
+          <div class="absolute top-[30%] left-[85%] -translate-x-1/2 flex flex-col items-center z-10">
+             <div class="bg-primary/5 border border-primary/30 rounded-xl px-3 py-2 shadow-sm text-center mb-1 w-28">
+               <div class="text-[9px] uppercase font-bold tracking-wider text-primary mb-0.5">Reviews</div>
+               <div class="text-xs font-bold text-foreground">G2, Capterra</div>
+             </div>
+             <div class="bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-[9px] font-bold">40%</div>
+          </div>
+
+          {/* Communities */}
+          <div class="absolute top-[75%] left-[75%] -translate-x-1/2 flex flex-col items-center z-10">
+             <div class="bg-card border border-border rounded-xl px-3 py-2 shadow-sm text-center mb-1">
+               <div class="text-[9px] uppercase font-bold tracking-wider text-muted-foreground mb-0.5">Communities</div>
+               <div class="text-xs font-semibold text-foreground">Reddit</div>
+             </div>
+             <div class="bg-muted text-muted-foreground rounded-full px-2 py-0.5 text-[9px] font-bold">30%</div>
+          </div>
+
+          {/* Company Sites */}
+          <div class="absolute top-[75%] left-[25%] -translate-x-1/2 flex flex-col items-center z-10">
+             <div class="bg-card border border-border rounded-xl px-3 py-2 shadow-sm text-center mb-1">
+               <div class="text-[9px] uppercase font-bold tracking-wider text-muted-foreground mb-0.5">Company Sites</div>
+               <div class="text-xs font-semibold text-foreground">Brand Blogs</div>
+             </div>
+             <div class="bg-muted text-muted-foreground rounded-full px-2 py-0.5 text-[9px] font-bold">10%</div>
+          </div>
+
+          {/* Media */}
+          <div class="absolute top-[30%] left-[15%] -translate-x-1/2 flex flex-col items-center z-10">
+             <div class="bg-card border border-border rounded-xl px-3 py-2 shadow-sm text-center mb-1">
+               <div class="text-[9px] uppercase font-bold tracking-wider text-muted-foreground mb-0.5">Media / News</div>
+               <div class="text-xs font-semibold text-foreground">TechCrunch</div>
+             </div>
+             <div class="bg-muted text-muted-foreground rounded-full px-2 py-0.5 text-[9px] font-bold">15%</div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Copy Side */}
+      <div>
+        <div class="inline-block px-3 py-1 mb-4 rounded-full bg-pink-500/10 border border-pink-500/20 text-xs font-semibold text-pink-500 uppercase tracking-wider">
+          Where AI goes to form its opinions
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          See which sites AI actually learns your market from
+        </h2>
+        <p class="text-lg text-muted-foreground leading-relaxed mb-6">
+          GSO is a search engine for AI’s own sources. Instead of showing you what you can click, it shows you which domains AI keeps pulling from when it answers questions in your vertical.
+        </p>
+        <p class="text-base font-medium text-foreground mb-8">
+          We look at the same AI answers your buyers see, extract every citation, and group those sources into types like regulators, media, review platforms, communities, and company sites. This gives you a clear map of which places matter most if you want AI to trust and recommend you.
+        </p>
+        
+        {/* Metrics Strip Grid */}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+           <div class="bg-card border border-border p-4 rounded-xl shadow-sm">
+             <div class="font-bold text-foreground mb-1 text-sm">Source Domain Share</div>
+             <p class="text-xs text-muted-foreground">How much of AI’s citations come from each type of source (gov, media, reviews, communities, company sites).</p>
+           </div>
+           <div class="bg-card border border-border p-4 rounded-xl shadow-sm">
+             <div class="font-bold text-foreground mb-1 text-sm">Top Source Domains</div>
+             <p class="text-xs text-muted-foreground">The specific sites that appear again and again as sources in your vertical.</p>
+           </div>
+        </div>
+
+        {/* Highlight Callout */}
+        <div class="bg-primary/5 border border-primary/20 rounded-xl p-5 mb-8 relative overflow-hidden">
+          <div class="absolute left-0 top-0 w-1 h-full bg-primary"></div>
+          <p class="text-sm font-medium text-foreground leading-relaxed">
+            If you see that 40% of AI answers in your category are built on Reddit threads and G2 pages, and your brand is missing there, that’s the first gap to close.
+          </p>
+        </div>
+
+        <a href="/features/gso" class="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-full hover:bg-foreground/90 transition-colors">
+          View GSO <Icon name="lucide:arrow-right" class="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+
   <CTA />
 </Layout>

@@ -1,144 +1,464 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import FeatureDetail from "../../components/sections/FeatureDetail.astro";
 import CTA from "../../components/sections/CTA.astro";
 import FAQ from "../../components/sections/FAQ.astro";
 import { features } from "../../utils/features";
+import { Icon } from "astro-icon/components";
+import DotBackground from "../../components/ui/DotBackground.astro";
 
 const feature = features.find((f) => f.slug === "ai-visibility-tracker")!;
 
 const insight =
-  "When someone asks ChatGPT, Perplexity, or Gemini for “best tools in my category”, the AI returns 3–4 options and the rest of the market disappears. Traditional SEO tools can’t tell you if you were even in the running, how you were described, or whether you were recommended at all. PhantomRank’s AI Visibility Tracker turns those messy, non‑deterministic answers into a stable picture of where you show up, how you’re framed, and which levers to pull to move real demand in your direction.";
+  "Traditional SEO tools can’t show you how often AI engines actually mention you, recommend you, or link to your site. The AI Visibility Tracker runs a fixed set of buyer‑style prompts across multiple engines and turns those answers into clear states you can track over time.";
 
 const outputs = [
-  "Answer State Map showing, for each intent cluster, whether your brand is absent, mentioned, recommended, or strongly endorsed across major AI engines.",
-  "Multi‑engine coverage report aggregating results from Perplexity (live) and, as we roll them out, ChatGPT, Gemini, Claude, and Copilot — so you’re not basing decisions on a single assistant.",
-  "AI Discovery Funnel that tracks the journey from query → your pages being crawled → your brand being mentioned → your site actually being cited, so you can see exactly where visibility breaks.",
-  "Trust Gap detection — prompts where AI crawled your content but chose not to cite it, revealing high‑ROI fixes where the content exists but isn’t yet “good enough” for the answer.",
-  "Visibility by Platform breakdown showing how each assistant treats you, so you can compare, for example, Perplexity vs ChatGPT recommendations for the same buyer intent.",
-  "Visibility Breakdown across four categories: Fully Visible, Cited Only, Trust Gap, and Not Found — a simple, non‑deterministic‑safe way to track change over time.",
-  "Competitor overlap analysis showing which competitors appear when you don’t, and in which intents they beat you (budget, quality, scale, niche, etc.).",
-  "Auto‑generated Key Insights that translate the data into plain next steps: pages to improve, queries to own, review surfaces to strengthen, and communities to seed.",
+  { title: "Answer State Map", desc: "Intent cluster matrix showing if you're absent, mentioned, recommended, or endorsed." },
+  { title: "Multi‑engine Report", desc: "Aggregated results across Perplexity, ChatGPT, Gemini, and Claude." },
+  { title: "AI Discovery Funnel", desc: "Track query → crawl → mention → citation drop-offs." },
+  { title: "Trust Gap Detection", desc: "Identify prompts where AI crawled your content but didn't cite it." },
 ];
 
 const howItWorks = [
-  "Brief Builder — Start with a structured brief instead of a keyword dump. Enter brand name, website, industry, up to 3 competitors, customer type (B2B/B2C/D2C), target buyer roles, up to 5 use cases, and up to 5 differentiators. Choose between Organic prompts (no brand name; see where you deserve to appear) and Brand‑centric prompts (measure current visibility). The brief auto‑saves so you can refine it over time.",
-  "Intent‑based Prompt Generation — PhantomRank generates 45 strategic prompts across 9 funnel‑aligned intent types: Category Awareness, Recommendation, Problem‑Solution, Comparison/Versus, Brand‑Direct, Use‑Case Specific, Local/Regional, Alternatives/Substitutes, and Trust Validation. For each, you can choose from 6 query styles — Conversational, Formal Question, Command, Keyword‑Dense, Context‑Heavy, or Comparison — to mirror how real buyers actually ask.",
-  "Review & Customize — Before any AI call is made, you review all prompts grouped by intent. You can select, deselect, edit, delete, or add your own custom prompts. This keeps the methodology transparent: you always know which questions we’re asking on your behalf.",
-  "Multi‑Engine Analysis Run — Select the AI platforms to query (Perplexity live; ChatGPT, Gemini, Claude, and Copilot rolling out), confirm your prompt set, and launch the run. We execute prompts in parallel, log which pages each engine crawls, and normalize the responses into a standard format. A real‑time progress view shows how many prompts have completed and what’s left.",
-  "Answer State & Funnel Modeling — For each intent cluster, PhantomRank classifies the outcome into four answer states: Absent, Mentioned, Recommended, and Strongly Endorsed. In parallel, we build an AI Discovery Funnel from query → crawl pool → mention → citation. This is how we handle non‑determinism: by tracking patterns and states over multiple prompts and engines, not pretending every answer is identical.",
-  "Results Dashboard — The dashboard is split into three lenses. Overview shows your answer state distribution, AI Discovery Funnel, per‑platform coverage, and auto‑generated insights. Detailed Results lets you inspect each prompt with citation status, crawled URLs, and context snippets. Competitor View highlights which brands show up when you don’t, and in which intents they dominate.",
+  { title: "Brief Builder", desc: "Define your brand DNA, competitors, and target buyer roles." },
+  { title: "Prompt Generation", desc: "Generate 45 strategic prompts across 9 funnel‑aligned intent types." },
+  { title: "Review & Customize", desc: "Edit or add custom prompts before any AI calls are made." },
+  { title: "Multi‑Engine Run", desc: "Execute prompts in parallel across major AI engines." },
+  { title: "State Modeling", desc: "Classify outcomes into states instead of unreliable rankings." },
+  { title: "Results Dashboard", desc: "Inspect prompt-level data, competitors, and trust gaps." },
 ];
 
 const useCases = [
-  {
-    scenario: "Pitching a new SEO or AI visibility client",
-    outcome:
-      "Run a full visibility audit before the first call. Show where they’re completely absent in AI answers, where competitors are recommended instead, and which trust gaps are easiest to fix. You walk into the pitch with a narrative and screenshots they’ve never seen before.",
-  },
-  {
-    scenario: "Monthly client reporting",
-    outcome:
-      "Move beyond vague comments like “AI seems to like us more.” Report concrete shifts in answer states, mention rates, trust gaps, and competitor visibility. Export prompt‑level CSVs into your existing decks and show how content and review work is changing what AIs actually say.",
-  },
-  {
-    scenario: "Content and SEO strategy prioritization",
-    outcome:
-      "Use Trust Gap detection to find queries where AI already crawls your client’s content but chooses not to cite it. These become your highest‑ROI fixes — pages where structural changes, better schema, or clearer positioning can unlock immediate AI visibility without net‑new articles.",
-  },
-  {
-    scenario: "Competitive intelligence and category mapping",
-    outcome:
-      "See which competitors get recommended for which intents — budget, quality, scale, niche — and how AIs describe their strengths. Use this to refine your client’s positioning, decide which battles to fight, and identify categories where you can realistically become the default recommendation.",
-  },
-  {
-    scenario: "Brand vs. Organic prompt testing",
-    outcome:
-      "Run one Organic analysis (no brand name) and one Brand‑centric analysis (brand included) to compare where you deserve to appear vs. where you actually appear. Quantify the visibility gap and use it to prioritize content, PR, and review investments.",
-  },
-  {
-    scenario: "Multi‑market and multi‑segment expansion",
-    outcome:
-      "Test visibility across geos and segments — for example, Mumbai vs US, or Fintech vs SaaS. See how different assistants recommend your client in each context and plan which markets to prioritize based on where AI already sees you as a fit.",
-  },
+  { scenario: "Pitching a new client", outcome: "Show them where they’re completely absent in AI answers vs competitors." },
+  { scenario: "Monthly reporting", outcome: "Report concrete shifts in mention rates and trust gaps, not just vague feelings." },
+  { scenario: "Content prioritization", outcome: "Fix 'Trust Gaps' for immediate visibility without writing net‑new articles." },
+  { scenario: "Competitive intelligence", outcome: "See which competitors win on budget, quality, or niche intents." },
 ];
 
 const includes = [
-  "9 funnel‑aligned intent types covering the full journey from Category Awareness to Brand‑Direct and Trust Validation.",
-  "45 AI‑generated prompts per brand analysis, with full edit control before anything is sent to AI.",
-  "6 query styles to mirror real buyer behaviour (Conversational, Formal Question, Command, Keyword‑Dense, Context‑Heavy, Comparison).",
-  "Organic and Brand‑centric prompt modes to compare “where you should appear” vs “where you actually appear”.",
-  "Up to 3 competitor benchmarks per analysis, baked into the same prompt set and time window.",
-  "Per‑prompt mention and citation tracking, including crawled URLs and context snippets.",
-  "Answer State classification for each intent cluster (Absent, Mentioned, Recommended, Strongly Endorsed).",
-  "AI Discovery Funnel visualisation to see where in the chain (crawl, mention, citation) you’re dropping out.",
-  "Trust Gap detection and scoring to highlight high‑leverage content fixes.",
-  "Auto‑generated, human‑editable insights that translate data into concrete next steps.",
-  "CSV export for prompt‑level and summary data, ready for client decks and internal reporting.",
-  "Scheduling support for recurring runs (e.g., weekly tracking) so you can see trends instead of one‑off snapshots.",
+  "9 funnel‑aligned intent types",
+  "45 AI‑generated prompts per analysis",
+  "Multi-engine support",
+  "Competitor benchmarking",
+  "Per-prompt mention & citation tracking",
+  "AI Discovery Funnel visualization",
+  "Trust Gap scoring",
+  "CSV exports for client decks",
 ];
 
 const faqs = [
-  {
-    question: "How is your AI visibility tracking different from black‑box tools?",
-    answer: "PhantomRank doesn’t hide a secret sampling recipe. Every scan is co-designed with you: we start by drafting a brand DNA from your site and name, your team edits it, we generate buyer personas and journeys, you choose and adjust stages and intents, and you can rewrite every prompt in your own buyer language. Finally, you decide which models to hit and we log the exact versions and geo. Our job is to make that test repeatable and readable, not to pick prompts for you behind the scenes."
-  },
-  {
-    question: "Can I control which prompts and personas PhantomRank uses to test visibility?",
-    answer: "Yes. We propose personas and journeys from your brand DNA, but nothing is locked. You can select which personas matter, which stages of the journey to include, and edit or replace every prompt so it matches how your buyers actually speak. PhantomRank then reuses that set consistently, so trends over time reflect real changes, not our guesswork."
-  },
-  {
-    question: "How do you handle AI engines giving different answers to the same prompt?",
-    answer: "We treat each engine as a separate surface. For every prompt set, PhantomRank queries ChatGPT, Gemini, Claude, Grok, Perplexity and Copilot in parallel, logs the model versions, and compares visibility at three layers: mention, recommendation, and citation. Instead of pretending there’s a single ‘true’ answer, we show you how each engine talks about you and where you’re strong or weak."
-  },
-  {
-    question: "What exactly do you track in an AI answer?",
-    answer: "We track whether you’re named, whether you’re recommended as a pick, whether your domain is cited, and whether your pages are in the crawl pool but rejected. We also capture which non‑you sources got cited alongside or instead of you, so you see the full competitive and ecosystem context—not just your own score."
-  },
-  {
-    question: "Can we limit scans to India or specific regions?",
-    answer: "Yes. Location is explicit, not implied. We inject geo parameters into our prompt templates and log them with each run, so you can see how visibility differs for India versus other regions and avoid mixing local and global results in the same charts."
-  }
+  { question: "How is your AI visibility tracking different from black‑box tools?", answer: "PhantomRank doesn’t hide a secret sampling recipe. Every scan is co-designed with you: we start by drafting a brand DNA from your site and name, your team edits it, we generate buyer personas and journeys, you choose and adjust stages and intents, and you can rewrite every prompt in your own buyer language. Finally, you decide which models to hit and we log the exact versions and geo. Our job is to make that test repeatable and readable, not to pick prompts for you behind the scenes." },
+  { question: "Can I control which prompts and personas PhantomRank uses to test visibility?", answer: "Yes. We propose personas and journeys from your brand DNA, but nothing is locked. You can select which personas matter, which stages of the journey to include, and edit or replace every prompt so it matches how your buyers actually speak. PhantomRank then reuses that set consistently, so trends over time reflect real changes, not our guesswork." },
+  { question: "How do you handle AI engines giving different answers to the same prompt?", answer: "We treat each engine as a separate surface. For every prompt set, PhantomRank queries ChatGPT, Gemini, Claude, Grok, Perplexity and Copilot in parallel, logs the model versions, and compares visibility at three layers: mention, recommendation, and citation. Instead of pretending there’s a single ‘true’ answer, we show you how each engine talks about you and where you’re strong or weak." },
+  { question: "What exactly do you track in an AI answer?", answer: "We track whether you’re named, whether you’re recommended as a pick, whether your domain is cited, and whether your pages are in the crawl pool but rejected. We also capture which non‑you sources got cited alongside or instead of you, so you see the full competitive and ecosystem context—not just your own score." },
+  { question: "Can we limit scans to India or specific regions?", answer: "Yes. Location is explicit, not implied. We inject geo parameters into our prompt templates and log them with each run, so you can see how visibility differs for India versus other regions and avoid mixing local and global results in the same charts." }
+];
+
+const metricsData = [
+  { category: "Answer states", name: "Answer State – Absent", measures: "Prompts where your brand does not appear at all.", matters: "Baseline invisibility; shows where AI doesn’t even consider you." },
+  { category: "Answer states", name: "Answer State – Mentioned", measures: "Prompts where your brand is named but not clearly recommended or linked.", matters: "Weak presence; you exist in the text, but not as a real option." },
+  { category: "Answer states", name: "Answer State – Recommended", measures: "Prompts where your brand is treated as a viable choice.", matters: "Core visibility in AI shortlists." },
+  { category: "Answer states", name: "Answer State – Strongly Endorsed", measures: "Prompts where AI highlights your brand as the top or preferred option.", matters: "‘Best pick’ moments; strongest impact on buyer perception." },
+  
+  { category: "AI Discovery Funnel", name: "Query Coverage", measures: "How many prompts in your set AI answered.", matters: "Baseline for all other metrics." },
+  { category: "AI Discovery Funnel", name: "Crawl Pool Presence", measures: "How often AI crawled/read your pages while answering.", matters: "Shows whether AI even knows your content exists." },
+  { category: "AI Discovery Funnel", name: "Mention Rate", measures: "How often your brand name appears in answers.", matters: "How visible you are in the text buyers actually read." },
+  { category: "AI Discovery Funnel", name: "Citation Rate", measures: "How often your domain is linked as a source.", matters: "How often AI sends traffic to your site." },
+  
+  { category: "Visibility breakdown", name: "Fully Visible", measures: "Prompts where you are both mentioned and cited.", matters: "The strongest form of AI visibility." },
+  { category: "Visibility breakdown", name: "Cited Only", measures: "Prompts where you’re cited but not clearly named.", matters: "Hidden referrals; AI trusts your content but doesn’t name you." },
+  { category: "Visibility breakdown", name: "Trust Gap", measures: "Prompts where AI crawled your page but cited a competitor instead.", matters: "High‑ROI content fixes where you’re seen but not trusted." },
+  { category: "Visibility breakdown", name: "Not Found", measures: "Prompts where you’re neither crawled nor mentioned.", matters: "True blind spots in AI search." },
+  
+  { category: "Competitive intelligence", name: "Competitor Overlap", measures: "Which competitors appear when you don’t, by intent cluster.", matters: "Shows who AI prefers in the exact moments you’re missing." },
+  { category: "Competitive intelligence", name: "Brand vs Organic Visibility Gap", measures: "Difference between organic prompts (‘best X’) and brand‑centric prompts (‘is [Brand] good for X’).", matters: "Separates where you deserve to appear from where you actually appear." },
+  
+  { category: "Platform & technical", name: "Multi‑Engine Coverage", measures: "Your answer state distribution per AI engine.", matters: "Shows how differently ChatGPT, Perplexity, Gemini, etc. treat your brand." },
+  { category: "Platform & technical", name: "Per‑Prompt Log", measures: "The raw answers, crawled URLs, and citations for each prompt × engine.", matters: "Gives an audit trail so advanced users can verify patterns and debug specific results." },
 ];
 ---
 
 <Layout
-  title="AI Visibility Tracker — See How AIs Talk About Your Brand | PhantomRank"
-  description="Turn AI answers into a stable, decision‑grade view of where your client shows up, how they’re framed, and where competitors are winning. Built for agencies that need more than screenshots."
+  title="AI Visibility Tracker | PhantomRank"
+  description="Turn messy, non-deterministic AI answers into a stable picture of where you show up, how you're framed, and which levers to pull."
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Features", href: "/features" },
     { name: "AI Visibility Tracker", href: "/features/ai-visibility-tracker" },
   ]}
 >
-  <FeatureDetail
-    feature={feature}
-    insight={insight}
-    outputs={outputs}
-    howItWorks={howItWorks}
-    useCases={useCases}
-    includes={includes}
-  >
-    <div slot="hero-image" class="mockup-window border border-border bg-muted/30">
-      <div class="bg-background border-t border-border">
-        <img
-          src="/images/features/ai-visibility-tracker/Persona1.webp"
-          alt="Persona Analysis"
-          class="w-full h-auto"
-        />
+
+  {/* ── 1. COMPOSITE HERO: ANSWER + FUNNEL ── */}
+  <section id="aivt-hero" class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 overflow-hidden">
+    <DotBackground containerId="aivt-hero" />
+    <div class="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+      {/* Left Copy */}
+      <div class="reveal">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
+          AI Visibility Tracker
+        </h1>
+        <p class="text-xl text-foreground font-medium mb-4 leading-relaxed">
+          See how often AI engines name you, recommend you, and link to you – and where competitors replace you in the answer.
+        </p>
+        <p class="text-sm uppercase tracking-wider font-bold text-primary mb-8 border-l-2 border-primary pl-4">
+          Tracks mentions, citations, crawl pool, and competitor overlap across fixed prompt sets and multiple engines.
+        </p>
+        <div class="bg-card/50 rounded-2xl border border-border p-6 backdrop-blur-sm shadow-sm">
+          <p class="text-muted-foreground leading-relaxed text-sm md:text-base">
+            {insight}
+          </p>
+        </div>
+      </div>
+      
+      {/* Right Visual: Answer + Funnel */}
+      <div class="reveal relative bg-muted/20 rounded-3xl border border-border p-8 overflow-hidden h-[500px] flex flex-col justify-between shadow-sm">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(59,130,246,0.1),transparent_70%)] pointer-events-none"></div>
+        
+        {/* Mini Answer Panel */}
+        <div class="relative z-10 bg-background border border-border rounded-xl shadow-2xl p-5 mb-8 w-11/12 ml-auto transform rotate-1">
+          <div class="text-xs font-bold text-muted-foreground mb-3 flex items-center gap-2">
+            <Icon name="lucide:user" class="w-4 h-4" /> Best CRM tools for 10-person agency?
+          </div>
+          <div class="border-t border-border pt-4 space-y-3">
+             <div class="h-2 w-full bg-muted rounded"></div>
+             
+             <div class="p-3 bg-primary/10 border border-primary/30 rounded-lg flex items-center justify-between">
+                <span class="text-xs font-bold text-foreground">Competitor A</span>
+                <span class="text-[10px] text-primary font-bold uppercase tracking-wider flex items-center gap-1"><Icon name="lucide:star" class="w-3 h-3" /> Top Pick</span>
+             </div>
+             
+             <div class="p-3 bg-background border border-border rounded-lg flex items-center justify-between opacity-80">
+                <span class="text-xs font-medium text-foreground">Your Brand</span>
+                <span class="text-[10px] text-muted-foreground uppercase tracking-wider font-bold flex items-center gap-1"><Icon name="lucide:minus" class="w-3 h-3" /> Mentioned</span>
+             </div>
+          </div>
+        </div>
+        
+        {/* Funnel */}
+        <div class="relative z-10 w-full mt-auto">
+          <div class="flex items-center justify-between gap-1 sm:gap-2">
+            {/* Stage 1 */}
+            <div class="flex-1 text-center">
+               <div class="bg-card border border-border rounded-lg py-2 sm:py-3 text-base sm:text-lg font-bold text-foreground mb-2 shadow-sm">45</div>
+               <div class="text-[9px] sm:text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Prompts</div>
+            </div>
+            <Icon name="lucide:arrow-right" class="w-3 h-3 sm:w-4 sm:h-4 text-border shrink-0" />
+            {/* Stage 2 */}
+            <div class="flex-1 text-center">
+               <div class="bg-card border border-border rounded-lg py-2 sm:py-3 text-base sm:text-lg font-bold text-foreground mb-2 shadow-sm">120</div>
+               <div class="text-[9px] sm:text-[10px] font-bold text-muted-foreground uppercase tracking-wider leading-tight">Pages Crawled</div>
+            </div>
+            <Icon name="lucide:arrow-right" class="w-3 h-3 sm:w-4 sm:h-4 text-border shrink-0" />
+            {/* Stage 3 */}
+            <div class="flex-1 text-center">
+               <div class="bg-primary/5 border border-primary/20 rounded-lg py-2 sm:py-3 text-base sm:text-lg font-bold text-primary mb-2 shadow-sm">18</div>
+               <div class="text-[9px] sm:text-[10px] font-bold text-primary uppercase tracking-wider">Mentions</div>
+            </div>
+            <Icon name="lucide:arrow-right" class="w-3 h-3 sm:w-4 sm:h-4 text-border shrink-0" />
+            {/* Stage 4 */}
+            <div class="flex-1 text-center">
+               <div class="bg-green-500/10 border border-green-500/30 rounded-lg py-2 sm:py-3 text-base sm:text-lg font-bold text-green-500 dark:text-green-400 mb-2 shadow-sm">9</div>
+               <div class="text-[9px] sm:text-[10px] font-bold text-green-500 dark:text-green-400 uppercase tracking-wider">Citations</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 2. PROMPTS X ENGINES MATRIX ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50">
+    <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+       <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">How we see AI answers across engines</h2>
+       <p class="text-lg text-muted-foreground leading-relaxed">
+         We track a fixed set of buyer‑style prompts across multiple AI engines and log the answer state for each one: whether you’re absent, mentioned, recommended, or strongly endorsed.
+       </p>
+    </div>
+
+    <div class="bg-card border border-border rounded-2xl overflow-hidden shadow-sm reveal">
+       <div class="overflow-x-auto">
+         <table class="w-full text-left text-sm whitespace-nowrap min-w-[800px]">
+           <thead class="bg-muted/30 border-b border-border">
+             <tr>
+               <th class="px-6 py-4 font-bold text-foreground">Marketing Funnel</th>
+               <th class="px-4 py-4 font-bold text-foreground">Perplexity</th>
+               <th class="px-4 py-4 font-bold text-foreground">ChatGPT</th>
+               <th class="px-4 py-4 font-bold text-foreground">Gemini</th>
+               <th class="px-4 py-4 font-bold text-foreground">Claude</th>
+               <th class="px-4 py-4 font-bold text-foreground">Copilot</th>
+             </tr>
+           </thead>
+           <tbody class="divide-y divide-border">
+             <tr class="hover:bg-muted/20 transition-colors">
+               <td class="px-6 py-5 font-bold text-foreground uppercase tracking-wider text-xs">TOFU (Awareness)</td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20"><Icon name="lucide:star" class="w-3 h-3" /> Endorsed</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><Icon name="lucide:thumbs-up" class="w-3 h-3" /> Recommended</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-muted text-muted-foreground border border-border"><Icon name="lucide:x" class="w-3 h-3" /> Absent</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"><Icon name="lucide:minus" class="w-3 h-3" /> Mentioned</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><Icon name="lucide:thumbs-up" class="w-3 h-3" /> Recommended</span></td>
+             </tr>
+             <tr class="hover:bg-muted/20 transition-colors">
+               <td class="px-6 py-5 font-bold text-foreground uppercase tracking-wider text-xs">MOFU (Consideration)</td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-muted text-muted-foreground border border-border"><Icon name="lucide:x" class="w-3 h-3" /> Absent</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"><Icon name="lucide:minus" class="w-3 h-3" /> Mentioned</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-muted text-muted-foreground border border-border"><Icon name="lucide:x" class="w-3 h-3" /> Absent</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><Icon name="lucide:thumbs-up" class="w-3 h-3" /> Recommended</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-muted text-muted-foreground border border-border"><Icon name="lucide:x" class="w-3 h-3" /> Absent</span></td>
+             </tr>
+             <tr class="hover:bg-muted/20 transition-colors">
+               <td class="px-6 py-5 font-bold text-foreground uppercase tracking-wider text-xs">BOFU (Decision)</td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20"><Icon name="lucide:star" class="w-3 h-3" /> Endorsed</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20"><Icon name="lucide:star" class="w-3 h-3" /> Endorsed</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"><Icon name="lucide:thumbs-up" class="w-3 h-3" /> Recommended</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20"><Icon name="lucide:star" class="w-3 h-3" /> Endorsed</span></td>
+               <td class="px-4 py-5"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"><Icon name="lucide:minus" class="w-3 h-3" /> Mentioned</span></td>
+             </tr>
+           </tbody>
+         </table>
+       </div>
+    </div>
+    <div class="mt-4 p-4 bg-muted/20 border border-border rounded-xl reveal max-w-3xl mx-auto">
+      <p class="text-xs text-muted-foreground text-center">
+        <strong>Examples:</strong> <span class="text-foreground">TOFU</span> – "What are the main CRM options for agencies?" | <span class="text-foreground">MOFU</span> – "Best CRM under $50/month for a 10‑person agency?" | <span class="text-foreground">BOFU</span> – "Is [Brand] a good CRM for a small agency team?"
+      </p>
+    </div>
+  </section>
+
+  {/* ── 3. CRAWL POOL + TRUST GAPS ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Copy */}
+      <div class="reveal order-2 lg:order-1">
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">Where AI sees you but still cites someone else</h2>
+        <p class="text-lg text-muted-foreground leading-relaxed mb-8">
+          For each answer, we log which pages the AI engine reads and which ones it cites. When your pages are in the crawl pool but a competitor gets the link, we call that a trust gap.
+        </p>
+        
+        {/* Left Side Prompts List */}
+        <div class="bg-card border border-border rounded-xl p-5 shadow-sm mb-6">
+           <div class="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3 pb-2 border-b border-border">9 Intent Types Modeled</div>
+           <div class="flex flex-wrap gap-2">
+             <span class="px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-md text-xs font-bold text-primary">Alternatives / Substitutes</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Category Awareness</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Recommendation</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Problem–Solution</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Comparison / Versus</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Brand‑Direct</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Use‑Case Specific</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Local / Regional</span>
+             <span class="px-3 py-1.5 bg-background border border-border rounded-md text-xs font-medium text-muted-foreground">Trust Validation</span>
+           </div>
+        </div>
+        
+        <p class="text-sm font-medium text-foreground">
+          These are the pages where structural changes, clearer positioning, or better schema can unlock immediate AI citations without writing net‑new content.
+        </p>
+      </div>
+
+      {/* Visual */}
+      <div class="reveal order-1 lg:order-2 bg-zinc-950 border border-zinc-800 rounded-3xl p-6 md:p-8 shadow-2xl relative h-full flex flex-col justify-center gap-6">
+         <div class="flex-1 bg-zinc-900/50 rounded-2xl border border-zinc-800 p-5">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-green-400 mb-3 flex items-center gap-2"><Icon name="lucide:check-circle" class="w-3.5 h-3.5" /> Seen & cited</div>
+            <div class="bg-black/50 border border-zinc-800 rounded-lg p-3 text-xs font-mono text-zinc-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <span class="truncate text-green-400/80">competitorcrm.com/blog/best-crm-for-agencies</span>
+              <span class="px-2 py-1 rounded bg-zinc-800 text-[9px] uppercase tracking-wider text-zinc-400 font-sans font-bold whitespace-nowrap self-start sm:self-auto">Competitor</span>
+            </div>
+         </div>
+
+         <div class="flex-1 bg-zinc-900/50 rounded-2xl border border-red-500/20 p-5 relative overflow-hidden">
+            <div class="absolute left-0 top-0 w-1.5 h-full bg-red-500"></div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-red-400 mb-3 flex items-center gap-2 pl-2"><Icon name="lucide:alert-triangle" class="w-3.5 h-3.5" /> Seen, then ignored (Trust Gap)</div>
+            <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-3 text-xs font-mono text-zinc-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <span class="truncate">yourbrand.com/crm-for-agencies</span>
+              <span class="px-2 py-1 rounded bg-red-500/20 text-[9px] uppercase tracking-wider text-red-400 font-sans font-bold whitespace-nowrap self-start sm:self-auto">You</span>
+            </div>
+         </div>
+
+         <div class="flex-1 bg-zinc-900/50 rounded-2xl border border-zinc-800 p-5 opacity-50 hover:opacity-100 transition-opacity">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-3 flex items-center gap-2"><Icon name="lucide:eye-off" class="w-3.5 h-3.5" /> Not seen</div>
+            <div class="bg-black/50 border border-zinc-800 rounded-lg p-3 text-xs font-mono text-zinc-500 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <span class="truncate">g2.com/categories/crm</span>
+              <span class="px-2 py-1 rounded bg-zinc-800 text-[9px] uppercase tracking-wider text-zinc-500 font-sans font-bold whitespace-nowrap self-start sm:self-auto">Review / Community</span>
+            </div>
+         </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 4. COMPETITOR OVERLAP ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      
+      {/* Visual */}
+      <div class="reveal bg-card border border-border rounded-3xl p-6 md:p-8 shadow-sm">
+        <div class="grid grid-cols-5 gap-2 md:gap-4 mb-6 items-end">
+           <div></div>
+           <div class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-muted-foreground text-center -rotate-45 origin-bottom-left pb-2">Budget</div>
+           <div class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-muted-foreground text-center -rotate-45 origin-bottom-left pb-2">Quality</div>
+           <div class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-muted-foreground text-center -rotate-45 origin-bottom-left pb-2">Scale</div>
+           <div class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider text-muted-foreground text-center -rotate-45 origin-bottom-left pb-2">Niche</div>
+        </div>
+        
+        <div class="space-y-6">
+          {/* Comp 1 */}
+          <div class="grid grid-cols-5 gap-2 md:gap-4 items-center">
+             <div class="text-xs md:text-sm font-bold text-foreground truncate pr-2 text-right">Competitor A</div>
+             <div class="flex justify-center"><div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-red-500/20 flex items-center justify-center"><div class="w-4 h-4 md:w-8 md:h-8 rounded-full bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]"></div></div></div>
+             <div class="flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-muted border border-border"></div></div>
+             <div class="flex justify-center"><div class="w-6 h-6 md:w-10 md:h-10 rounded-full bg-red-500/30 flex items-center justify-center"><div class="w-3 h-3 md:w-5 md:h-5 rounded-full bg-red-500"></div></div></div>
+             <div class="flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-muted border border-border"></div></div>
+          </div>
+          {/* Comp 2 */}
+          <div class="grid grid-cols-5 gap-2 md:gap-4 items-center">
+             <div class="text-xs md:text-sm font-bold text-foreground truncate pr-2 text-right">Competitor B</div>
+             <div class="flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-muted border border-border"></div></div>
+             <div class="flex justify-center"><div class="w-6 h-6 md:w-10 md:h-10 rounded-full bg-red-500/30 flex items-center justify-center"><div class="w-3 h-3 md:w-5 md:h-5 rounded-full bg-red-500"></div></div></div>
+             <div class="flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-muted border border-border"></div></div>
+             <div class="flex justify-center"><div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-red-500/20 flex items-center justify-center"><div class="w-4 h-4 md:w-8 md:h-8 rounded-full bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]"></div></div></div>
+          </div>
+          {/* Comp 3 */}
+          <div class="grid grid-cols-5 gap-2 md:gap-4 items-center">
+             <div class="text-xs md:text-sm font-bold text-foreground truncate pr-2 text-right">Competitor C</div>
+             <div class="flex justify-center"><div class="w-6 h-6 md:w-10 md:h-10 rounded-full bg-red-500/30 flex items-center justify-center"><div class="w-3 h-3 md:w-5 md:h-5 rounded-full bg-red-500"></div></div></div>
+             <div class="flex justify-center"><div class="w-8 h-8 md:w-12 md:h-12 rounded-full bg-red-500/20 flex items-center justify-center"><div class="w-4 h-4 md:w-8 md:h-8 rounded-full bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]"></div></div></div>
+             <div class="flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-muted border border-border"></div></div>
+             <div class="flex justify-center"><div class="w-4 h-4 md:w-6 md:h-6 rounded-full bg-muted border border-border"></div></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Copy */}
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">Who appears when you don't</h2>
+        <p class="text-lg text-muted-foreground leading-relaxed mb-6">
+          See which competitors AI prefers in the exact prompts where you’re missing from the answer, broken down by buyer intent.
+        </p>
+        <p class="text-sm font-medium text-foreground bg-primary/5 border border-primary/20 rounded-xl p-5">
+          This helps you decide which battles to fight and which categories you can realistically win, instead of trying to beat everyone everywhere.
+        </p>
+      </div>
+      
+    </div>
+  </section>
+
+  {/* ── 5. KEY METRICS HTML TABLE ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold text-foreground mb-4">Key AI visibility metrics tracked</h2>
+    </div>
+
+    <div class="overflow-x-auto bg-card border border-border rounded-2xl shadow-sm">
+      <table class="w-full text-left text-sm min-w-[900px]">
+        <thead class="bg-muted/30 border-b border-border">
+          <tr>
+            <th class="px-6 py-4 font-bold text-foreground">Category</th>
+            <th class="px-6 py-4 font-bold text-foreground">Metric name</th>
+            <th class="px-6 py-4 font-bold text-foreground">What it measures</th>
+            <th class="px-6 py-4 font-bold text-foreground">Why it matters</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border">
+          {metricsData.map((row) => (
+            <tr class="hover:bg-white/5 transition-colors">
+              <td class="px-6 py-4 font-bold text-muted-foreground text-xs uppercase tracking-wider">{row.category}</td>
+              <td class="px-6 py-4 font-bold text-foreground">{row.name}</td>
+              <td class="px-6 py-4 text-muted-foreground leading-relaxed">{row.measures}</td>
+              <td class="px-6 py-4 font-medium text-foreground leading-relaxed">{row.matters}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {/* ── 6. METHODOLOGY (TIMELINE) ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 border-b border-border/50 reveal">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-foreground">Methodology in plain language</h2>
+    </div>
+    
+    <div class="relative">
+      {/* Horizontal Line for Desktop */}
+      <div class="hidden md:block absolute top-10 left-8 right-8 h-1 bg-border rounded-full"></div>
+      
+      <div class="grid md:grid-cols-6 gap-6 md:gap-4 relative z-10">
+        {howItWorks.map((step, index) => (
+          <div class="group relative flex md:flex-col items-start md:items-center gap-4 md:gap-3">
+            {/* Connecting line for mobile */}
+            {index !== howItWorks.length - 1 && (
+              <div class="md:hidden absolute left-5 top-12 bottom-[-1.5rem] w-px bg-border"></div>
+            )}
+            
+            <div class="w-10 h-10 shrink-0 rounded-full bg-card border-2 border-primary flex items-center justify-center text-primary font-bold shadow-md z-10 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+              {index + 1}
+            </div>
+            
+            <div class="pt-2 md:pt-0 md:text-center w-full">
+               <h3 class="font-bold text-foreground text-sm mb-1">{step.title}</h3>
+               {/* Mobile: visible. Desktop: visible on hover (opacity/translate trick) or just keep it minimal */}
+               <p class="text-xs text-muted-foreground md:opacity-0 md:-translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300 md:absolute md:w-48 md:left-1/2 md:-translate-x-1/2 md:mt-2 md:bg-card md:border md:border-border md:p-3 md:rounded-lg md:shadow-xl pointer-events-none z-20">
+                 {step.desc}
+               </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {/* Desktop instructional subtext */}
+      <div class="hidden md:block text-center mt-32 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+         Hover over each step for details
+      </div>
+    </div>
+  </section>
+
+  {/* ── 7. CONDENSED LEGACY CONTENT ── */}
+  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+    
+    <div class="grid lg:grid-cols-2 gap-12 mb-24">
+      {/* What you'll see - 2x2 Grid */}
+      <div class="reveal">
+        <h2 class="text-2xl font-bold text-foreground mb-8">What you'll see</h2>
+        <div class="grid grid-cols-2 gap-6">
+          {outputs.map((output) => (
+            <div class="flex flex-col gap-2">
+              <Icon name="lucide:bar-chart-2" class="w-5 h-5 text-primary" />
+              <h3 class="font-bold text-foreground text-sm">{output.title}</h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">{output.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* What's included - Tight vertical list */}
+      <div class="reveal">
+        <h2 class="text-2xl font-bold text-foreground mb-8">What's included</h2>
+        <div class="bg-card rounded-2xl border border-border p-6 shadow-sm">
+          <ul class="space-y-3">
+            {includes.map((item) => (
+              <li class="flex items-center gap-3 text-sm text-muted-foreground">
+                <Icon name="lucide:check" class="w-4 h-4 text-green-500 shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div slot="workflow-image" class="mockup-window border border-border bg-muted/30">
-      <div class="bg-background border-t border-border">
-        <img
-          src="/images/features/ai-visibility-tracker/Intent.webp"
-          alt="Intent Mapping"
-          class="w-full h-auto"
-        />
-      </div>
+    {/* Use Cases - List style */}
+    <div class="reveal mb-24 max-w-3xl mx-auto">
+      <h2 class="text-2xl font-bold text-foreground mb-8 text-center">Built for Agency Workflows</h2>
+      <ul class="space-y-4">
+        {useCases.map((uc) => (
+          <li class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 border-b border-border/50 pb-4 last:border-0">
+            <span class="font-bold text-foreground whitespace-nowrap">{uc.scenario}</span>
+            <span class="text-sm text-muted-foreground">{uc.outcome}</span>
+          </li>
+        ))}
+      </ul>
     </div>
-  </FeatureDetail>
+
+  </section>
+
   <FAQ customFaqs={faqs} title="AI Visibility Tracker — FAQs" subtitle="Focus: methodology, non‑determinism, prompts, multi‑engine runs." />
   <CTA />
 </Layout>
