@@ -2,7 +2,6 @@
 // src/pages/learn/index.astro
 import Layout from "../../layouts/Layout.astro";
 import { siteConfig } from "../../config/site";
-import HubCard from "../../components/content/HubCard.astro";
 import { hubs } from "../../config/hubs";
 import { getCollection } from "astro:content";
 import Schema from "../../components/seo/Schema.astro";
@@ -46,12 +45,19 @@ const articles = allEntries
       category: e.data.category || "",
       keywords: e.data.keywords || e.data.secondarykeywords || [],
       publisheddate: e.data.publisheddate || "",
+      author: e.data.author || "PhantomRank Team",
+      featuredimage: e.data.featuredimage,
     };
   })
   .sort((a, b) => b.publisheddate.localeCompare(a.publisheddate));
 
-// Collect unique hub slugs that have articles
-const hubsWithArticles = [...new Set(articles.map((a) => a.hubSlug))];
+// Extract featured and side articles for the top section
+const featuredArticle = articles.length > 0 ? articles[0] : null;
+const sideArticles = articles.slice(1, 5);
+const remainingArticles = articles.slice(5);
+
+const fallbackImage = "https://images.unsplash.com/photo-1624996379697-f01d168b1a52?ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80";
+const fallbackAvatar = "https://images.unsplash.com/photo-1531590878845-12627191e687?ixlib=rb-1.2.1&auto=format&fit=crop&w=764&q=80";
 ---
 
 <Layout
@@ -71,177 +77,222 @@ const hubsWithArticles = [...new Set(articles.map((a) => a.hubSlug))];
       }))
     })} />
   </Fragment>
+  
   <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-    <div class="max-w-3xl">
+    <div class="max-w-3xl mb-12">
       <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-        PhantomRank Learn
+        Learn
       </p>
       <h1 class="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-        Learn AI search, visibility tracking, and modern SEO
+        How AI actually decides what to show
       </h1>
-      <p class="mt-6 text-lg leading-8 text-muted-foreground">
-        PhantomRank's content hub for agencies, SEO teams, and marketers who
-        want to understand how brands get discovered, cited, and compared inside
-        AI-generated answers.
+      <p class="mt-6 text-lg leading-8 text-muted-foreground max-w-2xl">
+        Notes, experiments, and teardowns on how AI assistants pick brands, sources, and narratives — and what to do if they keep ignoring you.
       </p>
     </div>
 
-    <!-- Hub cards -->
-    <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-      {hubs.map((hub) => (
-        <HubCard
-          title={hub.title}
-          description={hub.description}
-          href={`/learn/${hub.slug}`}
-          icon={hub.icon}
-          clusterCount={clusterCounts[hub.slug] || 0}
-        />
-      ))}
-    </div>
+    <!-- Featured Blog Section -->
+    {featuredArticle && (
+      <section class="py-10 border-t border-border">
+        <div class="lg:flex lg:-mx-6">
+          
+          <!-- Left: Main Featured Article -->
+          <div class="lg:w-3/4 lg:px-6 group">
+            <a href={featuredArticle.href} class="block">
+              <div class="overflow-hidden rounded-xl border border-border/50">
+                <img 
+                  class="object-cover object-center w-full h-80 xl:h-[28rem] transition-transform duration-500 group-hover:scale-105" 
+                  src={featuredArticle.featuredimage?.src || fallbackImage} 
+                  alt={featuredArticle.featuredimage?.alt || featuredArticle.title} 
+                />
+              </div>
 
-    <!-- Articles section -->
-    {articles.length > 0 && (
-      <div class="mt-16" id="articles-section">
-        <h2 class="text-2xl font-semibold text-foreground">All Articles</h2>
-        <p class="mt-2 text-muted-foreground">
-          In-depth articles across all topics. Filter by hub or sort to find what you need.
-        </p>
+              <div>
+                <p class="mt-6 text-sm font-bold uppercase tracking-widest text-primary">
+                  {featuredArticle.hubTitle}
+                </p>
 
-        <!-- Controls -->
-        <div class="mt-6 flex flex-wrap items-center gap-4">
-          <select
-            id="hub-filter"
-            class="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
-          >
-            <option value="all">All Hubs</option>
-            {hubsWithArticles.map((slug) => {
-              const hub = hubs.find((h) => h.slug === slug);
-              return <option value={slug}>{hub?.title || slug}</option>;
-            })}
-          </select>
+                <h2 class="max-w-2xl mt-4 text-3xl font-bold leading-tight text-foreground group-hover:text-primary transition-colors">
+                  {featuredArticle.title}
+                </h2>
+                
+                {featuredArticle.description && (
+                  <p class="mt-4 text-muted-foreground max-w-2xl line-clamp-2">
+                    {featuredArticle.description}
+                  </p>
+                )}
 
-          <select
-            id="sort-select"
-            class="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
-          >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-            <option value="az">A → Z</option>
-            <option value="za">Z → A</option>
-          </select>
+                <div class="flex items-center mt-6">
+                  <img class="object-cover object-center w-10 h-10 rounded-full border border-border" src={fallbackAvatar} alt="Author avatar">
+
+                  <div class="mx-4">
+                    <h3 class="text-sm font-medium text-foreground">{featuredArticle.author}</h3>
+                    <p class="text-xs text-muted-foreground">{featuredArticle.publisheddate}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Right: Side Articles -->
+          <div class="mt-12 lg:w-1/4 lg:mt-0 lg:px-6 flex flex-col">
+            {sideArticles.map((article, index) => (
+              <>
+                <div class="group">
+                  <h3 class="text-xs font-bold uppercase tracking-wider text-primary">
+                    {article.hubTitle}
+                  </h3>
+                  <a href={article.href} class="block mt-2 font-medium text-foreground group-hover:text-primary transition-colors line-clamp-3">
+                    {article.title}
+                  </a>
+                  <p class="text-xs text-muted-foreground mt-2">{article.publisheddate}</p>
+                </div>
+
+                {index < sideArticles.length - 1 && (
+                  <hr class="my-6 border-border">
+                )}
+              </>
+            ))}
+          </div>
+          
+        </div>
+      </section>
+    )}
+
+    <!-- All Articles List -->
+    {remainingArticles.length > 0 && (
+      <div class="mt-24 pt-12 border-t border-border" id="articles-section">
+        <h2 class="text-2xl font-bold text-foreground">
+          More articles
+        </h2>
+        
+        <div class="mt-6 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+          <div class="ml-auto flex items-center gap-2">
+            <span>Sort by</span>
+            <select
+              id="sort-select"
+              class="bg-transparent text-xs font-medium border border-border rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-primary"
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="az">A–Z</option>
+              <option value="za">Z–A</option>
+            </select>
+          </div>
         </div>
 
-        <!-- Article grid -->
-        <div id="articles-grid" class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {articles.map((article) => (
-            <a
-              href={article.href}
+        <ul id="articles-list" class="mt-6 divide-y divide-border border-y border-border">
+          {remainingArticles.map((article) => (
+            <li
+              class="article-row py-6"
               data-hub={article.hubSlug}
               data-title={article.title}
               data-date={article.publisheddate}
-              class="article-card group flex flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/40 hover:shadow-md"
             >
-              <span class="mb-2 text-xs font-medium uppercase tracking-wider text-primary">
-                {article.hubTitle}
-              </span>
-              <h3 class="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-                {article.title}
-              </h3>
-              {article.description && (
-                <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">
-                  {article.description}
-                </p>
-              )}
-              <span class="mt-auto pt-4 text-xs text-muted-foreground">
-                {article.publisheddate}
-              </span>
-            </a>
+              <a href={article.href} class="group block">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+                  <div class="max-w-3xl">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-primary">
+                      {article.hubTitle}
+                    </span>
+                    <h3 class="mt-1 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                      {article.title}
+                    </h3>
+                    {article.description && (
+                      <p class="mt-2 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                        {article.description}
+                      </p>
+                    )}
+                  </div>
+                  {article.publisheddate && (
+                    <div class="mt-3 text-xs font-medium text-muted-foreground sm:mt-0 whitespace-nowrap">
+                      {article.publisheddate}
+                    </div>
+                  )}
+                </div>
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <!-- Pagination -->
-        <div id="pagination" class="mt-8 flex items-center justify-center gap-2"></div>
+        <div id="pagination" class="mt-10 flex items-center justify-center gap-2"></div>
       </div>
     )}
   </section>
 </Layout>
 
 <script>
-  const ITEMS_PER_PAGE = 12;
+  const ITEMS_PER_PAGE = 20;
   let currentPage = 1;
-  let filteredCards: HTMLElement[] = [];
+  let filteredRows: HTMLElement[] = [];
 
-  const grid = document.getElementById("articles-grid")!;
-  const allCards = Array.from(grid.querySelectorAll(".article-card")) as HTMLElement[];
-  const hubFilter = document.getElementById("hub-filter") as HTMLSelectElement;
-  const sortSelect = document.getElementById("sort-select") as HTMLSelectElement;
-  const pagination = document.getElementById("pagination")!;
+  const list = document.getElementById("articles-list");
+  if (list) {
+    const allRows = Array.from(list.querySelectorAll(".article-row")) as HTMLElement[];
+    const sortSelect = document.getElementById("sort-select") as HTMLSelectElement;
+    const pagination = document.getElementById("pagination")!;
 
-  function applyFilterAndSort() {
-    const hub = hubFilter.value;
-    const sort = sortSelect.value;
+    function applyFilterAndSort() {
+      const sort = sortSelect.value;
+      filteredRows = [...allRows]; // All remaining articles
 
-    filteredCards = allCards.filter((card) => {
-      if (hub === "all") return true;
-      return card.dataset.hub === hub;
-    });
-
-    filteredCards.sort((a, b) => {
-      switch (sort) {
-        case "newest":
-          return (b.dataset.date || "").localeCompare(a.dataset.date || "");
-        case "oldest":
-          return (a.dataset.date || "").localeCompare(b.dataset.date || "");
-        case "az":
-          return (a.dataset.title || "").localeCompare(b.dataset.title || "");
-        case "za":
-          return (b.dataset.title || "").localeCompare(a.dataset.title || "");
-        default:
-          return 0;
-      }
-    });
-
-    currentPage = 1;
-    render();
-  }
-
-  function render() {
-    const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE);
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    const end = start + ITEMS_PER_PAGE;
-
-    allCards.forEach((card) => {
-      card.style.display = "none";
-      card.style.order = "";
-    });
-
-    filteredCards.forEach((card, i) => {
-      if (i >= start && i < end) {
-        card.style.display = "flex";
-        card.style.order = String(i);
-      }
-    });
-
-    // Pagination buttons
-    pagination.innerHTML = "";
-    if (totalPages <= 1) return;
-
-    for (let i = 1; i <= totalPages; i++) {
-      const btn = document.createElement("button");
-      btn.textContent = String(i);
-      btn.className = i === currentPage
-        ? "rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground"
-        : "rounded-md border border-border px-3 py-1.5 text-sm text-muted-foreground hover:bg-muted";
-      btn.addEventListener("click", () => {
-        currentPage = i;
-        render();
-        document.getElementById("articles-section")?.scrollIntoView({ behavior: "smooth" });
+      filteredRows.sort((a, b) => {
+        switch (sort) {
+          case "newest":
+            return (b.dataset.date || "").localeCompare(a.dataset.date || "");
+          case "oldest":
+            return (a.dataset.date || "").localeCompare(b.dataset.date || "");
+          case "az":
+            return (a.dataset.title || "").localeCompare(b.dataset.title || "");
+          case "za":
+            return (b.dataset.title || "").localeCompare(a.dataset.title || "");
+          default:
+            return 0;
+        }
       });
-      pagination.appendChild(btn);
-    }
-  }
 
-  hubFilter.addEventListener("change", applyFilterAndSort);
-  sortSelect.addEventListener("change", applyFilterAndSort);
-  applyFilterAndSort();
+      currentPage = 1;
+      render();
+    }
+
+    function render() {
+      const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE);
+      const start = (currentPage - 1) * ITEMS_PER_PAGE;
+      const end = start + ITEMS_PER_PAGE;
+
+      allRows.forEach((row) => {
+        row.style.display = "none";
+      });
+
+      filteredRows.forEach((row, i) => {
+        if (i >= start && i < end) {
+          row.style.display = "";
+        }
+      });
+
+      pagination.innerHTML = "";
+      if (totalPages <= 1) return;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = String(i);
+        btn.className =
+          i === currentPage
+            ? "rounded-md bg-primary px-3 py-1.5 text-sm font-bold text-primary-foreground"
+            : "rounded-md border border-border px-3 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted transition-colors";
+        btn.addEventListener("click", () => {
+          currentPage = i;
+          render();
+          document.getElementById("articles-section")?.scrollIntoView({ behavior: "smooth" });
+        });
+        pagination.appendChild(btn);
+      }
+    }
+
+    if (sortSelect) {
+        sortSelect.addEventListener("change", applyFilterAndSort);
+    }
+    
+    applyFilterAndSort();
+  }
 </script>

@@ -1,6 +1,7 @@
 ---
 import DotBackground from "../ui/DotBackground.astro";
 ---
+
 <section
   class="relative mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8 min-h-[90vh] flex flex-col items-center justify-center overflow-hidden"
   id="hero-section"
@@ -11,7 +12,9 @@ import DotBackground from "../ui/DotBackground.astro";
     <h1
       class="text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-6xl mx-auto leading-tight"
     >
-      <span class="block whitespace-nowrap">In the era of clickless search,</span>
+      <span class="block whitespace-nowrap"
+        >In the era of clickless search,</span
+      >
       <span
         class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2"
       >
@@ -20,24 +23,51 @@ import DotBackground from "../ui/DotBackground.astro";
     </h1>
 
     <p class="mt-8 text-xl text-muted-foreground max-w-3xl mx-auto font-light">
-      PhantomRank shows how AI engines like ChatGPT, Gemini, Perplexity, Grok, and NVIDIA mention your brand, link to your site, and compare you to competitors – so you can turn AI answers into a real edge, not a black box.
+      See how AI engines like ChatGPT, Gemini, Perplexity, Grok, and NVIDIA
+      mention your brand, link to your site, and compare you to competitors
     </p>
 
     <div class="mt-8 flex flex-col items-center justify-center gap-4">
-      <p class="text-sm text-muted-foreground/80 font-medium tracking-wide uppercase">
+      <p
+        class="text-sm text-muted-foreground/80 font-medium tracking-wide uppercase"
+      >
         Tracking AI visibility across:
       </p>
-      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-10 opacity-70 grayscale transition-all duration-300 hover:grayscale-0">
-        <img src="/images/Logo/ChatGPTlogo.svg" alt="ChatGPT" class="h-6 w-auto" />
-        <img src="/images/Logo/Claudelogo.svg" alt="Claude" class="h-6 w-auto" />
-        <img src="/images/Logo/Gemini-ailogo.svg" alt="Gemini" class="h-6 w-auto" />
+      <div
+        class="flex flex-wrap items-center justify-center gap-6 md:gap-10 opacity-70 grayscale transition-all duration-300 hover:grayscale-0 brightness-0 dark:brightness-100"
+      >
+        <img
+          src="/images/Logo/ChatGPTlogo.svg"
+          alt="ChatGPT"
+          class="h-6 w-auto"
+        />
+        <img
+          src="/images/Logo/Claudelogo.svg"
+          alt="Claude"
+          class="h-6 w-auto"
+        />
+        <img
+          src="/images/Logo/Gemini-ailogo.svg"
+          alt="Gemini"
+          class="h-6 w-auto"
+        />
         <img src="/images/Logo/GROKlogo.svg" alt="Grok" class="h-6 w-auto" />
-        <img src="/images/Logo/Nvidialogo.svg" alt="NVIDIA" class="h-6 w-auto" />
-        <img src="/images/Logo/Perplexitylogo.svg" alt="Perplexity" class="h-6 w-auto" />
+        <img
+          src="/images/Logo/Nvidialogo.svg"
+          alt="NVIDIA"
+          class="h-6 w-auto"
+        />
+        <img
+          src="/images/Logo/Perplexitylogo.svg"
+          alt="Perplexity"
+          class="h-6 w-auto"
+        />
       </div>
     </div>
 
-    <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+    <div
+      class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4"
+    >
       <a
         href="/signup"
         class="inline-flex items-center justify-center px-8 py-3.5 text-sm font-medium text-primary-foreground bg-primary rounded-full hover:bg-primary/90 transition-colors duration-300"
