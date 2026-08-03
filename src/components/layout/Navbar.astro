@@ -41,14 +41,12 @@ import ThemeToggle from "../ui/ThemeToggle.astro";
     </div>
 
     <div class="hidden md:flex items-center gap-4">
-      <div class="aura aura-silver rounded-full shrink-0" style="--aura-radius: 9999px;">
-        <a
-          href={siteConfig.ctaLink.href}
-          class="rounded-full bg-zinc-950 text-zinc-100 border border-zinc-800 px-4 py-2 text-sm font-semibold transition-all hover:bg-zinc-900 hover:text-white"
-        >
-          {siteConfig.ctaLink.text}
-        </a>
-      </div>
+      <a
+        href={siteConfig.ctaLink.href}
+        class="btn-primary"
+      >
+        {siteConfig.ctaLink.text}
+      </a>
       <ThemeToggle />
     </div>
 
