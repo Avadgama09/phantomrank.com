@@ -45,8 +45,22 @@ const { containerId = "hero-section" } = Astro.props;
 
     const createDots = () => {
       dots = [];
+      let currentSpacing = spacing;
+      
       const isMobile = window.innerWidth < 768;
-      const currentSpacing = isMobile ? spacing * 1.5 : spacing;
+      if (isMobile) {
+        currentSpacing = spacing * 1.5;
+      }
+
+      // Calculate spacing dynamically to ensure max ~2000 dots for performance
+      // If a screen is extremely large (e.g., 4k), a fixed spacing of 22 causes >17,000 dots,
+      // which can freeze the main thread completely on load.
+      const targetMaxDots = 2000;
+      const area = width * height;
+      if (area > 0 && area / (currentSpacing * currentSpacing) > targetMaxDots) {
+        currentSpacing = Math.sqrt(area / targetMaxDots);
+      }
+
       const rows = Math.ceil(height / currentSpacing) + 1;
       const cols = Math.ceil(width / currentSpacing) + 1;
 
