@@ -4,7 +4,7 @@
 <section id="scene-cta" class="relative bg-background py-32 border-t border-border">
   <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
     
-    <div class="cta-content opacity-0 transform translate-y-8">
+    <div class="cta-content">
       <h2 class="text-4xl md:text-6xl font-medium tracking-tight text-foreground mb-8 leading-tight flex flex-col md:block items-center justify-center">
         <span class="block">Stop guessing what</span>
         <span class="block"><span id="ai-word-cycler" class="inline-block text-center md:text-left bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">ChatGPT</span> says about you.</span>
@@ -39,17 +39,26 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.to(".cta-content", {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: "#scene-cta",
-      start: "top 75%",
-      toggleActions: "play none none reverse",
-    }
-  });
+  const setupCTA = () => {
+    gsap.fromTo(".cta-content", 
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: "#scene-cta",
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        }
+      }
+    );
+  };
+
+  setupCTA();
+  document.addEventListener("astro:page-load", setupCTA);
 
   // Word Cycler
   const engines = ["ChatGPT", "Perplexity", "Gemini", "Claude", "Grok", "Moonshot AI", "Nemotron"];

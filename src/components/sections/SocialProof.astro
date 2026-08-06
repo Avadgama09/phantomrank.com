@@ -13,17 +13,17 @@
     <!-- Factual Reality -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 mb-32 evidence-facts">
       
-      <div class="fact-column flex flex-col opacity-0 transform translate-y-8 text-center px-4">
+      <div class="fact-column flex flex-col text-center px-4">
         <h4 class="text-xl font-semibold text-foreground mb-4">In-house SEO / AI search teams</h4>
         <p class="text-muted-foreground font-light text-lg">Use the Brand-level AI Visibility Tracker to catch visibility issues before competitors do.</p>
       </div>
 
-      <div class="fact-column flex flex-col opacity-0 transform translate-y-8 text-center px-4">
+      <div class="fact-column flex flex-col text-center px-4">
         <h4 class="text-xl font-semibold text-foreground mb-4">Content and brand marketers</h4>
         <p class="text-muted-foreground font-light text-lg">Use the strategy layer to turn information gaps into a content calendar AI will actually crawl and cite.</p>
       </div>
 
-      <div class="fact-column flex flex-col opacity-0 transform translate-y-8 text-center px-4">
+      <div class="fact-column flex flex-col text-center px-4">
         <h4 class="text-xl font-semibold text-foreground mb-4">Digital marketing and SEO agencies</h4>
         <p class="text-muted-foreground font-light text-lg">Use Industry Metrics audits and AIVT reports as a paid AI-visibility-audit add-on for clients.</p>
       </div>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- The Singular Customer Story -->
-    <div class="max-w-4xl mx-auto evidence-story opacity-0 transform translate-y-12">
+    <div class="max-w-4xl mx-auto evidence-story">
       <!-- TODO: add named agency social proof once confirmed -->
     </div>
 
@@ -44,30 +44,26 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Reveal Facts
-  gsap.to(".fact-column", {
-    opacity: 1,
-    y: 0,
-    duration: 0.8,
-    stagger: 0.2,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: ".evidence-facts",
-      start: "top 75%",
-      toggleActions: "play none none reverse",
-    }
-  });
+  const setup = () => {
+    // Reveal Facts once
+    gsap.fromTo(".fact-column", 
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".evidence-facts",
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        }
+      }
+    );
+  };
 
-  // Reveal Story
-  gsap.to(".evidence-story", {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: ".evidence-story",
-      start: "top 85%",
-      toggleActions: "play none none reverse",
-    }
-  });
+  setup();
+  document.addEventListener("astro:page-load", setup);
 </script>

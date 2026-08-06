@@ -111,7 +111,7 @@ import DotBackground from "../ui/DotBackground.astro";
         <img
           src="/images/features/ai-visibility-tracker/VisibilityAnalysis.webp"
           alt="Dashboard Preview"
-          class="w-full object-cover object-top opacity-80 grayscale-[0.5] hover:grayscale-0 transition-all duration-700"
+          class="w-full object-cover object-top opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
         />
       </div>
     </div>
@@ -119,40 +119,5 @@ import DotBackground from "../ui/DotBackground.astro";
 </section>
 
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const setup = () => {
-    // Subtle entrance animation for the hero text
-    gsap.fromTo(
-      ".text-center > *",
-      { y: 20, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power2.out",
-        delay: 0.1,
-        clearProps: "all"
-      },
-    );
-
-    // Parallax subtle effect on the dashboard glimpse
-    gsap.to(".hero-dashboard-glimpse", {
-      y: 50,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "section",
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-  };
-
-  setup();
-  document.addEventListener("astro:page-load", setup);
+  // Hero section is instantly rendered for optimal LCP performance
 </script>
