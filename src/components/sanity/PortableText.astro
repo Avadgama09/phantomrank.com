@@ -1,0 +1,134 @@
+---
+// src/components/sanity/PortableText.astro
+// Native Astro Portable Text Renderer — Renders static HTML at build time with ZERO React hydration.
+
+interface Props {
+  value: any[];
+}
+
+const { value = [] } = Astro.props;
+
+function renderBlockText(children: any[] = []): string {
+  return children
+    .map((child) => {
+      let text = child.text || "";
+      if (child.marks?.includes("strong")) text = `<strong>${text}</strong>`;
+      if (child.marks?.includes("em")) text = `<em>${text}</em>`;
+      if (child.marks?.includes("code")) text = `<code class="rounded bg-muted px-1.5 py-0.5 text-primary">${text}</code>`;
+      return text;
+    })
+    .join("");
+}
+---
+
+<div class="sanity-portable-text space-y-6">
+  {value.map((block) => {
+    // Normal text blocks
+    if (block._type === "block") {
+      const htmlContent = renderBlockText(block.children);
+      
+      switch (block.style) {
+        case "h2":
+          return <h2 class="text-2xl font-bold tracking-tight text-foreground mt-8 mb-4" set:html={htmlContent} />;
+        case "h3":
+          return <h3 class="text-xl font-semibold tracking-tight text-foreground mt-6 mb-3" set:html={htmlContent} />;
+        case "h4":
+          return <h4 class="text-lg font-semibold text-foreground mt-4 mb-2" set:html={htmlContent} />;
+        case "blockquote":
+          return <blockquote class="border-l-4 border-primary/60 pl-4 py-2 italic text-muted-foreground my-4" set:html={htmlContent} />;
+        default:
+          return <p class="text-muted-foreground leading-8" set:html={htmlContent} />;
+      }
+    }
+
+    // Callout Box
+    if (block._type === "callout") {
+      const typeClasses = {
+        note: "border-blue-500/40 bg-blue-500/10 text-blue-200",
+        tip: "border-emerald-500/40 bg-emerald-500/10 text-emerald-200",
+        warning: "border-amber-500/40 bg-amber-500/10 text-amber-200",
+        important: "border-rose-500/40 bg-rose-500/10 text-rose-200",
+      };
+      const cls = typeClasses[block.type as keyof typeof typeClasses] || typeClasses.note;
+
+      return (
+        <div class={`my-6 rounded-2xl border p-5 shadow-sm ${cls}`}>
+          {block.title && <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">{block.title}</h4>}
+          <p class="text-sm leading-relaxed">{block.text}</p>
+        </div>
+      );
+    }
+
+    // Verdict / Answer Summary Box
+    if (block._type === "verdictBox") {
+      return (
+        <div class="my-6 rounded-2xl border border-primary/30 bg-primary/5 p-6 shadow-sm">
+          <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-2">
+            {block.heading || "Key Takeaway"}
+          </h4>
+          <p class="text-base font-medium leading-relaxed text-foreground">
+            {block.summary}
+          </p>
+        </div>
+      );
+    }
+
+    // Custom Data Table (Accessible Structured Table per Rule 10)
+    if (block._type === "customTable") {
+      return (
+        <div class="my-8 overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
+          <table class="w-full text-left text-sm text-muted-foreground">
+            {block.caption && (
+              <caption class="p-4 text-xs font-bold text-foreground text-left border-b border-border bg-muted/30">
+                {block.caption}
+              </caption>
+            )}
+            {block.headers?.length > 0 && (
+              <thead class="bg-muted/60 text-xs uppercase font-semibold text-foreground border-b border-border">
+                <tr>
+                  {block.headers.map((h: string) => (
+                    <th class="px-4 py-3 font-semibold">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody class="divide-y divide-border/60">
+              {block.rows?.map((r: any) => (
+                <tr class="hover:bg-muted/20 transition-colors">
+                  {r.cells?.map((c: string) => (
+                    <td class="px-4 py-3">{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+
+    // Source Citation Box (Rule 5)
+    if (block._type === "sourceCitation") {
+      return (
+        <div class="my-4 rounded-xl border border-border/80 bg-muted/20 p-4 text-xs text-muted-foreground flex flex-col gap-1">
+          <div class="flex items-center justify-between font-semibold text-foreground">
+            <span>Source: {block.sourceName}</span>
+            {block.sourceType && (
+              <span class="rounded bg-muted px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                {block.sourceType}
+              </span>
+            )}
+          </div>
+          {block.publisher && <div>Publisher: {block.publisher}</div>}
+          {block.note && <div class="italic text-muted-foreground mt-1">{block.note}</div>}
+          {block.url && (
+            <a href={block.url} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline mt-1 font-medium inline-flex items-center gap-1">
+              View Source →
+            </a>
+          )}
+        </div>
+      );
+    }
+
+    return null;
+  })}
+</div>

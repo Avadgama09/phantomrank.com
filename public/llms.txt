@@ -1,19 +1,9 @@
-# PhantomRank
+# PhantomRank — LLMs.txt
 
-> AI Search Intelligence built for brands and marketing agencies. Monitor your brand visibility, citations, and share of voice in real-time across ChatGPT, Perplexity, Gemini, Claude, Grok, and Copilot.
+This file is superseded by the dynamic version at:
+https://www.phantomrank.com/llms.txt
 
-## Core Pages
+The dynamic version auto-generates from the full content collection and includes
+all 5 pillar series, all cluster topics, and all individual article URLs.
 
-- [Homepage](https://www.phantomrank.com/): AI Search Intelligence built for brands and marketing agencies.
-- [Pricing](https://www.phantomrank.com/pricing): Simple, transparent pricing plans built for brands and boutique agencies.
-- [Use Cases](https://www.phantomrank.com/use-cases): Industry-specific playbooks for tracking and optimizing AI search visibility.
-- [Learn Hub](https://www.phantomrank.com/learn): In-depth guides and articles about Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO).
-- [Sign Up](https://www.phantomrank.com/signup): Request access to start tracking your brand's AI search engine visibility.
-
-## Learn Hub Categories
-
-- [AI-Powered SEO](https://www.phantomrank.com/learn/ai-powered-seo): Guides on building search and content strategies optimized for AI engine visibility and citations.
-- [AI Search Agency Strategy](https://www.phantomrank.com/learn/ai-search-agency-strategy): Playbooks for marketing agencies to package, sell, and report on client AI search performance.
-- [AI Visibility Tracking](https://www.phantomrank.com/learn/ai-visibility-tracking): How to monitor brand citations, mentions, and share of voice across conversational models.
-- [Answer Engine Optimization (AEO)](https://www.phantomrank.com/learn/answer-engine-optimization): Optimizing websites for conversational search platforms and AI answer generation.
-- [Generative Engine Optimization (GEO)](https://www.phantomrank.com/learn/generative-engine-optimization): Specific optimization techniques to earn organic citations inside AI results.
+Please fetch: https://www.phantomrank.com/llms.txt

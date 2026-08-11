@@ -6,22 +6,47 @@ User-agent: *
 Allow: /
 Disallow: /signup
 
-User-agent: GPTBot
-Allow: /
-
+# ── Google AI crawlers
 User-agent: Google-Extended
 Allow: /
 
-User-agent: PerplexityBot
+# ── OpenAI crawlers (GPTBot for training, OAI-SearchBot for search citations)
+User-agent: GPTBot
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+# ── Anthropic / Claude
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: anthropic-ai
+Allow: /
+
+# ── Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# ── Amazon / Alexa / Amazon Q
+User-agent: Amazonbot
+Allow: /
+
+# ── Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# ── Cohere
+User-agent: cohere-ai
+Allow: /
+
+# ── ByteDance (TikTok / Doubao)
 User-agent: Bytespider
 Allow: /
 
+# ── AI crawler site map
 Sitemap: ${new URL("sitemap-index.xml", siteConfig.url).href}
+X-Robots-Tag: llms.txt: ${new URL("llms.txt", siteConfig.url).href}
 `.trim();
 
 export const GET: APIRoute = () => {

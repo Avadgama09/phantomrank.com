@@ -179,6 +179,11 @@ export const pageMeta: Record<string, PageMeta> = {
     description:
       "PhantomRank pricing plans for agencies of every size — from free single-brand tracking to enterprise-grade unlimited AI visibility monitoring. All plans in INR.",
   },
+  studio: {
+    title: "PhantomRank Studio — Digital Marketing & AI Visibility Execution",
+    description:
+      "PhantomRank shows where your brand is missing from search and AI answers. Studio turns those findings into websites, SEO, content, and authority work.",
+  },
   resources: {
     title: "Resources",
     description:

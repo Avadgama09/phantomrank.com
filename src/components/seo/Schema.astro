@@ -7,6 +7,13 @@ interface BreadcrumbItem {
   href: string;
 }
 
+interface ClusterLink {
+  name: string;
+  url: string;
+  description?: string;
+  articleCount?: number;
+}
+
 interface Props {
   type:
     | "WebSite"
@@ -14,7 +21,9 @@ interface Props {
     | "SoftwareApplication"
     | "FAQPage"
     | "Article"
-    | "BreadcrumbList";
+    | "BreadcrumbList"
+    | "CollectionPage"
+    | "Service";
   data?: {
     faqs?: FAQ[];
     breadcrumbs?: BreadcrumbItem[];
@@ -27,64 +36,201 @@ interface Props {
       publisherName?: string;
       publisherLogo?: string;
       image?: string;
+      // Hierarchy for isPartOf chain
+      clusterUrl?: string;
+      clusterTitle?: string;
+      pillarUrl?: string;
+      pillarTitle?: string;
+      // For speakable
+      speakableSelectors?: string[];
+      // Related links
+      relatedLinks?: { label: string; href: string }[];
+    };
+    // For CollectionPage (pillar and cluster pages)
+    collectionPage?: {
+      name: string;
+      description?: string;
+      url: string;
+      isPartOfUrl?: string;   // parent page URL for isPartOf
+      isPartOfName?: string;
+      hasPart?: ClusterLink[]; // child clusters or articles
+      datePublished?: string;
+      dateModified?: string;
+    };
+    // For Service schema (product/homepage)
+    service?: {
+      name?: string;
+      description?: string;
+      category?: string;
     };
   };
 }
 
 const { type, data = {} } = Astro.props;
 
-let schema = {};
+let schema: Record<string, unknown> = {};
 
+// ──────────────────────────────────────────────────────────────────────────────
+// WebSite
+// ──────────────────────────────────────────────────────────────────────────────
 if (type === "WebSite") {
   schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": `${siteConfig.url}/#website`,
     name: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteConfig.url}/learn?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
   };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Organization — fully expanded for Knowledge Graph
+// ──────────────────────────────────────────────────────────────────────────────
 } else if (type === "Organization") {
   schema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "Brand"],
+    "@id": `${siteConfig.url}/#organization`,
     name: siteConfig.name,
+    alternateName: "PhantomRank AI",
     url: siteConfig.url,
-    logo: new URL("/favicon.svg", siteConfig.url).toString(),
+    logo: {
+      "@type": "ImageObject",
+      url: new URL("/favicon.svg", siteConfig.url).toString(),
+    },
     description: siteConfig.description,
-    sameAs: Object.values(siteConfig.socialLinks),
+    slogan: siteConfig.slogan,
+    foundingDate: siteConfig.foundingDate,
+    areaServed: siteConfig.areaServed,
+    knowsAbout: siteConfig.knowsAbout,
+    sameAs: [
+      ...Object.values(siteConfig.socialLinks),
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      url: `${siteConfig.url}/signup`,
+      availableLanguage: ["English"],
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "PhantomRank Plans",
+      url: `${siteConfig.url}/pricing`,
+    },
   };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// SoftwareApplication
+// ──────────────────────────────────────────────────────────────────────────────
 } else if (type === "SoftwareApplication") {
   schema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
+    "@id": `${siteConfig.url}/#software`,
     name: siteConfig.name,
     description: siteConfig.description,
     url: siteConfig.url,
     applicationCategory: "BusinessApplication",
+    applicationSubCategory: "MarketingAnalytics",
     operatingSystem: "Web",
+    inLanguage: "en",
+    featureList: [
+      "AI brand citation tracking across ChatGPT, Gemini, Claude, Perplexity, Grok",
+      "Share of Synthesis measurement",
+      "AI Share of Voice benchmarking",
+      "Competitive AI visibility analysis",
+      "White-label agency reporting",
+      "Multi-client brand monitoring",
+      "Industry-level AI visibility benchmarks",
+    ],
+    audience: {
+      "@type": "Audience",
+      audienceType: "Marketing Agencies and Brands",
+    },
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "INR",
       lowPrice: "0",
-      highPrice: "30000",
-      offerCount: "4",
+      highPrice: "29999",
+      offerCount: "5",
+      url: `${siteConfig.url}/pricing`,
+    },
+    publisher: {
+      "@id": `${siteConfig.url}/#organization`,
     },
   };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Service — for product category ownership in AI search
+// ──────────────────────────────────────────────────────────────────────────────
+} else if (type === "Service") {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${siteConfig.url}/#service`,
+    name: data.service?.name || "AI Search Intelligence Platform",
+    description: data.service?.description || siteConfig.description,
+    serviceType: data.service?.category || "AI Visibility Monitoring",
+    category: "Marketing Analytics Software",
+    provider: {
+      "@id": `${siteConfig.url}/#organization`,
+    },
+    areaServed: siteConfig.areaServed,
+    audience: {
+      "@type": "Audience",
+      audienceType: "Marketing Agencies, Performance Marketers, Brand Managers",
+    },
+    url: siteConfig.url,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "PhantomRank Subscription Plans",
+      url: `${siteConfig.url}/pricing`,
+    },
+    knowsAbout: siteConfig.knowsAbout,
+  };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Article (BlogPosting) — with dates, isPartOf chain, and speakable
+// ──────────────────────────────────────────────────────────────────────────────
 } else if (type === "Article" && data.article) {
+  const speakableSelectors = data.article.speakableSelectors || [
+    ".article-intro",
+    "article h2 + p",
+    "article h3 + p",
+  ];
+
+  const isPartOfChain = [];
+  if (data.article.clusterUrl) {
+    isPartOfChain.push({
+      "@type": "CollectionPage",
+      "@id": new URL(data.article.clusterUrl, siteConfig.url).toString(),
+      name: data.article.clusterTitle || "Cluster",
+    });
+  }
+
   schema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": Astro.url.href,
     headline: data.article.title,
     description: data.article.description || siteConfig.description,
-    image: data.article.image || new URL(siteConfig.ogImage, siteConfig.url).toString(),
-    datePublished: data.article.datePublished || new Date("2026-06-30").toISOString(),
-    dateModified: data.article.dateModified || new Date().toISOString(),
+    image: data.article.image || new URL(typeof siteConfig.ogImage === "string" ? siteConfig.ogImage : siteConfig.ogImage.src, siteConfig.url).toString(),
+    datePublished: data.article.datePublished || new Date("2026-01-01").toISOString(),
+    dateModified: data.article.dateModified || data.article.datePublished || new Date("2026-01-01").toISOString(),
     author: {
-      "@type": "Person",
-      name: data.article.authorName || siteConfig.author,
+      "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
+      name: data.article.authorName || siteConfig.name,
+      url: siteConfig.url,
     },
     publisher: {
       "@type": "Organization",
+      "@id": `${siteConfig.url}/#organization`,
       name: data.article.publisherName || siteConfig.name,
       logo: {
         "@type": "ImageObject",
@@ -95,7 +241,24 @@ if (type === "WebSite") {
       "@type": "WebPage",
       "@id": Astro.url.href,
     },
+    // isPartOf chain: Article → Cluster → Pillar → /learn
+    ...(isPartOfChain.length > 0 && { isPartOf: isPartOfChain[0] }),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: speakableSelectors,
+    },
+    // Related links as relatedLink
+    ...(data.article.relatedLinks?.length && {
+      relatedLink: data.article.relatedLinks.map((l) =>
+        new URL(l.href, siteConfig.url).toString()
+      ),
+    }),
+    inLanguage: siteConfig.lang,
   };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// FAQPage
+// ──────────────────────────────────────────────────────────────────────────────
 } else if (type === "FAQPage" && data.faqs?.length) {
   schema = {
     "@context": "https://schema.org",
@@ -109,6 +272,10 @@ if (type === "WebSite") {
       },
     })),
   };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// BreadcrumbList
+// ──────────────────────────────────────────────────────────────────────────────
 } else if (type === "BreadcrumbList" && data.breadcrumbs?.length) {
   schema = {
     "@context": "https://schema.org",
@@ -119,6 +286,43 @@ if (type === "WebSite") {
       name: crumb.name,
       item: new URL(crumb.href, siteConfig.url).toString(),
     })),
+  };
+
+// ──────────────────────────────────────────────────────────────────────────────
+// CollectionPage — for /learn hub, pillar pages, and cluster pages
+// ──────────────────────────────────────────────────────────────────────────────
+} else if (type === "CollectionPage" && data.collectionPage) {
+  const cp = data.collectionPage;
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": new URL(cp.url, siteConfig.url).toString(),
+    name: cp.name,
+    description: cp.description || siteConfig.description,
+    url: new URL(cp.url, siteConfig.url).toString(),
+    inLanguage: siteConfig.lang,
+    publisher: {
+      "@id": `${siteConfig.url}/#organization`,
+    },
+    // Parent page (isPartOf chain)
+    ...(cp.isPartOfUrl && {
+      isPartOf: {
+        "@type": "CollectionPage",
+        "@id": new URL(cp.isPartOfUrl, siteConfig.url).toString(),
+        name: cp.isPartOfName || "Learn Hub",
+      },
+    }),
+    // Child clusters or articles
+    ...(cp.hasPart?.length && {
+      hasPart: cp.hasPart.map((part) => ({
+        "@type": "CollectionPage",
+        name: part.name,
+        url: new URL(part.url, siteConfig.url).toString(),
+        description: part.description,
+      })),
+    }),
+    ...(cp.datePublished && { datePublished: cp.datePublished }),
+    ...(cp.dateModified && { dateModified: cp.dateModified }),
   };
 }
 ---

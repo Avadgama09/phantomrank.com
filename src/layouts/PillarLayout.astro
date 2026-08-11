@@ -1,12 +1,24 @@
 ---
-// src/layouts/PillarLayout.astro — Hero image + two-column: prose content (left) + HubNav sidebar (right)
+// src/layouts/PillarLayout.astro
+// Content Hub Pillar Layout: Hero → Cluster Grid → Prose + Sidebar → Article Feed
 import Layout from "./Layout.astro";
-import HubNav from "../components/content/HubNav.astro";
+import Schema from "../components/seo/Schema.astro";
 
 interface ClusterLink {
   slug: string;
   title: string;
   href: string;
+  description?: string;
+  articleCount?: number;
+}
+
+interface RecentArticle {
+  title: string;
+  description: string;
+  href: string;
+  clusterTitle: string;
+  clusterSlug: string;
+  publisheddate?: string;
 }
 
 interface Props {
@@ -14,48 +26,368 @@ interface Props {
   description?: string;
   breadcrumbs?: { name: string; href?: string }[];
   hubTitle: string;
+  hubSlug: string;
+  hubIcon?: string;
+  hubDescription?: string;
   clusters: ClusterLink[];
-  featuredImage?: { src: string; alt: string };
+  totalArticleCount?: number;
+  recentArticles?: RecentArticle[];
+  publishedDate?: string;
+  updatedDate?: string;
 }
 
-const { title, description, breadcrumbs, hubTitle, clusters, featuredImage } = Astro.props;
+const {
+  title,
+  description,
+  breadcrumbs,
+  hubTitle,
+  hubSlug,
+  hubIcon = "📚",
+  hubDescription,
+  clusters,
+  totalArticleCount = 0,
+  recentArticles = [],
+  publishedDate,
+  updatedDate,
+} = Astro.props;
+
+const pillarUrl = `/learn/${hubSlug}`;
+const totalClusters = clusters.length;
+
+const primaryClusters = clusters.slice(0, 3);
+const remainingClusters = clusters.slice(3);
+const firstClusterHref = clusters[0]?.href ?? pillarUrl;
 ---
 
 <Layout title={title} description={description} breadcrumbs={breadcrumbs}>
-  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+  <Schema
+    slot="head"
+    type="CollectionPage"
+    data={{
+      collectionPage: {
+        name: title,
+        description,
+        url: pillarUrl,
+        isPartOfUrl: "/learn",
+        isPartOfName: "PhantomRank Learn Hub",
+        hasPart: clusters.map((c) => ({
+          name: c.title,
+          url: c.href,
+          description: c.description,
+        })),
+        datePublished: publishedDate,
+        dateModified: updatedDate,
+      },
+    }}
+  />
 
-    {featuredImage?.src && (
-      <div class="mb-10 overflow-hidden rounded-2xl">
-        <img
-          src={featuredImage.src}
-          alt={featuredImage.alt}
-          class="h-auto w-full object-cover"
-          loading="eager"
-          decoding="async"
-        />
+  <!-- ── Back breadcrumb ── -->
+  <div class="border-b border-border">
+    <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+      <a
+        href="/learn"
+        class="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        All Topics
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       HERO BAND
+  ══════════════════════════════════════════════════════════════ -->
+  <section class="relative overflow-hidden border-b border-border bg-gradient-to-br from-background via-background to-primary/5">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div class="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary/8 blur-3xl"></div>
+      <div class="absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-primary/5 blur-2xl"></div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div class="lg:grid lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
+        <div>
+          <div class="flex items-start gap-5 mb-5">
+            <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-4xl shadow-sm">
+              {hubIcon}
+            </div>
+            <div>
+              <h1 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl leading-tight">
+                {hubTitle}
+              </h1>
+              {hubDescription && (
+                <p class="mt-2 text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                  {hubDescription}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <!-- Stats chips -->
+          <div class="flex flex-wrap items-center gap-3 mt-6">
+            {totalClusters > 0 && (
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-foreground shadow-sm">
+                <svg class="h-3.5 w-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                {totalClusters} Sub-Topics
+              </span>
+            )}
+            {totalArticleCount > 0 && (
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3.5 py-1.5 text-sm font-medium text-foreground shadow-sm">
+                <svg class="h-3.5 w-3.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                {totalArticleCount} Articles & Teardowns
+              </span>
+            )}
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-8">
+            <a
+              href={firstClusterHref}
+              class="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md hover:bg-primary/90 transition-all hover:-translate-y-px hover:shadow-lg"
+            >
+              Browse Sub-Topics
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        {clusters[0] && (
+          <div class="hidden lg:block mt-0">
+            <div class="w-72 rounded-2xl border border-border bg-card p-6 shadow-md">
+              <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
+                Featured Topic
+              </div>
+              <h3 class="text-base font-bold text-foreground leading-snug">
+                {clusters[0].title}
+              </h3>
+              {clusters[0].description && (
+                <p class="mt-2 text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+                  {clusters[0].description}
+                </p>
+              )}
+              {clusters[0].articleCount !== undefined && clusters[0].articleCount > 0 && (
+                <div class="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+                  <span>{clusters[0].articleCount} articles</span>
+                </div>
+              )}
+              <a
+                href={clusters[0].href}
+                class="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-primary/30 bg-primary/10 px-4 py-2.5 text-sm font-semibold text-primary hover:bg-primary/20 transition-colors"
+              >
+                Read topic →
+              </a>
+            </div>
+          </div>
+        )}
       </div>
-    )}
+    </div>
+  </section>
 
-    <div class="lg:grid lg:grid-cols-[1fr_280px] lg:gap-12">
+  <!-- ══════════════════════════════════════════════════════════════
+       CLUSTER CARD GRID
+  ══════════════════════════════════════════════════════════════ -->
+  {clusters.length > 0 && (
+    <section class="border-b border-border bg-background/40">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-bold tracking-tight text-foreground">
+              Topic Breakdown
+            </h2>
+            <p class="mt-1 text-sm text-muted-foreground">
+              {totalClusters} sub-topics · {totalArticleCount} articles
+            </p>
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {clusters.map((cluster, i) => (
+            <a
+              href={cluster.href}
+              class="group relative flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-md hover:-translate-y-px"
+            >
+              <div class="mb-4 flex items-center justify-between">
+                <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {cluster.articleCount !== undefined && cluster.articleCount > 0 && (
+                  <span class="rounded-full border border-border bg-background px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                    {cluster.articleCount} {cluster.articleCount === 1 ? "article" : "articles"}
+                  </span>
+                )}
+              </div>
+
+              <h3 class="text-base font-semibold leading-snug text-foreground group-hover:text-primary transition-colors">
+                {cluster.title}
+              </h3>
+
+              {cluster.description && (
+                <p class="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {cluster.description}
+                </p>
+              )}
+
+              <div class="mt-4 flex items-center gap-1 text-xs font-medium text-primary">
+                Read Topic
+                <svg class="h-3.5 w-3.5 translate-x-0 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ══════════════════════════════════════════════════════════════
+       PROSE + SIDEBAR
+  ══════════════════════════════════════════════════════════════ -->
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="lg:grid lg:grid-cols-[1fr_280px] lg:gap-16">
+
+      <!-- Prose content from MDX -->
       <article
-        class="prose prose-lg max-w-none
+        class="article-intro min-w-0 overflow-x-auto prose prose-lg max-w-none
           prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground
+          prose-h1:text-3xl
           prose-p:text-muted-foreground prose-p:leading-8
           prose-a:text-primary prose-a:no-underline hover:prose-a:underline
           prose-strong:text-foreground
           prose-li:text-muted-foreground
           prose-blockquote:border-primary/40 prose-blockquote:text-muted-foreground
           prose-code:rounded prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary
+          prose-pre:overflow-x-auto
           prose-table:text-sm
           prose-th:font-semibold prose-th:text-foreground
-          prose-td:text-muted-foreground"
+          prose-td:text-muted-foreground
+          prose-img:rounded-xl prose-img:shadow-md
+          prose-hr:border-border"
       >
         <slot />
       </article>
 
+      <!-- Sticky sidebar -->
       <aside class="hidden lg:block">
-        <HubNav hubTitle={hubTitle} clusters={clusters} />
+        <div class="sticky top-24 space-y-4">
+
+          <!-- Core Topics -->
+          {primaryClusters.length > 0 && (
+            <div class="rounded-2xl border border-border bg-background/60 p-5">
+              <h3 class="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
+                Core Topics
+              </h3>
+              <nav class="space-y-1">
+                {primaryClusters.map((c) => (
+                  <a
+                    href={c.href}
+                    class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    <span class="leading-snug">{c.title}</span>
+                    {c.articleCount !== undefined && c.articleCount > 0 && (
+                      <span class="ml-2 shrink-0 text-xs text-muted-foreground/60">
+                        {c.articleCount}
+                      </span>
+                    )}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
+
+          <!-- More Topics -->
+          {remainingClusters.length > 0 && (
+            <div class="rounded-2xl border border-border bg-background/60 p-5">
+              <h3 class="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                More Topics
+              </h3>
+              <nav class="space-y-1">
+                {remainingClusters.map((c) => (
+                  <a
+                    href={c.href}
+                    class="flex items-center justify-between rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  >
+                    <span class="leading-snug">{c.title}</span>
+                    {c.articleCount !== undefined && c.articleCount > 0 && (
+                      <span class="ml-2 shrink-0 text-xs text-muted-foreground/60">
+                        {c.articleCount}
+                      </span>
+                    )}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
+
+          <!-- Back to all topics -->
+          <div class="rounded-2xl border border-border bg-background/60 px-5 py-4">
+            <a
+              href="/learn"
+              class="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              All Topics
+            </a>
+          </div>
+        </div>
       </aside>
     </div>
   </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       RECENT ARTICLES FEED
+  ══════════════════════════════════════════════════════════════ -->
+  {recentArticles.length > 0 && (
+    <section class="border-t border-border bg-muted/20">
+      <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div class="mb-8">
+          <h2 class="text-xl font-bold tracking-tight text-foreground">
+            Latest Articles
+          </h2>
+          <p class="mt-1 text-sm text-muted-foreground">
+            Browse recent additions across all {totalClusters} sub-topics.
+          </p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {recentArticles.map((article) => (
+            <a
+              href={article.href}
+              class="group flex flex-col rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:border-primary/40 hover:shadow-md hover:-translate-y-px"
+            >
+              <span class="mb-3 inline-flex w-fit items-center rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 text-xs font-medium text-primary">
+                {article.clusterTitle}
+              </span>
+
+              <h3 class="text-sm font-semibold leading-snug text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                {article.title}
+              </h3>
+
+              {article.description && (
+                <p class="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {article.description}
+                </p>
+              )}
+
+              <div class="mt-4 flex items-center gap-1 text-xs font-medium text-primary">
+                Read Article
+                <svg class="h-3 w-3 translate-x-0 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 </Layout>

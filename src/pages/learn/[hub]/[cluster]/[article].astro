@@ -9,19 +9,20 @@ export async function getStaticPaths() {
 
   // Get articles: any .mdx inside a cluster folder that isn't _index.mdx or _pillar.mdx
   const articles = all.filter((entry) => {
-    const parts = entry.id.split("/");
+    const cleanId = entry.id.replace(/\\/g, "/");
+    const parts = cleanId.split("/");
     return (
       parts.length >= 3 &&
-      !entry.id.endsWith("_index.mdx") &&
-      !entry.id.endsWith("_pillar.mdx")
+      !cleanId.endsWith("_index.mdx") &&
+      !cleanId.endsWith("_pillar.mdx")
     );
   });
 
   return articles.map((article) => {
-    const parts = article.id.split("/");
+    const cleanId = article.id.replace(/\\/g, "/");
+    const parts = cleanId.split("/");
     const hubSlug = parts[0];
     const clusterSlug = parts[1];
-    // Use frontmatter slug if present, otherwise derive from filename
     const articleSlug =
       article.data.slug ||
       parts[parts.length - 1].replace(/\.mdx$/, "");
@@ -29,16 +30,18 @@ export async function getStaticPaths() {
     // Find sibling articles in same cluster
     const siblings = all
       .filter((e) => {
-        const p = e.id.split("/");
+        const cleanEId = e.id.replace(/\\/g, "/");
+        const p = cleanEId.split("/");
         return (
           p[0] === hubSlug &&
           p[1] === clusterSlug &&
-          !e.id.endsWith("_index.mdx") &&
-          !e.id.endsWith("_pillar.mdx")
+          !cleanEId.endsWith("_index.mdx") &&
+          !cleanEId.endsWith("_pillar.mdx")
         );
       })
       .map((e) => {
-        const p = e.id.split("/");
+        const cleanEId = e.id.replace(/\\/g, "/");
+        const p = cleanEId.split("/");
         const s = e.data.slug || p[p.length - 1].replace(/\.mdx$/, "");
         return {
           slug: s,
@@ -49,9 +52,15 @@ export async function getStaticPaths() {
       .sort((a, b) => a.title.localeCompare(b.title));
 
     // Find cluster _index for title
-    const clusterIndex = all.find(
-      (e) => e.id === `${hubSlug}/${clusterSlug}/_index.mdx`
-    );
+    const clusterIndex = all.find((e) => {
+      const cleanEId = e.id.replace(/\\/g, "/");
+      return cleanEId === `${hubSlug}/${clusterSlug}/_index.mdx`;
+    });
+
+    const fullClusterTitle = clusterIndex?.data?.title || clusterSlug;
+    const shortClusterTitle = fullClusterTitle.includes(":")
+      ? fullClusterTitle.split(":")[0].trim()
+      : fullClusterTitle;
 
     return {
       params: { hub: hubSlug, cluster: clusterSlug, article: articleSlug },
@@ -59,7 +68,7 @@ export async function getStaticPaths() {
         entry: article,
         hubSlug,
         clusterSlug,
-        clusterTitle: clusterIndex?.data?.title || clusterSlug,
+        clusterTitle: shortClusterTitle,
         siblingArticles: siblings,
         totalArticles: siblings.length,
         currentArticle: articleSlug,
@@ -72,7 +81,6 @@ const { entry, hubSlug, clusterSlug, clusterTitle, siblingArticles, totalArticle
 const { Content } = await entry.render();
 
 const hub = hubs.find((h: { slug: string; title: string }) => h.slug === hubSlug);
-
 const hubTitle = hub?.title || hubSlug;
 
 const breadcrumbs = [
@@ -95,6 +103,10 @@ const breadcrumbs = [
   siblingArticles={siblingArticles}
   currentArticle={currentArticle}
   totalArticles={totalArticles}
+  datePublished={entry.data.publisheddate}
+  dateModified={entry.data.updateddate}
+  featuredImage={entry.data.featuredimage?.src}
+  relatedLinks={entry.data.relatedLinks}
 >
   <Content />
 </ArticleLayout>

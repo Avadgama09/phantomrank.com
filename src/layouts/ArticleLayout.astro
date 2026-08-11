@@ -1,11 +1,16 @@
 ---
-// src/layouts/ArticleLayout.astro — Article page with sibling-articles sidebar
+// src/layouts/ArticleLayout.astro — Article page with sibling-articles sidebar + full schema
 import Layout from "./Layout.astro";
 import Schema from "../components/seo/Schema.astro";
 
 interface SiblingArticle {
   slug: string;
   title: string;
+  href: string;
+}
+
+interface RelatedLink {
+  label: string;
   href: string;
 }
 
@@ -20,6 +25,11 @@ interface Props {
   siblingArticles: SiblingArticle[];
   currentArticle: string;
   totalArticles: number;
+  // Schema fields
+  datePublished?: string;
+  dateModified?: string;
+  featuredImage?: string;
+  relatedLinks?: RelatedLink[];
 }
 
 const {
@@ -33,14 +43,44 @@ const {
   siblingArticles,
   currentArticle,
   totalArticles,
+  datePublished,
+  dateModified,
+  featuredImage,
+  relatedLinks,
 } = Astro.props;
 
 const displayedArticles = siblingArticles.slice(0, 5);
 const hasMore = totalArticles > 5;
+
+const clusterUrl = `/learn/${hubSlug}/${clusterSlug}`;
+const pillarUrl = `/learn/${hubSlug}`;
 ---
 
 <Layout title={title} description={description} breadcrumbs={breadcrumbs}>
-  <Schema type="Article" data={{ article: { title, description } }} />
+  <Schema
+    slot="head"
+    type="Article"
+    data={{
+      article: {
+        title,
+        description,
+        datePublished: datePublished ? new Date(datePublished).toISOString() : undefined,
+        dateModified: dateModified
+          ? new Date(dateModified).toISOString()
+          : datePublished
+          ? new Date(datePublished).toISOString()
+          : undefined,
+        image: featuredImage,
+        clusterUrl,
+        clusterTitle,
+        pillarUrl,
+        pillarTitle: hubTitle,
+        relatedLinks,
+        speakableSelectors: [".article-intro", "article h2 + p", "article h3 + p"],
+      },
+    }}
+  />
+
   <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
     <a
       href={`/learn/${hubSlug}/${clusterSlug}`}
@@ -54,7 +94,7 @@ const hasMore = totalArticles > 5;
 
     <div class="lg:grid lg:grid-cols-[1fr_280px] lg:gap-12">
       <article
-        class="min-w-0 overflow-x-auto prose prose-lg max-w-none
+        class="article-body min-w-0 overflow-x-auto prose prose-lg max-w-none
           prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground
           prose-p:text-muted-foreground prose-p:leading-8
           prose-a:text-primary prose-a:no-underline hover:prose-a:underline
@@ -73,46 +113,93 @@ const hasMore = totalArticles > 5;
       </article>
 
       <aside class="hidden lg:block">
-        <div class="sticky top-24">
-          <h3 class="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            More in {clusterTitle}
-          </h3>
-          <nav class="mt-4 flex flex-col gap-1">
-            {displayedArticles.map((article) => (
+        <div class="sticky top-24 space-y-4">
+          <!-- Sibling articles navigation -->
+          <div class="rounded-2xl border border-border bg-background/60 p-6">
+            <h3 class="mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              More in {clusterTitle}
+            </h3>
+            <nav class="mt-4 flex flex-col gap-1">
+              {displayedArticles.map((article) => (
+                <a
+                  href={article.href}
+                  class:list={[
+                    "rounded-md px-3 py-2 text-sm transition-colors",
+                    article.slug === currentArticle
+                      ? "bg-primary/10 font-medium text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  ]}
+                >
+                  {article.title}
+                </a>
+              ))}
+            </nav>
+
+            {hasMore && (
               <a
-                href={article.href}
-                class:list={[
-                  "rounded-md px-3 py-2 text-sm transition-colors",
-                  article.slug === currentArticle
-                    ? "bg-primary/10 font-medium text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                ]}
+                href={`/learn/${hubSlug}/${clusterSlug}`}
+                class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:underline"
               >
-                {article.title}
+                View all {totalArticles} articles
+                <svg class="ml-1 h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
               </a>
-            ))}
-          </nav>
+            )}
+          </div>
 
-          {hasMore && (
+          <!-- Hierarchy navigation -->
+          <div class="rounded-2xl border border-border bg-background/60 p-5 space-y-2">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              Series
+            </h3>
             <a
-              href={`/learn/${hubSlug}/${clusterSlug}`}
-              class="mt-4 inline-flex items-center text-sm font-medium text-primary hover:underline"
+              href={clusterUrl}
+              class="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              View all {totalArticles} articles
-              <svg class="ml-1 h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
+              {clusterTitle}
             </a>
-          )}
-
-          <div class="mt-8 border-t border-border pt-6">
             <a
-              href={`/learn/${hubSlug}`}
-              class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              href={pillarUrl}
+              class="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              ← {hubTitle}
+              <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              {hubTitle}
+            </a>
+            <a
+              href="/learn"
+              class="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              All Series
             </a>
           </div>
+
+          <!-- Related links from frontmatter -->
+          {relatedLinks && relatedLinks.length > 0 && (
+            <div class="rounded-2xl border border-border bg-background/60 p-5">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                Related reading
+              </h3>
+              <nav class="flex flex-col gap-1">
+                {relatedLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    class="text-sm text-muted-foreground hover:text-primary hover:bg-muted rounded-md px-2 py-1.5 transition-colors line-clamp-2"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
         </div>
       </aside>
     </div>

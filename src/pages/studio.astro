@@ -1,0 +1,317 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { pageMeta } from "../utils/data";
+import { studioCategories, studioWorkflow } from "../utils/studioData";
+import { Icon } from "astro-icon/components";
+
+const meta = pageMeta.studio || {
+  title: "PhantomRank Studio — Digital Marketing & AI Visibility Execution",
+  description:
+    "PhantomRank shows where your brand is missing from search and AI answers. Studio turns those findings into websites, SEO, content, and authority work.",
+};
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Studio", href: "/studio" },
+  ]}
+>
+  {/* ── Hero Section ── */}
+  <section class="relative overflow-hidden py-16 md:py-24 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+      <div class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
+        <Icon name="lucide:layers" class="h-4 w-4" />
+        PhantomRank Studio
+      </div>
+      
+      <h1 class="reveal text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl mb-4">
+        The hands-on side of PhantomRank.
+      </h1>
+
+      <p class="reveal mx-auto max-w-3xl text-lg md:text-xl font-medium text-muted-foreground leading-relaxed mb-8">
+        PhantomRank shows where your brand is missing from search and AI answers. Studio turns those findings into websites, SEO, content and authority work.
+      </p>
+
+      <div class="reveal flex flex-wrap items-center justify-center gap-4">
+        <a href="/signup" class="btn-primary">
+          Request a Studio audit
+          <Icon name="lucide:arrow-right" class="w-4 h-4" />
+        </a>
+        <a href="/signup" class="btn-secondary">
+          See PhantomRank in action
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Services Showcase (Visual Core of the Page) ── */}
+  <section id="services" class="py-20 bg-base-200/30">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-16">
+        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          Execution Services
+        </h2>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          Seven parent categories built to turn audit findings into web infrastructure, content depth, and verifiable brand authority.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          studioCategories.map((category) => {
+            const isSeo = category.id === "seo";
+            const isAiVisibility = category.id === "ai-visibility-model-optimisation";
+
+            return (
+              <div
+                class={`reveal group bg-card border border-border p-6 md:p-8 rounded-3xl flex flex-col justify-between hover:border-primary/40 transition-all duration-200 shadow-sm hover:shadow-md ${
+                  isSeo ? "md:col-span-2 lg:col-span-3 bg-gradient-to-b from-card to-card/60" : ""
+                }`}
+              >
+                <div>
+                  {/* Category Header */}
+                  <div class="flex items-center gap-3.5 mb-5">
+                    <div class="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <Icon name={category.icon} class="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-bold text-foreground">
+                        {category.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p class="text-muted-foreground text-sm leading-relaxed mb-6">
+                    {category.summary}
+                  </p>
+
+                  {/* Standard Visible Services list */}
+                  {!isSeo && category.visibleServices && (
+                    <div class="space-y-2.5 mb-6">
+                      <h4 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mb-2">
+                        Core Deliverables
+                      </h4>
+                      <ul class="space-y-2">
+                        {category.visibleServices.map((service) => (
+                          <li class="flex items-start gap-2 text-sm text-foreground/90">
+                            <Icon name="lucide:check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span>{service}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* AI Visibility Special Details */}
+                  {isAiVisibility && (
+                    <div class="mb-6 rounded-2xl bg-primary/5 border border-primary/15 p-4">
+                      <div class="flex items-center gap-2 text-xs font-semibold text-primary uppercase tracking-wider mb-2">
+                        <Icon name="lucide:cpu" class="w-4 h-4" />
+                        AI Model Coverage
+                      </div>
+                      <p class="text-xs text-muted-foreground leading-relaxed">
+                        Optimisation recommendations tailored for <strong class="text-foreground font-semibold">ChatGPT, Google Gemini, Perplexity & Sonar, Claude, and Grok</strong>.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* SEO Special Layout: 5 Visible Internal Groups */}
+                  {isSeo && category.groups && (
+                    <div class="mb-6">
+                      <h4 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mb-4">
+                        Five Core SEO Pillars
+                      </h4>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {category.groups.map((group) => (
+                          <div class="p-4 rounded-2xl bg-muted/40 border border-border/50">
+                            <h5 class="font-bold text-foreground text-sm mb-2.5 flex items-center gap-2">
+                              <span class="w-2 h-2 rounded-full bg-primary" />
+                              {group.name}
+                            </h5>
+                            <ul class="space-y-1.5">
+                              {group.services.map((item) => (
+                                <li class="text-xs text-muted-foreground flex items-start gap-1.5">
+                                  <span class="text-primary/70 font-semibold">•</span>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Progressive Disclosure: Accordion for Additional Services */}
+                {category.expandedServices && category.expandedServices.length > 0 && (
+                  <details class="group/details mt-4 border-t border-border/60 pt-4">
+                    <summary class="py-3 px-4 rounded-xl bg-muted/40 hover:bg-muted/70 focus-visible:outline-2 focus-visible:outline-primary transition-colors cursor-pointer select-none font-semibold text-sm text-foreground flex items-center justify-between">
+                      <span>See what’s included</span>
+                      <Icon
+                        name="lucide:chevron-down"
+                        class="w-4 h-4 text-muted-foreground transition-transform duration-200 group-open/details:rotate-180"
+                      />
+                    </summary>
+                    <div class="pt-3 px-2 space-y-2">
+                      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
+                        {category.expandedServices.map((extra) => (
+                          <li class="flex items-start gap-2">
+                            <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 text-primary/60 shrink-0 mt-0.5" />
+                            <span>{extra}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── How Studio Works (4-Step Workflow) ── */}
+  <section class="py-20 border-t border-border">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-16">
+        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          How Studio Works
+        </h2>
+        <p class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          A predictable four-step methodology connecting diagnostic search data to visible brand growth.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {
+          studioWorkflow.map((item) => (
+            <div class="reveal group bg-card border border-border p-8 rounded-3xl relative overflow-hidden hover:border-primary/30 transition-colors">
+              <div class="text-4xl font-extrabold text-primary/20 mb-4 group-hover:text-primary/40 transition-colors">
+                {item.step}
+              </div>
+              <h3 class="text-xl font-bold text-foreground mb-3">
+                {item.title}
+              </h3>
+              <p class="text-sm text-muted-foreground leading-relaxed mb-6">
+                {item.description}
+              </p>
+              <div class="space-y-2 pt-4 border-t border-border/50">
+                <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 block mb-2">
+                  Key Deliverables
+                </span>
+                {item.deliverables.map((deliv) => (
+                  <div class="flex items-center gap-2 text-xs font-medium text-foreground/90">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                    <span>{deliv}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── How We Approach AI Visibility (Credibility Section) ── */}
+  <section class="py-16 bg-base-200/40 border-y border-border">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm text-center">
+        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
+          <Icon name="lucide:shield-check" class="w-6 h-6" />
+        </div>
+        <h2 class="text-2xl font-bold text-foreground mb-4">
+          How we approach AI visibility
+        </h2>
+        <p class="text-muted-foreground text-base leading-relaxed max-w-3xl mx-auto mb-6">
+          We treat search and AI visibility as disciplined web engineering, topical content depth, and verifiable brand entity authority—not black-box hacks.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left pt-6 border-t border-border/60">
+          <div class="p-4 rounded-2xl bg-muted/30">
+            <h3 class="font-semibold text-foreground text-sm mb-1">Empirical Measurement</h3>
+            <p class="text-xs text-muted-foreground">PhantomRank measures actual mentions, citations, and source patterns without false control claims.</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-muted/30">
+            <h3 class="font-semibold text-foreground text-sm mb-1">Structured Execution</h3>
+            <p class="text-xs text-muted-foreground">Studio builds the schema, content clusters, and technical structure to eliminate information gaps.</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-muted/30">
+            <h3 class="font-semibold text-foreground text-sm mb-1">Sustainable Growth</h3>
+            <p class="text-xs text-muted-foreground">No tricks or temporary exploits—only clean architecture, quality content, and genuine authority.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Call to Action ── */}
+  <section class="py-20 md:py-28">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <div class="reveal bg-gradient-to-br from-primary/10 via-card to-card border border-primary/20 rounded-3xl p-8 md:p-14">
+        <h2 class="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl mb-4">
+          Ready to turn search data into execution?
+        </h2>
+        <p class="text-muted-foreground text-base max-w-2xl mx-auto mb-8 leading-relaxed">
+          Request a Studio audit to identify your brand's search and AI visibility gaps, or talk through a custom project with our engineering team.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="/signup" class="btn-primary">
+            Request a Studio audit
+            <Icon name="lucide:arrow-right" class="w-4 h-4" />
+          </a>
+          <a href="/signup" class="btn-secondary">
+            Talk through a project
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    function setupAnimations() {
+      // Check reduced motion preference
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (prefersReducedMotion) {
+        document.querySelectorAll(".reveal").forEach((elem) => {
+          elem.classList.add("active");
+        });
+        return;
+      }
+
+      gsap.utils.toArray(".reveal").forEach((elem: any) => {
+        gsap.fromTo(
+          elem,
+          { autoAlpha: 0, y: 25 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: elem,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    }
+
+    setupAnimations();
+    document.addEventListener("astro:page-load", setupAnimations);
+  </script>
+</Layout>

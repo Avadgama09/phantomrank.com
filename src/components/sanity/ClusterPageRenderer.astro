@@ -1,0 +1,102 @@
+---
+// src/components/sanity/ClusterPageRenderer.astro
+// Shared Renderer for Cluster Landing Pages (/learn/[cluster]/)
+import ClusterLayout from "../../layouts/ClusterLayout.astro";
+import PortableText from "./PortableText.astro";
+import { sanityFetch } from "../../sanity/lib/client";
+import { ALL_CLUSTERS_QUERY, CLUSTER_BY_SLUG_QUERY, ARTICLES_IN_CLUSTER_QUERY } from "../../sanity/lib/queries";
+
+interface Props {
+  clusterSlug: string;
+}
+
+const { clusterSlug } = Astro.props;
+
+const clusterData = await sanityFetch<any>({
+  query: CLUSTER_BY_SLUG_QUERY,
+  params: { clusterSlug },
+});
+
+const siblingClusters = await sanityFetch<any[]>({
+  query: ALL_CLUSTERS_QUERY,
+});
+
+const clusterArticles = await sanityFetch<any[]>({
+  query: ARTICLES_IN_CLUSTER_QUERY,
+  params: { clusterSlug },
+});
+
+const title = clusterData?.title || clusterSlug.replace(/-/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase());
+const description = clusterData?.shortDescription || `Guide and articles for the ${title} cluster.`;
+
+const formattedSiblings = (siblingClusters || []).map((s) => ({
+  slug: s.slug,
+  title: s.title,
+  href: `/learn/${s.slug}`,
+}));
+
+const formattedArticles = (clusterArticles || []).map((a) => ({
+  slug: a.slug,
+  title: a.title,
+  description: a.excerpt || "",
+  href: `/learn/${clusterSlug}/${a.slug}`,
+  publisheddate: a.publishedAt || "",
+}));
+---
+
+<ClusterLayout
+  title={clusterData?.seo?.title || `${title} — Topic Cluster | PhantomRank`}
+  description={clusterData?.seo?.description || description}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Learn", href: "/learn" },
+    { name: title },
+  ]}
+  hubTitle="Learn Hub"
+  hubSlug="learn"
+  clusters={formattedSiblings}
+  currentCluster={clusterSlug}
+  articles={formattedArticles}
+>
+  {clusterData?.introduction ? (
+    <PortableText value={clusterData.introduction} />
+  ) : (
+    <div class="prose prose-lg max-w-none text-muted-foreground">
+      <h1>{title}</h1>
+      <p class="lead">{description}</p>
+    </div>
+  )}
+
+  {formattedArticles.length > 0 ? (
+    <div class="mt-12 border-t border-border pt-10">
+      <h2 class="text-2xl font-semibold tracking-tight text-foreground">
+        Articles in {title}
+      </h2>
+      <div class="mt-6 grid gap-4">
+        {formattedArticles.map((article) => (
+          <a
+            href={article.href}
+            class="group flex flex-col rounded-lg border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-sm"
+          >
+            <h3 class="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+              {article.title}
+            </h3>
+            {article.description && (
+              <p class="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+                {article.description}
+              </p>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div class="mt-12 rounded-xl border border-dashed border-border p-8 text-center text-muted-foreground">
+      <p>Articles for <strong>{title}</strong> are currently in editorial review. Check back soon for deep-dive frameworks and research pieces.</p>
+      <div class="mt-4 flex justify-center gap-4 text-xs font-semibold text-primary">
+        <a href="/learn/ai-seo/" class="hover:underline">Explore AI SEO →</a>
+        <a href="/learn/ai-visibility/" class="hover:underline">Explore AI Visibility →</a>
+      </div>
+    </div>
+  )}
+</ClusterLayout>

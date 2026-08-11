@@ -1,0 +1,20 @@
+---
+// src/pages/learn/diagnosis/[article].astro
+import ArticlePageRenderer from "../../../components/sanity/ArticlePageRenderer.astro";
+import { sanityFetch } from "../../../sanity/lib/client";
+import { ARTICLES_IN_CLUSTER_QUERY } from "../../../sanity/lib/queries";
+
+export async function getStaticPaths() {
+  const articles = await sanityFetch<any[]>({
+    query: ARTICLES_IN_CLUSTER_QUERY,
+    params: { clusterSlug: "diagnosis" },
+  });
+
+  return (articles || []).map((a) => ({
+    params: { article: a.slug },
+  }));
+}
+
+const { article: articleSlug } = Astro.params;
+---
+<ArticlePageRenderer clusterSlug="diagnosis" articleSlug={articleSlug} />

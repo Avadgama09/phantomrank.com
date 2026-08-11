@@ -66,6 +66,10 @@ const schemaBreadcrumbs = breadcrumbs?.map((b) => ({
     }
     <slot name="head" />
 
+    <!-- LLMs.txt discovery — machine-readable site map for AI crawlers -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt - Machine-readable site map" />
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLMs-Full.txt - Full content index for AI indexing" />
+
     <!-- Bing Webmaster Tools Verification -->
     <meta name="msvalidate.01" content="8987F64E8E376BDEF6B20E76324752B3" />
 

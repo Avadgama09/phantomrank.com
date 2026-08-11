@@ -1,9 +1,17 @@
 ---
 // src/layouts/ClusterLayout.astro — Two-column: prose content + sidebar with current cluster highlighted
+// Adds CollectionPage schema with isPartOf pointing to parent pillar
 import Layout from "./Layout.astro";
 import HubNav from "../components/content/HubNav.astro";
+import Schema from "../components/seo/Schema.astro";
 
 interface ClusterLink {
+  slug: string;
+  title: string;
+  href: string;
+}
+
+interface ArticleLink {
   slug: string;
   title: string;
   href: string;
@@ -17,12 +25,50 @@ interface Props {
   hubSlug: string;
   clusters: ClusterLink[];
   currentCluster: string;
+  articles?: ArticleLink[];
+  publishedDate?: string;
+  updatedDate?: string;
 }
 
-const { title, description, breadcrumbs, hubTitle, hubSlug, clusters, currentCluster } = Astro.props;
+const {
+  title,
+  description,
+  breadcrumbs,
+  hubTitle,
+  hubSlug,
+  clusters,
+  currentCluster,
+  articles = [],
+  publishedDate,
+  updatedDate,
+} = Astro.props;
+
+const clusterUrl = `/learn/${hubSlug}/${currentCluster}`;
+const pillarUrl = `/learn/${hubSlug}`;
 ---
 
 <Layout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <!-- CollectionPage schema: Cluster → isPartOf Pillar, hasPart = articles -->
+  <Schema
+    slot="head"
+    type="CollectionPage"
+    data={{
+      collectionPage: {
+        name: title,
+        description,
+        url: clusterUrl,
+        isPartOfUrl: pillarUrl,
+        isPartOfName: hubTitle,
+        hasPart: articles.map((a) => ({
+          name: a.title,
+          url: a.href,
+        })),
+        datePublished: publishedDate,
+        dateModified: updatedDate,
+      },
+    }}
+  />
+
   <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
     <a
       href={`/learn/${hubSlug}`}
