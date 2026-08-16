@@ -51,6 +51,42 @@ export default defineConfig({
                   .title("Articles & Guides Filtered Lists")
                   .items([
                     S.documentTypeListItem("article").title("All Articles"),
+                    
+                    // Filter by Content Type
+                    S.listItem()
+                      .title("By Content Type")
+                      .child(
+                        S.list()
+                          .title("Content Types")
+                          .items([
+                            S.listItem()
+                              .title("Blog Posts")
+                              .child(S.documentList().title("Blog Posts").filter('_type == "article" && contentType == "blog"')),
+                            S.listItem()
+                              .title("Case Studies")
+                              .child(S.documentList().title("Case Studies").filter('_type == "article" && contentType == "case-study"')),
+                            S.listItem()
+                              .title("How-To Guides")
+                              .child(S.documentList().title("How-To Guides").filter('_type == "article" && contentType == "how-to"')),
+                            S.listItem()
+                              .title("Comparisons")
+                              .child(S.documentList().title("Comparisons").filter('_type == "article" && contentType == "comparison"')),
+                            S.listItem()
+                              .title("Frameworks")
+                              .child(S.documentList().title("Frameworks").filter('_type == "article" && contentType == "framework"')),
+                            S.listItem()
+                              .title("Research Studies")
+                              .child(S.documentList().title("Research Studies").filter('_type == "article" && contentType == "research-study"')),
+                            S.listItem()
+                              .title("Definitions")
+                              .child(S.documentList().title("Definitions").filter('_type == "article" && contentType == "definition"')),
+                            S.listItem()
+                              .title("Checklists")
+                              .child(S.documentList().title("Checklists").filter('_type == "article" && contentType == "checklist"')),
+                          ])
+                      ),
+
+                    // Filter by Editorial Stage
                     S.listItem()
                       .title("Outline Drafts")
                       .child(
@@ -72,6 +108,8 @@ export default defineConfig({
                           .title("Published Guides")
                           .filter('_type == "article" && !(_id in path("drafts.**"))')
                       ),
+
+                    // Filter by SEO Strategy
                     S.listItem()
                       .title("SEO Targets")
                       .child(

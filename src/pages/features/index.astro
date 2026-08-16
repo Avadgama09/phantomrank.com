@@ -20,15 +20,17 @@ const meta = {
   ]}
 >
   {/* ── HERO SECTION ── */}
-  <section id="features-hero" class="relative bg-background pt-32 pb-24 overflow-hidden border-b border-border">
+  <section id="features-hero" class="relative mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8 min-h-[50vh] flex flex-col items-center justify-center overflow-hidden text-center border-b border-border">
      <DotBackground containerId="features-hero" />
-     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.1),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.15),transparent_50%)] pointer-events-none"></div>
      
-     <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center reveal">
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6">
-          Platform features
+     <div class="relative z-10 text-center reveal">
+        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-6xl mx-auto leading-tight mb-6">
+          Platform
+          <span class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2">
+            features
+          </span>
         </h1>
-        <p class="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12">
+        <p class="mt-6 text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed mb-12">
           PhantomRank has three live modules: one for brand‑level AI visibility, one for category‑level benchmarking, and one for understanding where AI gets its information.
         </p>
 
@@ -128,10 +130,10 @@ const meta = {
 
         {/* Flowchart Diagram */}
         <div class="absolute inset-0 flex items-center justify-end pr-4 md:pr-12 pointer-events-none">
-          <svg class="absolute inset-0 w-full h-full z-0">
-             <path d="M 40% 50% L 60% 25%" stroke="hsl(var(--border))" stroke-dasharray="4" stroke-width="1.5" fill="none" class="opacity-50" />
-             <path d="M 40% 50% L 60% 50%" stroke="hsl(var(--primary))" stroke-dasharray="4" stroke-width="1.5" fill="none" />
-             <path d="M 40% 50% L 60% 75%" stroke="hsl(var(--destructive))" stroke-dasharray="4" stroke-width="1.5" fill="none" />
+          <svg class="absolute inset-0 w-full h-full z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+             <path d="M 40 50 L 60 25" stroke="hsl(var(--border))" stroke-dasharray="4" stroke-width="1.5" fill="none" class="opacity-50" />
+             <path d="M 40 50 L 60 50" stroke="hsl(var(--primary))" stroke-dasharray="4" stroke-width="1.5" fill="none" />
+             <path d="M 40 50 L 60 75" stroke="hsl(var(--destructive))" stroke-dasharray="4" stroke-width="1.5" fill="none" />
           </svg>
           
           <div class="relative z-10 grid grid-cols-2 gap-x-12 md:gap-x-16 gap-y-12 items-center w-full max-w-sm ml-auto mr-4 md:mr-10">

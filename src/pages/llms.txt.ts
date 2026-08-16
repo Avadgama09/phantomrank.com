@@ -3,85 +3,13 @@
 // Spec: https://llmstxt.org/
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
-import { hubs } from "../config/hubs";
 import { siteConfig } from "../config/site";
 
 export const GET: APIRoute = async () => {
-  const allEntries = await getCollection("learn");
+  const allEntries = await getCollection("learn", (entry) => !entry.data.draft);
 
-  // Build cluster map with normalized path checking
-  const clusterEntries = allEntries.filter((e) => {
-    const cleanId = e.id.replace(/\\/g, "/");
-    return cleanId.endsWith("_index.mdx");
-  });
-  const articleEntries = allEntries.filter((e) => {
-    const cleanId = e.id.replace(/\\/g, "/");
-    return !cleanId.endsWith("_index.mdx") && !cleanId.endsWith("_pillar.mdx");
-  });
-
-  interface ArticleEntry {
-    slug: string;
-    title: string;
-    href: string;
-  }
-
-  interface ClusterEntry {
-    clusterSlug: string;
-    title: string;
-    href: string;
-    description: string;
-    articles: ArticleEntry[];
-  }
-
-  interface HubMap {
-    [hubSlug: string]: ClusterEntry[];
-  }
-
-  const hubMap: HubMap = {};
-
-  for (const hub of hubs) {
-    hubMap[hub.slug] = [];
-  }
-
-  for (const cluster of clusterEntries) {
-    const cleanId = cluster.id.replace(/\\/g, "/");
-    const parts = cleanId.split("/");
-    const hubSlug = parts[0];
-    const clusterSlug = parts[1];
-
-    if (!hubMap[hubSlug]) continue;
-
-    const clusterArticles: ArticleEntry[] = articleEntries
-      .filter((a) => {
-        const p = a.id.replace(/\\/g, "/").split("/");
-        return p[0] === hubSlug && p[1] === clusterSlug;
-      })
-      .map((a) => {
-        const p = a.id.replace(/\\/g, "/").split("/");
-        const slug = a.data.slug || p[p.length - 1].replace(/\.mdx$/, "");
-        return {
-          slug,
-          title: a.data.title,
-          href: `${siteConfig.url}/learn/${hubSlug}/${clusterSlug}/${slug}`,
-        };
-      })
-      .sort((a, b) => a.title.localeCompare(b.title));
-
-    const fullTitle = cluster.data.title || clusterSlug.replace(/-/g, " ");
-    const shortTitle = fullTitle.includes(":") ? fullTitle.split(":")[0].trim() : fullTitle;
-
-    hubMap[hubSlug].push({
-      clusterSlug,
-      title: shortTitle,
-      href: `${siteConfig.url}/learn/${hubSlug}/${clusterSlug}`,
-      description: cluster.data.description || "",
-      articles: clusterArticles,
-    });
-  }
-
-  for (const hub of hubs) {
-    hubMap[hub.slug]?.sort((a, b) => a.title.localeCompare(b.title));
-  }
+  const clusterEntries = allEntries.filter((e) => e.data.pageType === "cluster");
+  const articleEntries = allEntries.filter((e) => e.data.pageType === "article");
 
   const totalArticles = articleEntries.length;
   const totalClusters = clusterEntries.length;
@@ -101,37 +29,31 @@ export const GET: APIRoute = async () => {
     `- [About PhantomRank](${siteConfig.url}/about): Why PhantomRank was built, what it measures, and how it differs from traditional SEO tools.`,
     `- [Sign Up](${siteConfig.url}/signup): Request access to start tracking brand AI search visibility.`,
     ``,
-    `## Learn Hub — 5 Primary Content Hubs`,
+    `## Learn Hub`,
     ``,
-    `- [Learn Hub Index](${siteConfig.url}/learn): ${totalArticles} articles across ${totalClusters} topic clusters organized into 5 content hubs covering AI Visibility Tracking, GEO, AEO, AI Search Agency Strategy, and AI-Powered SEO.`,
+    `- [Learn Hub Index](${siteConfig.url}/learn): ${totalArticles} articles across ${totalClusters} topic clusters.`,
+    `- [AI Visibility Pillar](${siteConfig.url}/learn/ai-visibility): Category overview for brand visibility in conversational search.`,
+    `- [AI SEO Pillar](${siteConfig.url}/learn/ai-seo): Strategy and optimization guides for generative search engines.`,
     ``,
   ];
 
-  for (const hub of hubs) {
-    const clusters = hubMap[hub.slug] || [];
-    if (clusters.length === 0) continue;
+  for (const cluster of clusterEntries) {
+    const clusterSlug = cluster.data.clusterSlug || cluster.slug.split("/").pop() || cluster.slug;
+    const clusterTitle = cluster.data.title;
+    const clusterDescription = cluster.data.description || "";
+    const articlesInCluster = articleEntries.filter((a) => a.data.cluster === clusterSlug);
 
-    const hubArticleCount = clusters.reduce((sum, c) => sum + c.articles.length, 0);
-
-    lines.push(`### Content Hub: ${hub.title}`);
+    lines.push(`### Topic Cluster: ${clusterTitle}`);
     lines.push(``);
-    lines.push(`${hub.description}`);
-    lines.push(``);
-    lines.push(`- [${hub.title} — Pillar Page](${siteConfig.url}/learn/${hub.slug}): ${clusters.length} clusters, ${hubArticleCount} articles.`);
+    lines.push(`- [${clusterTitle}](${siteConfig.url}/learn/${clusterSlug}): ${clusterDescription}`);
     lines.push(``);
 
-    for (const cluster of clusters) {
-      lines.push(`#### Topic Cluster: ${cluster.title}`);
-      lines.push(``);
-      lines.push(`- [${cluster.title}](${cluster.href}): ${cluster.description || `Articles in the ${cluster.title} cluster.`}`);
-      lines.push(``);
-
-      if (cluster.articles.length > 0) {
-        for (const article of cluster.articles) {
-          lines.push(`  - [${article.title}](${article.href})`);
-        }
-        lines.push(``);
+    if (articlesInCluster.length > 0) {
+      for (const article of articlesInCluster) {
+        const slug = article.slug.split("/").pop() || article.slug;
+        lines.push(`  - [${article.data.title}](${siteConfig.url}/learn/${clusterSlug}/${slug})`);
       }
+      lines.push(``);
     }
   }
 

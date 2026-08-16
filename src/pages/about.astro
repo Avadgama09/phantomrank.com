@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import { pageMeta } from "../utils/data";
 import { Icon } from "astro-icon/components";
 
+import DotBackground from "../components/ui/DotBackground.astro";
+
 const meta = pageMeta.about || {
   title: "About PhantomRank",
   description: "Search intelligence platform for the AI era. Discover why we exist, how we work under the hood, and our commitment to transparency."
@@ -18,16 +20,21 @@ const meta = pageMeta.about || {
   ]}
 >
   {/* ── Hero Section ── */}
-  <section class="relative overflow-hidden py-20 md:py-32">
-    <div class="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-      <div class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
-        <Icon name="lucide:info" class="h-4 w-4" />
+  <section id="about-hero" class="relative mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8 min-h-[50vh] flex flex-col items-center justify-center overflow-hidden text-center border-b border-border">
+    <DotBackground containerId="about-hero" />
+
+    <div class="relative z-10 text-center reveal">
+      <div class="text-sm text-muted-foreground/80 font-medium tracking-wide uppercase mb-3 inline-flex items-center gap-2">
+        <Icon name="lucide:info" class="h-4 w-4 text-primary" />
         About PhantomRank
       </div>
-      <h1 class="reveal text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl mb-6">
-        Why PhantomRank Exists
+      <h1 class="text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-6xl mx-auto leading-tight mb-6">
+        Search Intelligence
+        <span class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2">
+          Why PhantomRank Exists
+        </span>
       </h1>
-      <p class="reveal mx-auto max-w-3xl text-xl font-medium text-foreground/95 leading-relaxed">
+      <p class="mt-6 text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
         PhantomRank exists to answer a simple but uncomfortable question for brands and agencies in 2026: 
         <span class="text-primary block mt-2 font-semibold">“How do AI assistants talk about us when buyers ask for recommendations?”</span>
       </p>
@@ -35,7 +42,7 @@ const meta = pageMeta.about || {
   </section>
 
   {/* ── Intro Details ── */}
-  <section class="pb-20">
+  <section class="py-20">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
       <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-8 bg-card/50 border border-border p-8 md:p-12 rounded-3xl backdrop-blur-sm">
         <div>

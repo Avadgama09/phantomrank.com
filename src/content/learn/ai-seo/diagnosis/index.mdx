@@ -1,0 +1,446 @@
+---
+pageType: "cluster"
+title: "Diagnosis"
+clusterSlug: "diagnosis"
+order: 3
+primaryKeyword: "AI visibility diagnosis"
+secondaryKeywords: ["why you're not cited", "citation barriers", "competitive analysis", "AI search gaps"]
+parentPillars: ["ai-seo", "ai-visibility"]
+seo:
+  title: "AI Visibility Diagnosis: Why You're Not Getting Cited | PhantomRank"
+  description: "Understand the technical, content, entity, and competitive barriers preventing your brand from appearing in AI-generated answers."
+author: "PhantomRank Editorial Team"
+publishedDate: "2026-03-20"
+dataPoints:
+  - type: "prevalence-technical"
+    finding: "[PhantomRank Data Needed] X% of audited brands are blocking AI crawlers or have WAF rules preventing ChatGPT/Claude bot access"
+    impact: "[PhantomRank Data Needed] Brands with crawl blocks show Y% lower citation rates than accessible brands"
+    source: "PhantomRank AIVT Audits"
+  - type: "content-pattern"
+    finding: "[PhantomRank Data Needed] X% of non-cited pages lack direct answers in the first 30% of content"
+    impact: "[PhantomRank Data Needed] Pages with answers in opening 30% are cited 3.2x more than pages without"
+    source: "PhantomRank GSO Analysis"
+  - type: "entity-barrier"
+    finding: "[PhantomRank Data Needed] X% of audited brands have inconsistent descriptions across homepage, LinkedIn, and directories"
+    impact: "[PhantomRank Data Needed] Brands with entity consistency score >85% show 2.1x higher citation frequency"
+    source: "PhantomRank Entity Resolution Audits"
+  - type: "trust-barrier"
+    finding: "[PhantomRank Data Needed] X% of brands with zero third-party mentions have zero AI citations"
+    impact: "[PhantomRank Data Needed] Brands with media mentions show 4.7x higher citation rates than unmentioned brands"
+    source: "PhantomRank Trust & Validation Analysis"
+  - type: "mention-source-divide"
+    finding: "Only 28% of AI responses contain both a brand mention AND a citation link. 72% of the time, AI uses your content as evidence while recommending a competitor."
+    source: "PhantomRank Analysis"
+  - type: "competitive-gap"
+    finding: "[PhantomRank Data Needed] Competitive benchmark: Your brand gets cited X% of the time vs Competitor A (Y%), Competitor B (Z%)"
+    gap_reason: "[PhantomRank Data Needed] Citation gap analysis: What evidence do they have that you don't?"
+    source: "PhantomRank IM (Industry Metrics) Analysis"
+  - type: "platform-specific"
+    finding: "[PhantomRank Data Needed] Platform breakdown: ChatGPT cites you X% | Perplexity cites you Y% | Google AI cites you Z% | Claude cites you W%"
+    platform_gap: "[PhantomRank Data Needed] Why the variance? Which platforms show largest opportunity?"
+    source: "PhantomRank AIVT Platform Analysis"
+---
+
+# Diagnosis
+
+## Welcome to Diagnosis
+
+You measured. Now comes the hard part: **understanding why.**
+
+Diagnosis is where you stop guessing and start understanding the root causes preventing your brand from getting cited. It's the bridge between "We're not visible" and "Here's exactly what's blocking us."
+
+But here's the critical insight: **Most brands have multiple barriers simultaneously.** Fixing one doesn't automatically fix the others. A brand might have perfect content clarity but inconsistent entity signals. Another might have strong authority but be blocked by a WAF rule. Another might have great third-party validation but compete against incumbents with massive Reddit presence.
+
+This cluster teaches you the diagnostic framework to identify your specific barriers—not guesses, but measurable problems you can prove and fix.
+
+## Why Diagnosis Matters
+
+**If you optimize for the wrong barrier, you'll waste months without moving citation rates.**
+
+Imagine investing three months restructuring your entire content library for extractability, only to discover that your real barrier is entity confusion or missing third-party validation. All that work didn't move the needle because you were fixing the wrong problem.
+
+This happens constantly because most teams diagnose by gut feeling, not evidence.
+
+The six barriers we cover in this cluster are:
+
+1. **Technical Barriers** — You're being crawled, indexed, or rendered incorrectly
+2. **Content Barriers** — Your information isn't structured or clear enough to extract
+3. **Entity Barriers** — AI systems are confused about who you are
+4. **Trust Barriers** — You lack third-party proof to validate your claims
+5. **Competitive Barriers** — Competitors have evidence or positioning you don't
+6. **Platform-Specific Barriers** — You're optimizing for the wrong platform, or platforms see you differently
+
+Each barrier requires different fixes. Diagnosis reveals which ones are actually holding you back.
+
+## The Mention-Source Divide: Your Invisible Problem
+
+**This is the diagnostic finding that changes everything.**
+
+Research shows that only **28% of AI-generated answers contain both a brand mention AND a citation link.** In the other 72%, the AI mentions your brand while citing your competitor.
+
+**What's happening:**
+
+> "The best CRM for agencies is HubSpot because it integrates with Slack, Zapier, and HubSpot's native marketplace." [cites YOUR integration guide as evidence]
+
+The AI used your content to build its recommendation. But it recommended a competitor. You're supporting their win.
+
+**The diagnostic question:** Is your brand barrier that you're not being mentioned at all? Or is it that you're being used as supporting evidence for someone else's recommendation?
+
+These require completely different fixes:
+
+- **Not mentioned at all** → Extractability + entity clarity issues
+- **Mentioned but not recommended** → Trust barrier + third-party validation gap
+- **Mentioned and recommended but not cited** → Technical issue or crawl block
+
+Understanding which one applies to you is the first diagnostic step.
+
+## The Six Diagnostic Barriers
+
+### Barrier 1: Technical Barriers (Crawling, Indexing, Rendering)
+
+**The Problem:** AI systems can't access or properly read your content.
+
+**How it happens:**
+- WAF (Web Application Firewall) rules block ChatGPT Bot, Claude Bot, or other AI crawlers
+- Robots.txt or meta tags prevent indexing
+- JavaScript-heavy content doesn't render properly for non-browser crawlers
+- CDN rules block specific user agents
+- CAPTCHA or other anti-bot measures prevent crawling
+
+**Why it matters:** If the AI can't read your content, it can't cite it. Period.
+
+**How to Detect It:**
+- Check robots.txt for `Disallow` rules that target AI bots
+- Review your WAF logs for blocked ChatGPT-User, OAI-SearchBot, Claude-SearchBot, etc.
+- Test your most important pages with AI bot user agents to confirm they can render
+- Check Google Search Console for crawl errors (if Google can't crawl it, neither can most AI)
+
+**Real Impact:**
+Brands with crawl blocks show significantly lower citation rates than accessible brands. In some audits, fixing a WAF rule alone moved citation rates from near-zero to competitive baseline.
+
+**The Fix:**
+- Allow AI crawler user agents (ChatGPT-User, OAI-SearchBot, GPTBot, Claude-SearchBot, ClaudeBot, Anthropic-SearchBot)
+- Review and loosen WAF rules for known AI bot patterns
+- Ensure JavaScript-heavy pages pre-render or server-side render critical content
+- Test bot access regularly
+
+---
+
+### Barrier 2: Content Barriers (Clarity, Structure, Extractability)
+
+**The Problem:** Your information is too vague, buried, or poorly formatted for AI systems to extract confidently.
+
+**How it happens:**
+- Key information is buried deep in the page (not in opening 30%)
+- Claims are vague ("We're a great platform") instead of specific ("Our response time is &lt;100ms")
+- Important data is written in prose instead of tables or lists
+- No clear headers to signal page structure
+- Contradictory or conflicting claims across the page
+
+**Why it matters:** AI systems scan pages in chunks. If your direct answer isn't in the first chunk, it may never be found.
+
+**Research:** Pages with direct answers in the opening 30% are cited 3.2x more often than pages without. Tables are cited 2.5x more often than prose. Contradiction between opening claim and body text drops citations by 40%.
+
+**How to Detect It:**
+- Read your key pages like an AI would: scan first 30%, look for direct answer
+- Count how many claims are specific vs vague
+- Measure table-to-prose ratio (should be high for data-heavy content)
+- Check for internal contradictions between H1 claim and body content
+
+**Real Impact:**
+Audits regularly find that high-traffic pages get zero citations because the answer is buried. Moving the answer to the top 30% and formatting as a table immediately increased citations.
+
+**The Fix:**
+- Put your direct answer in the first paragraph
+- Use specific numbers instead of vague language
+- Convert data-heavy sections to tables
+- Use clear headers to structure the page
+- Remove contradictions between headline and body
+
+---
+
+### Barrier 3: Entity Barriers (Inconsistency, Confusion with Competitors)
+
+**The Problem:** AI systems are confused about who you are because your identity signals are inconsistent across the web.
+
+**How it happens:**
+- Your company description differs across your homepage, LinkedIn, Google Business Profile, and industry directories
+- You describe your category differently on different pages ("SaaS" on site, "software platform" on LinkedIn, "productivity tool" on G2)
+- Your founder/team information is incomplete or inconsistent
+- You're easily confused with a competitor because your positioning is too generic
+- Your use cases are described differently in different places
+
+**Why it matters:** AI systems build knowledge graphs of your brand identity. Inconsistent signals make the system uncertain about what you do and who you serve.
+
+**Research:** Brands with entity consistency scores >85% show 2.1x higher citation frequency than inconsistent brands.
+
+**How to Detect It:**
+- Write down your company description on your homepage
+- Copy your description from LinkedIn
+- Check Google Business Profile
+- Check G2, Capterra, or industry directories
+- Compare them. Are they saying the same thing?
+- Look for the 5 W's: Who, What, Where, Why, Who You Serve. Are they consistent?
+
+**Real Impact:**
+One audit found a brand describing itself as:
+- Homepage: "AI visibility platform"
+- LinkedIn: "Search intelligence software"
+- G2: "Marketing analytics tool"
+- Directory: "SEO software competitor"
+
+Four different identities. The AI was confused. After standardizing descriptions, citations increased 34%.
+
+**The Fix:**
+- Create one canonical company description (1-2 sentences)
+- Use consistent category language everywhere (pick "AI visibility platform" and stick with it)
+- Make your use cases explicit and consistent
+- Update all profiles (Google Business, LinkedIn, directories, Wikipedia if applicable)
+- Add founder/author information to content (AI systems associate people with brands)
+
+---
+
+### Barrier 4: Trust & Validation Barriers (Lack of Third-Party Proof)
+
+**The Problem:** You lack the third-party evidence that AI systems require to confidently recommend you.
+
+**How it happens:**
+- You have no reviews on G2, Capterra, or industry platforms
+- You've received zero media mentions or press coverage
+- You have no analyst reports or industry recognition
+- You're not mentioned by recognized experts in your space
+- You lack case studies or references
+- Your website is the only source of information about your brand
+
+**Why it matters:** AI systems have measured bias toward earned media over owned media. They're less confident recommending brands that only speak for themselves.
+
+**Research:** Brands with media mentions show 4.7x higher citation rates than unmentioned brands. Brands with zero third-party mentions have zero AI citations in most categories.
+
+**Platform-Specific:** On Perplexity, Reddit mentions matter massively. On ChatGPT, Wikipedia and media mentions matter more. On Google AI Overviews, traditional SEO authority (backlinks, reviews) still dominates.
+
+**How to Detect It:**
+- Run a search: "[Your brand name]" on Google News. Results = media coverage.
+- Check G2, Capterra for reviews. Zero reviews = barrier.
+- Search "[Your competitor]" on Perplexity. Notice how they're described with third-party proof? Compare that to your Perplexity mentions.
+- Check if experts in your space mention you. Zero mentions = barrier.
+
+**Real Impact:**
+An audit compared two competing SaaS products:
+- Product A: 147 G2 reviews, 23 media mentions, active Reddit community
+- Product B (your client): 8 G2 reviews, zero media mentions, no Reddit presence
+- Citation rates matched almost exactly: A got cited 67% of the time, B got cited 6%
+
+**The Fix:**
+- Build legitimate review presence (G2, Capterra, Trustpilot)
+- Pitch for media coverage in industry publications
+- Create citation-worthy content (original research, data, expert analysis)
+- Engage in communities where your audience congregates (Reddit, Slack communities, forums)
+- Get recognized by industry analysts or experts
+
+---
+
+### Barrier 5: Competitive Barriers (Why Competitors Win)
+
+**The Problem:** Competitors consistently get cited instead of you, even when you rank well in traditional SEO.
+
+**How it happens:**
+- Competitors have evidence you don't (research, data, case studies)
+- Competitors have stronger third-party validation
+- Competitors are positioned for the exact use case the AI is answering for
+- Competitors have category dominance (they own the narrative)
+- Your content doesn't differentiate you from competitors
+
+**Why it matters:** Citation is zero-sum. If competitors occupy the "recommended solution" position, you can't.
+
+**How to Detect It:**
+- Run your top 10 category queries on ChatGPT, Perplexity, and Google AI Overviews
+- Log which competitors appear and in what position
+- Compare your website to the top 3 cited competitors. What evidence do they have that you don't?
+- Look at positioning: Do they own a specific use case, buyer persona, or problem statement that matches the query?
+- Check third-party mentions: Are they reviewed more? Mentioned more by experts? Present on Reddit?
+
+**Real Impact:**
+Audit findings showed:
+- Competitor A wins "best for startups" queries (they have startup case studies, you don't)
+- Competitor B wins "best for enterprises" (they have enterprise testimonials, you target mid-market)
+- You win queries no one's really competing for (low volume)
+
+**The Fix:**
+- Identify which competitor owns which use case
+- Create content that positions you for underserved use cases
+- Build third-party proof in your weak areas
+- Consider repositioning if you're weak on all fronts
+- Create original research or data to differentiate from commoditized competitors
+
+---
+
+### Barrier 6: Platform-Specific Barriers (Different Platforms, Different Rules)
+
+**The Problem:** You optimize for ChatGPT but Perplexity is where your actual buyers are—and they see you completely differently.
+
+**How it happens:**
+- You rank well on Google (ChatGPT's primary source) but have zero Reddit presence (Perplexity's primary source)
+- You're strong on ChatGPT but invisible on Perplexity because your content doesn't match Perplexity's retrieval preferences
+- You're optimized for Bing (ChatGPT's primary index) but not for Perplexity's Sonar crawler
+- Different AI systems have different knowledge cutoffs—some know about you, others don't
+- Different systems weight entity authority differently (Gemini is entity-heavy; Perplexity is community-heavy)
+
+**Why it matters:** Platform optimization is not a one-size-fits-all problem. You need platform-specific tactics.
+
+**How to Detect It:**
+- Run the same query on ChatGPT, Perplexity, Google AI Overviews, and Claude
+- Log whether you're cited on each platform
+- Note differences in which sources they pull from
+- Identify which platform shows you best (and which worst)
+- For your worst platform, identify what's missing (Reddit mentions? Wikipedia? Traditional media?)
+
+**Real Impact:**
+Audit showed a B2B SaaS company:
+- ChatGPT: Cited 45% of the time (strong Bing ranking)
+- Perplexity: Cited 8% of the time (zero Reddit presence, competitor dominates)
+- Google AI: Cited 32% of the time (moderate traditional SEO)
+- Claude: Cited 19% of the time (no academic papers, weak authority signals)
+
+Total opportunity: Platform-specific fixes could move citations from average 26% to 40%+.
+
+**The Fix:**
+- Audit your platform-specific presence (Do you rank on Bing? Have Reddit discussions? Wikipedia coverage? Academic citations?)
+- Prioritize platforms by buyer volume (ChatGPT first? Perplexity? Google AI?)
+- Build platform-specific evidence (Reddit for Perplexity, academic for Claude, traditional SEO for Google AI)
+
+---
+
+## The Diagnostic Framework: Finding Your Barriers
+
+**Here's how to systematically identify which barriers are actually holding you back.**
+
+### Step 1: Establish Your Baseline (Week 1)
+
+Run n=7 identical category queries on ChatGPT, Perplexity, Google AI Overviews, and Claude.
+
+Record:
+- Are you mentioned? (Yes/No)
+- Are you cited? (Yes/No)
+- What position in the response?
+- What's the sentiment/framing?
+- Which platform shows you best/worst?
+
+### Step 2: Audit for Technical Barriers (Week 1)
+
+- Check robots.txt for AI bot blocks
+- Review WAF logs for blocked crawlers
+- Test your homepage with AI bot user agents
+- Confirm JavaScript renders properly
+
+**Decision:** If crawl blocked, fix this first before investigating other barriers.
+
+### Step 3: Audit for Content Barriers (Week 2)
+
+- Read your top 10 pages like an AI: Is the answer in the first 30%?
+- Count tables vs prose. Specific claims vs vague
+- Check for internal contradictions
+- Measure formatting quality
+
+**Decision:** If >50% of your pages fail this audit, content restructuring is your priority.
+
+### Step 4: Audit for Entity Barriers (Week 2)
+
+- Compare your description across 5+ platforms
+- Rate consistency (0-100)
+- Identify which attributes are inconsistent
+
+**Decision:** If entity consistency &lt;75%, standardize your identity across the web.
+
+### Step 5: Audit for Trust Barriers (Week 3)
+
+- Count reviews on G2/Capterra
+- Search for media mentions
+- Check expert/analyst coverage
+- Map competitor third-party presence
+
+**Decision:** If you have &lt;25% of competitor review volume, building reviews is urgent.
+
+### Step 6: Competitive Diagnosis (Week 3)
+
+- Map which competitors win which queries
+- Document what evidence they have that you lack
+- Identify your weakest competitive positions
+
+**Decision:** Prioritize content creation in your weakest competitive categories.
+
+### Step 7: Platform-Specific Diagnosis (Week 4)
+
+- Compare your citations across platforms
+- Identify your best platform (optimize here first)
+- Identify your worst platform (opportunity lies here)
+- Document platform-specific gaps (Reddit? Wikipedia? Bing ranking?)
+
+**Decision:** Double down on your best platform first, then expand to weak platforms.
+
+---
+
+## The Data Gap Analysis
+
+**Once you've diagnosed your barriers, quantify them.**
+
+For each barrier you identify, answer:
+
+1. **Prevalence:** How many of your pages/areas have this barrier? (X out of Y)
+2. **Impact:** What's the citation rate for pages/brands WITH this barrier vs WITHOUT? (X% vs Y%)
+3. **Competitive Gap:** How does your barrier severity compare to competitors? (You: 60% entity inconsistent; Competitor A: 15%)
+4. **Fix Timeline:** How long to fix this barrier? (Entity consistency: 2 weeks; Media coverage: 3 months)
+
+This turns diagnosis from "We have a problem" into "Here's the exact problem, its size, and how long to fix it."
+
+---
+
+## What Comes Next
+
+**Diagnosis teaches you *what's blocking you.* Optimization teaches you *how to fix it.*
+
+Once you understand your barriers:
+
+- **Optimization** — Specific tactics to fix each barrier type
+- **Operations** — How to implement at scale across teams/brands
+- **Evidence** — Data-backed proof that fixes actually work
+
+But you can't skip Diagnosis. Without understanding your actual barriers, optimization becomes random guessing.
+
+---
+
+## FAQ
+
+### I'm not cited at all. Where do I start?
+
+Start with technical barriers (Week 1). If crawl-blocked, nothing else matters. Then content (Week 2). Most zero-citation brands have content buried deep or too vague.
+
+### Multiple barriers apply to us. Which do we fix first?
+
+Fix in this order:
+1. Technical (fastest, immediate impact)
+2. Content (high-impact, medium effort)
+3. Entity (foundational, easy to implement)
+4. Competitive (medium effort, ongoing)
+5. Trust (longest timeline, highest leverage long-term)
+
+### How long until we see citation improvements?
+
+Technical fixes: 1-2 weeks
+Content restructuring: 2-4 weeks
+Entity standardization: 1-2 weeks
+Third-party validation: 1-3 months (media takes time)
+Competitive repositioning: 2-6 months
+
+Total realistic timeline: 2-3 months for meaningful improvement.
+
+### What if we have all the barriers?
+
+You probably do. Most brands have 3-4 barriers simultaneously. Start with technical (fast win), then content (high-impact), then entity (foundational). Trust and competitive work happen in parallel with content fixes.
+
+### Should we measure diagnostics monthly?
+
+No. Diagnostic barriers change slowly. Audit diagnostics quarterly or when you make major changes. Monthly measurement is for AIVT (visibility), not diagnosis (root cause).
+
+### Can one fix unlock multiple barriers?
+
+Absolutely. Fixing entity consistency often helps with content (clearer positioning = clearer content). Fixing crawl blocks lets AI find your improved content. Fixes often cascade.

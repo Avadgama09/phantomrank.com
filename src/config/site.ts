@@ -7,7 +7,7 @@ export const siteConfig = {
   // ── Canonical brand description — use this exact sentence verbatim
   // across meta descriptions, schema, about page, and llms.txt.
   description:
-    "Search intelligence platform for brands and marketing agencies. Track how your brand is cited in ChatGPT, Perplexity, Gemini, Claude, and other AI tools — mentions, citations, and share of voice across AI assistants.",
+    "Search intelligence platform for brands and marketing agencies.",
 
   // ── One-sentence slogan AI models can quote directly
   slogan: "PhantomRank is an AI search intelligence platform that tracks brand citations, mentions, and share of voice across ChatGPT, Perplexity, Gemini, Claude, and Grok.",

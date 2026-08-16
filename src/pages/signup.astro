@@ -2,6 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import { pageMeta, stats } from "../utils/data";
 
+import DotBackground from "../components/ui/DotBackground.astro";
+
 const meta = pageMeta.signup;
 ---
 
@@ -13,26 +15,27 @@ const meta = pageMeta.signup;
     { name: "Get Access", href: "/signup" },
   ]}
 >
-  <section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
+  <section id="signup-hero" class="relative mx-auto max-w-7xl px-4 pt-28 pb-16 sm:px-6 lg:px-8 overflow-hidden">
+    <DotBackground containerId="signup-hero" />
+    <div class="relative z-10 grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
       {/* ── Left Column: Copy ── */}
       <div class="reveal">
         <div
-          class="inline-flex items-center gap-2 px-3 py-1 text-primary text-lg font-semibold mb-4"
+          class="text-sm text-muted-foreground/80 font-medium tracking-wide uppercase mb-3"
         >
           Get Access
         </div>
         <h1
-          class="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
+          class="text-3xl sm:text-4xl lg:text-6xl font-medium tracking-tight text-foreground leading-tight mb-4"
         >
           Let's get your agency
           <span
-            class="text-primary"
+            class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2"
           >
             AI-search ready
           </span>
         </h1>
-        <p class="text-lg text-muted-foreground mb-8">
+        <p class="mt-6 text-xl text-muted-foreground font-light leading-relaxed mb-8">
           Tell us a little about your agency and we'll get you set up. Whether
           you're managing 3 brands or 300, we'll find the right plan for you.
         </p>

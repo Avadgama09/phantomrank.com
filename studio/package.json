@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "sanity.config.ts",
   "scripts": {
-    "dev": "sanity dev",
+    "dev": "sanity dev --host 127.0.0.1",
     "build": "sanity build",
     "start": "sanity start",
     "typegen": "sanity schema extract"

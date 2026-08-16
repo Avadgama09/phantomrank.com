@@ -1,18 +1,17 @@
 ---
 // src/pages/learn/evidence/[article].astro
 import ArticlePageRenderer from "../../../components/sanity/ArticlePageRenderer.astro";
-import { sanityFetch } from "../../../sanity/lib/client";
-import { ARTICLES_IN_CLUSTER_QUERY } from "../../../sanity/lib/queries";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const articles = await sanityFetch<any[]>({
-    query: ARTICLES_IN_CLUSTER_QUERY,
-    params: { clusterSlug: "evidence" },
-  });
+  const articles = await getCollection("learn", (entry) => entry.data.pageType === "article" && entry.data.cluster === "evidence" && !entry.data.draft);
 
-  return (articles || []).map((a) => ({
-    params: { article: a.slug },
-  }));
+  return articles.map((a) => {
+    const slug = a.slug.split("/").pop() || a.slug;
+    return {
+      params: { article: slug },
+    };
+  });
 }
 
 const { article: articleSlug } = Astro.params;

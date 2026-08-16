@@ -1,272 +1,614 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Schema from "../components/seo/Schema.astro";
+import DotBackground from "../components/ui/DotBackground.astro";
 import { pageMeta } from "../utils/data";
-import { studioCategories, studioWorkflow } from "../utils/studioData";
+import { studioNavCategories, studioFAQs } from "../utils/studioData";
 import { Icon } from "astro-icon/components";
 
 const meta = pageMeta.studio || {
-  title: "PhantomRank Studio — Digital Marketing & AI Visibility Execution",
+  title: "PhantomRank Studio — Search & AI Visibility Execution",
   description:
-    "PhantomRank shows where your brand is missing from search and AI answers. Studio turns those findings into websites, SEO, content, and authority work.",
+    "PhantomRank gives you the signal. Studio helps you act on it — websites, SEO, content, AI visibility and authority-building.",
 };
+
+const modelLogos = [
+  { name: "ChatGPT", src: "/images/Logo/ChatGPTlogo.svg" },
+  { name: "Claude", src: "/images/Logo/Claudelogo.svg" },
+  { name: "Gemini", src: "/images/Logo/Gemini-ailogo.svg" },
+  { name: "Grok", src: "/images/Logo/GROKlogo.svg" },
+  { name: "Perplexity", src: "/images/Logo/Perplexitylogo.svg" },
+];
 ---
 
 <Layout
-  title={meta.title}
-  description={meta.description}
+  metadata={{
+    title: meta.title,
+    description: meta.description,
+    ignoreTitleTemplate: true,
+  }}
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Studio", href: "/studio" },
   ]}
 >
-  {/* ── Hero Section ── */}
-  <section class="relative overflow-hidden py-16 md:py-24 border-b border-border/40">
-    <div class="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-      <div class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
+  <Fragment slot="head">
+    <Schema
+      type="Service"
+      data={{
+        service: {
+          name: "PhantomRank Studio Execution Services",
+          description:
+            "Execution services built around PhantomRank search intelligence — websites, technical SEO, content strategy, AI visibility optimisation, and authority distribution.",
+          category: "Digital Marketing & AI Visibility Services",
+        },
+      }}
+    />
+  </Fragment>
+
+  {/* ── 1. HERO SECTION ── */}
+  <section
+    class="relative mx-auto max-w-7xl px-4 pt-28 pb-16 sm:px-6 lg:px-8 min-h-[75vh] flex flex-col items-center justify-center overflow-hidden border-b border-border/40"
+    id="studio-hero"
+  >
+    <DotBackground containerId="studio-hero" />
+
+    <div class="text-center z-10 max-w-5xl mx-auto">
+      <div class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs sm:text-sm font-medium text-primary uppercase tracking-wider">
         <Icon name="lucide:layers" class="h-4 w-4" />
-        PhantomRank Studio
+        PHANTOMRANK STUDIO
       </div>
-      
-      <h1 class="reveal text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl mb-4">
-        The hands-on side of PhantomRank.
+
+      <h1 class="reveal text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-5xl mx-auto leading-tight">
+        <span>PhantomRank gives you the signal.</span>
+        <span class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2">
+          Studio helps you act on it.
+        </span>
       </h1>
 
-      <p class="reveal mx-auto max-w-3xl text-lg md:text-xl font-medium text-muted-foreground leading-relaxed mb-8">
-        PhantomRank shows where your brand is missing from search and AI answers. Studio turns those findings into websites, SEO, content and authority work.
+      <p class="reveal mt-8 text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+        PhantomRank shows how your brand appears across AI search and recommendation engines. Studio is where we help with the work around it — websites, SEO, content, AI visibility and authority-building.
       </p>
 
-      <div class="reveal flex flex-wrap items-center justify-center gap-4">
-        <a href="/signup" class="btn-primary">
-          Request a Studio audit
-          <Icon name="lucide:arrow-right" class="w-4 h-4" />
+      <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#overview" class="btn-primary">
+          Explore Studio
+          <Icon name="lucide:arrow-down" class="w-4 h-4" />
         </a>
         <a href="/signup" class="btn-secondary">
-          See PhantomRank in action
+          See PhantomRank
         </a>
       </div>
     </div>
   </section>
 
-  {/* ── Services Showcase (Visual Core of the Page) ── */}
-  <section id="services" class="py-20 bg-base-200/30">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="reveal text-center mb-16">
-        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Execution Services
+  {/* ── 2. BEYOND THE DASHBOARD BRIDGE ── */}
+  <section class="py-16 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
+      <div class="reveal max-w-3xl mx-auto mb-10">
+        <h2 class="text-2xl sm:text-4xl font-medium tracking-tight text-foreground mb-4">
+          Beyond the dashboard
         </h2>
-        <p class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Seven parent categories built to turn audit findings into web infrastructure, content depth, and verifiable brand authority.
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
+          PhantomRank shows where you are being mentioned, cited, overlooked or misrepresented. Studio is for the work that follows — fixing the site, building the right pages, improving the information around your brand and tracking what changes.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {
-          studioCategories.map((category) => {
-            const isSeo = category.id === "seo";
-            const isAiVisibility = category.id === "ai-visibility-model-optimisation";
-
-            return (
-              <div
-                class={`reveal group bg-card border border-border p-6 md:p-8 rounded-3xl flex flex-col justify-between hover:border-primary/40 transition-all duration-200 shadow-sm hover:shadow-md ${
-                  isSeo ? "md:col-span-2 lg:col-span-3 bg-gradient-to-b from-card to-card/60" : ""
-                }`}
-              >
-                <div>
-                  {/* Category Header */}
-                  <div class="flex items-center gap-3.5 mb-5">
-                    <div class="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <Icon name={category.icon} class="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 class="text-xl font-bold text-foreground">
-                        {category.name}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <p class="text-muted-foreground text-sm leading-relaxed mb-6">
-                    {category.summary}
-                  </p>
-
-                  {/* Standard Visible Services list */}
-                  {!isSeo && category.visibleServices && (
-                    <div class="space-y-2.5 mb-6">
-                      <h4 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mb-2">
-                        Core Deliverables
-                      </h4>
-                      <ul class="space-y-2">
-                        {category.visibleServices.map((service) => (
-                          <li class="flex items-start gap-2 text-sm text-foreground/90">
-                            <Icon name="lucide:check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                            <span>{service}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* AI Visibility Special Details */}
-                  {isAiVisibility && (
-                    <div class="mb-6 rounded-2xl bg-primary/5 border border-primary/15 p-4">
-                      <div class="flex items-center gap-2 text-xs font-semibold text-primary uppercase tracking-wider mb-2">
-                        <Icon name="lucide:cpu" class="w-4 h-4" />
-                        AI Model Coverage
-                      </div>
-                      <p class="text-xs text-muted-foreground leading-relaxed">
-                        Optimisation recommendations tailored for <strong class="text-foreground font-semibold">ChatGPT, Google Gemini, Perplexity & Sonar, Claude, and Grok</strong>.
-                      </p>
-                    </div>
-                  )}
-
-                  {/* SEO Special Layout: 5 Visible Internal Groups */}
-                  {isSeo && category.groups && (
-                    <div class="mb-6">
-                      <h4 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mb-4">
-                        Five Core SEO Pillars
-                      </h4>
-                      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {category.groups.map((group) => (
-                          <div class="p-4 rounded-2xl bg-muted/40 border border-border/50">
-                            <h5 class="font-bold text-foreground text-sm mb-2.5 flex items-center gap-2">
-                              <span class="w-2 h-2 rounded-full bg-primary" />
-                              {group.name}
-                            </h5>
-                            <ul class="space-y-1.5">
-                              {group.services.map((item) => (
-                                <li class="text-xs text-muted-foreground flex items-start gap-1.5">
-                                  <span class="text-primary/70 font-semibold">•</span>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Progressive Disclosure: Accordion for Additional Services */}
-                {category.expandedServices && category.expandedServices.length > 0 && (
-                  <details class="group/details mt-4 border-t border-border/60 pt-4">
-                    <summary class="py-3 px-4 rounded-xl bg-muted/40 hover:bg-muted/70 focus-visible:outline-2 focus-visible:outline-primary transition-colors cursor-pointer select-none font-semibold text-sm text-foreground flex items-center justify-between">
-                      <span>See what’s included</span>
-                      <Icon
-                        name="lucide:chevron-down"
-                        class="w-4 h-4 text-muted-foreground transition-transform duration-200 group-open/details:rotate-180"
-                      />
-                    </summary>
-                    <div class="pt-3 px-2 space-y-2">
-                      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
-                        {category.expandedServices.map((extra) => (
-                          <li class="flex items-start gap-2">
-                            <Icon name="lucide:arrow-right" class="w-3.5 h-3.5 text-primary/60 shrink-0 mt-0.5" />
-                            <span>{extra}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </details>
-                )}
-              </div>
-            );
-          })
-        }
-      </div>
-    </div>
-  </section>
-
-  {/* ── How Studio Works (4-Step Workflow) ── */}
-  <section class="py-20 border-t border-border">
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="reveal text-center mb-16">
-        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          How Studio Works
-        </h2>
-        <p class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          A predictable four-step methodology connecting diagnostic search data to visible brand growth.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {
-          studioWorkflow.map((item) => (
-            <div class="reveal group bg-card border border-border p-8 rounded-3xl relative overflow-hidden hover:border-primary/30 transition-colors">
-              <div class="text-4xl font-extrabold text-primary/20 mb-4 group-hover:text-primary/40 transition-colors">
-                {item.step}
-              </div>
-              <h3 class="text-xl font-bold text-foreground mb-3">
-                {item.title}
-              </h3>
-              <p class="text-sm text-muted-foreground leading-relaxed mb-6">
-                {item.description}
-              </p>
-              <div class="space-y-2 pt-4 border-t border-border/50">
-                <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 block mb-2">
-                  Key Deliverables
-                </span>
-                {item.deliverables.map((deliv) => (
-                  <div class="flex items-center gap-2 text-xs font-medium text-foreground/90">
-                    <div class="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                    <span>{deliv}</span>
-                  </div>
-                ))}
-              </div>
+      <div class="reveal bg-card border border-border rounded-3xl p-6 sm:p-8 max-w-4xl mx-auto shadow-sm">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-left">
+          {/* Signal side */}
+          <div class="flex-1 space-y-2">
+            <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              <Icon name="lucide:activity" class="w-4 h-4" />
+              PhantomRank Intelligence
             </div>
-          ))
-        }
+            <p class="text-sm font-medium text-foreground">
+              Visibility, citations, competitors, source patterns, content gaps
+            </p>
+          </div>
+
+          {/* Arrow divider */}
+          <div class="shrink-0 w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <Icon name="lucide:arrow-right" class="w-5 h-5 rotate-90 md:rotate-0" />
+          </div>
+
+          {/* Execution side */}
+          <div class="flex-1 space-y-2">
+            <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-500">
+              <Icon name="lucide:wrench" class="w-4 h-4" />
+              Studio Execution
+            </div>
+            <p class="text-sm font-medium text-foreground">
+              Website, SEO, content, authority and ongoing optimisation
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  {/* ── How We Approach AI Visibility (Credibility Section) ── */}
-  <section class="py-16 bg-base-200/40 border-y border-border">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <div class="reveal bg-card border border-border rounded-3xl p-8 md:p-10 shadow-sm text-center">
-        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
-          <Icon name="lucide:shield-check" class="w-6 h-6" />
-        </div>
-        <h2 class="text-2xl font-bold text-foreground mb-4">
-          How we approach AI visibility
+  {/* ── 3. SERVICE NAVIGATION (OVERVIEW) ── */}
+  <section id="overview" class="py-20 border-b border-border/40 scroll-mt-24">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground">
+          What we can help with
         </h2>
-        <p class="text-muted-foreground text-base leading-relaxed max-w-3xl mx-auto mb-6">
-          We treat search and AI visibility as disciplined web engineering, topical content depth, and verifiable brand entity authority—not black-box hacks.
+        <p class="mt-3 text-base text-muted-foreground font-light max-w-xl mx-auto">
+          Seven focused ways to turn search intelligence into visible commercial execution.
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left pt-6 border-t border-border/60">
-          <div class="p-4 rounded-2xl bg-muted/30">
-            <h3 class="font-semibold text-foreground text-sm mb-1">Empirical Measurement</h3>
-            <p class="text-xs text-muted-foreground">PhantomRank measures actual mentions, citations, and source patterns without false control claims.</p>
-          </div>
-          <div class="p-4 rounded-2xl bg-muted/30">
-            <h3 class="font-semibold text-foreground text-sm mb-1">Structured Execution</h3>
-            <p class="text-xs text-muted-foreground">Studio builds the schema, content clusters, and technical structure to eliminate information gaps.</p>
-          </div>
-          <div class="p-4 rounded-2xl bg-muted/30">
-            <h3 class="font-semibold text-foreground text-sm mb-1">Sustainable Growth</h3>
-            <p class="text-xs text-muted-foreground">No tricks or temporary exploits—only clean architecture, quality content, and genuine authority.</p>
-          </div>
-        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {studioNavCategories.map((cat) => (
+          <a
+            href={`#${cat.id}`}
+            class="reveal group bg-card border border-border p-6 rounded-2xl flex flex-col justify-between hover:border-primary/40 transition-all duration-200 shadow-sm"
+          >
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-2xl font-bold text-primary/30 group-hover:text-primary transition-colors">
+                  {cat.number}
+                </span>
+                <Icon name="lucide:arrow-down-right" class="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+              <h3 class="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                {cat.name}
+              </h3>
+              <p class="text-xs text-muted-foreground leading-relaxed">
+                {cat.description}
+              </p>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  {/* ── Call to Action ── */}
+  {/* ── 4. DETAILED SERVICE SECTIONS ── */}
+  <div class="divide-y divide-border/40">
+    {/* 01. AI VISIBILITY & MODEL OPTIMISATION */}
+    <section id="ai-visibility" class="py-20 scroll-mt-24">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-lg font-bold text-primary/50">01</span>
+            <h2 class="text-3xl font-medium tracking-tight text-foreground">
+              AI Visibility & Model Optimisation
+            </h2>
+          </div>
+
+          <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-8">
+            PhantomRank shows how AI systems talk about your brand. Studio helps improve the information, pages and external signals behind those answers.
+          </p>
+
+          {/* Model Logos Strip */}
+          <div class="mb-10 p-6 rounded-2xl bg-card border border-border">
+            <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mb-4 text-center">
+              Model Coverage & Retrieval Optimisation Across:
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-8 opacity-80 transition-all duration-300 hover:opacity-100">
+              {modelLogos.map((logo) => (
+                <div class="flex items-center gap-2">
+                  <img src={logo.src} alt={logo.name} class="h-6 w-auto brightness-0 dark:brightness-100" />
+                  <span class="text-xs font-medium text-foreground">{logo.name}</span>
+                </div>
+              ))}
+            </div>
+            <p class="mt-5 text-xs text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto">
+              We can run model-specific visibility work where it matters — from improving retrieval-ready source material and RAG-friendly content structure, to clearer entity signals, better comparison content and stronger third-party source coverage.
+            </p>
+          </div>
+
+          {/* Scope list */}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div class="bg-card border border-border p-6 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-4">
+                PhantomRank Intelligence Integration
+              </h3>
+              <ul class="space-y-2.5 text-xs text-muted-foreground">
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-semibold">•</span>
+                  <span>AI visibility audits & mention/citation analysis</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-semibold">•</span>
+                  <span>Crawled-but-not-cited page review & diagnostics</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-semibold">•</span>
+                  <span>Brand-description and messaging alignment</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-semibold">•</span>
+                  <span>AI competitor analysis & Share of Voice / Synthesis</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-semibold">•</span>
+                  <span>Information-gap and citation-gap research</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary font-semibold">•</span>
+                  <span>Source-domain and source-ecosystem analysis</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-card border border-border p-6 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-4">
+                Execution Scope & Structural Work
+              </h3>
+              <ul class="space-y-2.5 text-xs text-muted-foreground">
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-semibold">•</span>
+                  <span>Website and content structure optimization</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-semibold">•</span>
+                  <span>Entity clarity & JSON-LD schema enrichment</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-semibold">•</span>
+                  <span>Citation-ready source material development</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-semibold">•</span>
+                  <span>Comparison & buyer decision content builds</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-semibold">•</span>
+                  <span>Relevant third-party source & profile seeding</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-500 font-semibold">•</span>
+                  <span>AI-search reporting and ongoing monitoring</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-4">
+            <a href="/learn/ai-visibility-tracking" class="text-xs text-primary hover:underline inline-flex items-center gap-1">
+              <span>Read our AI visibility guide in the content hub</span>
+              <Icon name="lucide:arrow-right" class="w-3 h-3" />
+            </a>
+            <a href="/signup" class="btn-ghost text-xs">Request AI Visibility Audit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 02. WEBSITES & CONVERSION */}
+    <section id="websites-conversion" class="py-20 scroll-mt-24 bg-muted/20">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-lg font-bold text-primary/50">02</span>
+            <h2 class="text-3xl font-medium tracking-tight text-foreground">
+              Websites & Conversion
+            </h2>
+          </div>
+
+          <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-8">
+            We design and build the pages people actually use to decide whether to contact, enquire or buy from you.
+          </p>
+
+          <div class="bg-card border border-border p-6 rounded-2xl mb-8">
+            <h3 class="text-sm font-bold text-foreground mb-4">Web Development & Technical Foundations</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs text-muted-foreground">
+              <li>• One-page & brochure websites</li>
+              <li>• Service & SaaS marketing sites</li>
+              <li>• Ecommerce & product pages</li>
+              <li>• Landing pages & city pages</li>
+              <li>• Full website redesigns</li>
+              <li>• CMS setup & headless builds</li>
+              <li>• Core Web Vitals & speed performance</li>
+              <li>• Mobile-first implementation</li>
+              <li>• Technical SEO foundations</li>
+              <li>• Website copy & brand messaging</li>
+              <li>• Forms, CRM & WhatsApp integrations</li>
+              <li>• Ongoing website support & updates</li>
+            </ul>
+          </div>
+
+          {/* Selected Work Showcase */}
+          <div class="p-8 rounded-2xl bg-card border border-border/80 text-center">
+            <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-4">
+              <Icon name="lucide:layout-grid" class="w-5 h-5" />
+            </div>
+            <h3 class="text-base font-bold text-foreground mb-2">
+              Featured Studio Website Builds
+            </h3>
+            <p class="text-xs text-muted-foreground max-w-xl mx-auto mb-6">
+              Modern, high-performance web architecture engineered for fast page loads, schema indexation, and conversion.
+            </p>
+            <div class="inline-flex items-center gap-2 text-xs text-muted-foreground bg-muted/40 px-4 py-2 rounded-full border border-border">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>All builds include technical SEO, responsive layouts & core analytics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 03. SEO */}
+    <section id="seo" class="py-20 scroll-mt-24">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-lg font-bold text-primary/50">03</span>
+            <h2 class="text-3xl font-medium tracking-tight text-foreground">
+              SEO
+            </h2>
+          </div>
+
+          <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-4">
+            SEO is a mix of technical work, content work, local visibility and authority-building. We choose the work based on the actual site and market, not a fixed checklist.
+          </p>
+
+          <p class="text-xs text-primary font-semibold mb-8">
+            There are many kinds of SEO work. We identify which ones actually matter for your business.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-card border border-border p-5 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-3">On-page SEO</h3>
+              <ul class="space-y-2 text-xs text-muted-foreground">
+                <li>• Keyword-to-page mapping</li>
+                <li>• Search intent & page structure</li>
+                <li>• Titles, meta & heading hierarchy</li>
+                <li>• Internal linking & image SEO</li>
+                <li>• Content refreshes</li>
+              </ul>
+            </div>
+
+            <div class="bg-card border border-border p-5 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-3">Technical SEO</h3>
+              <ul class="space-y-2 text-xs text-muted-foreground">
+                <li>• Audits & crawlability fixes</li>
+                <li>• Core Web Vitals & speed</li>
+                <li>• Sitemaps, robots & canonicals</li>
+                <li>• JS rendering & mobile SEO</li>
+                <li>• JSON-LD Schema markup</li>
+              </ul>
+            </div>
+
+            <div class="bg-card border border-border p-5 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-3">Local SEO</h3>
+              <ul class="space-y-2 text-xs text-muted-foreground">
+                <li>• Google Business Profile</li>
+                <li>• Local landing pages</li>
+                <li>• Maps & map-pack visibility</li>
+                <li>• Listings & NAP consistency</li>
+                <li>• Review strategy</li>
+              </ul>
+            </div>
+
+            <div class="bg-card border border-border p-5 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-3">Off-page SEO</h3>
+              <ul class="space-y-2 text-xs text-muted-foreground">
+                <li>• Backlink profile audits</li>
+                <li>• Strategic link outreach</li>
+                <li>• Digital PR & editorial placement</li>
+                <li>• Relevant resource links</li>
+                <li>• Unlinked brand mention recovery</li>
+              </ul>
+            </div>
+
+            <div class="bg-card border border-border p-5 rounded-2xl lg:col-span-2">
+              <h3 class="text-sm font-bold text-foreground mb-3">Platform & Search-Context SEO</h3>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
+                <li>• Shopify & E-commerce SEO</li>
+                <li>• WordPress & Webflow SEO</li>
+                <li>• Next.js & React SSR SEO</li>
+                <li>• Programmatic SEO (pSEO)</li>
+                <li>• YouTube & Video SEO</li>
+                <li>• Google Discover & News SEO</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 04. CONTENT STRATEGY & PRODUCTION */}
+    <section id="content-strategy" class="py-20 scroll-mt-24 bg-muted/20">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-lg font-bold text-primary/50">04</span>
+            <h2 class="text-3xl font-medium tracking-tight text-foreground">
+              Content Strategy & Production
+            </h2>
+          </div>
+
+          <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-4">
+            We plan and create the pages that help customers understand, compare and choose your business.
+          </p>
+
+          <div class="p-3 rounded-xl bg-primary/5 border border-primary/20 text-xs text-primary font-semibold mb-8 inline-flex items-center gap-2">
+            <Icon name="lucide:check-circle" class="w-4 h-4" />
+            AI-assisted drafting, with human editing, review and fact-checking.
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-card border border-border p-6 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-4">Strategy & Planning</h3>
+              <ul class="space-y-2.5 text-xs text-muted-foreground">
+                <li>• Content audits & editorial calendars</li>
+                <li>• Topic clusters & search question research</li>
+                <li>• Buyer-journey content mapping</li>
+                <li>• Detailed content briefs & internal linking</li>
+              </ul>
+            </div>
+
+            <div class="bg-card border border-border p-6 rounded-2xl">
+              <h3 class="text-sm font-bold text-foreground mb-4">Page & Asset Creation</h3>
+              <ul class="space-y-2.5 text-xs text-muted-foreground">
+                <li>• Service, product, use-case & industry pages</li>
+                <li>• Comparison, alternative & pricing pages</li>
+                <li>• Blog articles, pillar guides & FAQs</li>
+                <li>• Case studies & founder thought leadership</li>
+                <li>• Schema-ready content & FAQ markup</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 05. AUTHORITY, DISTRIBUTION & SEEDING */}
+    <section id="authority-distribution" class="py-20 scroll-mt-24">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-lg font-bold text-primary/50">05</span>
+            <h2 class="text-3xl font-medium tracking-tight text-foreground">
+              Authority, Distribution & Seeding
+            </h2>
+          </div>
+
+          <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-8">
+            Your website is only one part of the information people and AI systems use. We help strengthen the relevant sources around it.
+          </p>
+
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-4">Credible Source & Distribution Scope</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs text-muted-foreground">
+              <li>• Source-domain mapping</li>
+              <li>• Citation ecosystem research</li>
+              <li>• Content-seeding strategy</li>
+              <li>• Directory & listing optimisation</li>
+              <li>• Review-platform presence</li>
+              <li>• Marketplace & founder profiles</li>
+              <li>• Reddit & Quora community strategy</li>
+              <li>• Digital PR & editorial outreach</li>
+              <li>• Relevant third-party placements</li>
+              <li>• Unlinked brand mention recovery</li>
+              <li>• External source brand consistency</li>
+              <li>• Launch & content distribution support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 06. RESEARCH & GROWTH STRATEGY */}
+    <section id="research-strategy" class="py-20 scroll-mt-24 bg-muted/20">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-lg font-bold text-primary/50">06</span>
+            <h2 class="text-3xl font-medium tracking-tight text-foreground">
+              Research & Growth Strategy
+            </h2>
+          </div>
+
+          <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-8">
+            Before building pages or publishing content, we work out what matters, where the gaps are and what should happen first.
+          </p>
+
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-4">Growth Intelligence & Prioritisation Scope</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs text-muted-foreground">
+              <li>• Keyword research & search intent</li>
+              <li>• Customer-question research</li>
+              <li>• Buyer journeys & buying criteria</li>
+              <li>• Market & category research</li>
+              <li>• Competitor content & authority gaps</li>
+              <li>• Website & conversion review</li>
+              <li>• Positioning & brand messaging</li>
+              <li>• Local & regional opportunity research</li>
+              <li>• SEO & content roadmaps</li>
+              <li>• AI visibility action plans</li>
+              <li>• Prioritisation frameworks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 07. TRACKING, REPORTING & ADVISORY */}
+    <section id="tracking-advisory" class="py-20 scroll-mt-24">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-lg font-bold text-primary/50">07</span>
+            <h2 class="text-3xl font-medium tracking-tight text-foreground">
+              Tracking, Reporting & Advisory
+            </h2>
+          </div>
+
+          <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-8">
+            The work does not end when a page goes live. We track what changes and decide what to do next.
+          </p>
+
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-4">Monitoring & Fractional Support Scope</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs text-muted-foreground">
+              <li>• Keyword & organic visibility tracking</li>
+              <li>• Technical issue monitoring & indexation</li>
+              <li>• Local SEO & backlink monitoring</li>
+              <li>• Competitor movement alerts</li>
+              <li>• AI mention & citation monitoring</li>
+              <li>• AI Share of Voice & citation-share tracking</li>
+              <li>• Brand-description & source-pattern changes</li>
+              <li>• Monthly reporting & action tracking</li>
+              <li>• Quarterly growth planning</li>
+              <li>• Fractional SEO & AI visibility support</li>
+              <li>• In-house team & agency collaboration</li>
+              <li>• Training & strategy playbooks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  {/* ── 5. FREQUENTLY ASKED QUESTIONS ── */}
+  <section id="faq" class="py-20 bg-muted/20 border-t border-b border-border/40 scroll-mt-24">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground">
+          Frequently asked questions
+        </h2>
+        <p class="mt-3 text-base text-muted-foreground font-light">
+          Commercial questions about working with PhantomRank Studio.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        {studioFAQs.map((faq) => (
+          <details class="reveal group/faq bg-card border border-border rounded-2xl overflow-hidden">
+            <summary class="p-5 text-sm sm:text-base font-medium text-foreground flex items-center justify-between cursor-pointer hover:bg-muted/20 select-none focus-visible:outline-2 focus-visible:outline-primary">
+              <span>{faq.question}</span>
+              <Icon name="lucide:chevron-down" class="w-4 h-4 text-muted-foreground group-open/faq:rotate-180 transition-transform shrink-0 ml-4" />
+            </summary>
+            <div class="px-5 pb-5 pt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed border-t border-border/40">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── 6. FINAL CALL TO ACTION ── */}
   <section class="py-20 md:py-28">
     <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-      <div class="reveal bg-gradient-to-br from-primary/10 via-card to-card border border-primary/20 rounded-3xl p-8 md:p-14">
-        <h2 class="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl mb-4">
-          Ready to turn search data into execution?
+      <div class="reveal bg-gradient-to-br from-blue-500/10 via-card to-card border border-primary/20 rounded-3xl p-8 md:p-14 shadow-sm">
+        <h2 class="text-3xl sm:text-5xl font-medium tracking-tight text-foreground mb-4">
+          Need help acting on what PhantomRank is showing you?
         </h2>
-        <p class="text-muted-foreground text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-          Request a Studio audit to identify your brand's search and AI visibility gaps, or talk through a custom project with our engineering team.
+        <p class="text-base text-muted-foreground font-light max-w-2xl mx-auto mb-8 leading-relaxed">
+          Start with one focused piece of work — a website, SEO issue, content gap, local visibility problem or AI visibility audit.
         </p>
-        <div class="flex flex-wrap items-center justify-center gap-4">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="/signup" class="btn-primary">
-            Request a Studio audit
-            <Icon name="lucide:arrow-right" class="w-4 h-4" />
+            Get started
           </a>
           <a href="/signup" class="btn-secondary">
-            Talk through a project
+            See PhantomRank
           </a>
         </div>
       </div>
@@ -280,7 +622,7 @@ const meta = pageMeta.studio || {
     gsap.registerPlugin(ScrollTrigger);
 
     function setupAnimations() {
-      // Check reduced motion preference
+      // Respect reduced-motion preferences
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
@@ -295,11 +637,11 @@ const meta = pageMeta.studio || {
       gsap.utils.toArray(".reveal").forEach((elem: any) => {
         gsap.fromTo(
           elem,
-          { autoAlpha: 0, y: 25 },
+          { autoAlpha: 0, y: 20 },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.7,
+            duration: 0.6,
             ease: "power2.out",
             scrollTrigger: {
               trigger: elem,

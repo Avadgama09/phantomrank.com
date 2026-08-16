@@ -2,10 +2,7 @@
 // src/components/sanity/ArticlePageRenderer.astro
 // Shared Renderer for Article & Research Study pages (/learn/[cluster]/[article])
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
-import PortableText from "./PortableText.astro";
-import { sanityFetch } from "../../sanity/lib/client";
-import { urlForImage } from "../../sanity/lib/image";
-import { ARTICLES_IN_CLUSTER_QUERY, ARTICLE_BY_SLUG_QUERY, RESEARCH_STUDY_BY_SLUG_QUERY } from "../../sanity/lib/queries";
+import { getCollection } from "astro:content";
 
 interface Props {
   clusterSlug: string;
@@ -14,34 +11,34 @@ interface Props {
 
 const { clusterSlug, articleSlug } = Astro.props;
 
-// Query as Article first
-let contentData = await sanityFetch<any>({
-  query: ARTICLE_BY_SLUG_QUERY,
-  params: { articleSlug },
+const allMdx = await getCollection("learn", (entry) => !entry.data.draft);
+
+// Find matching article MDX entry
+const articleEntry = allMdx.find(
+  (entry) =>
+    entry.slug === articleSlug ||
+    entry.slug === `${clusterSlug}/${articleSlug}` ||
+    entry.slug.endsWith(`/${articleSlug}`)
+);
+
+const clusterArticles = allMdx.filter(
+  (entry) => entry.data.pageType === "article" && entry.data.cluster === clusterSlug
+);
+
+const siblingArticles = clusterArticles.map((a) => {
+  const slug = a.slug.split("/").pop() || a.slug;
+  return {
+    slug,
+    title: a.data.title,
+    href: `/learn/${clusterSlug}/${slug}`,
+  };
 });
 
-// Fallback query as Research Study if not found as Article
-if (!contentData) {
-  contentData = await sanityFetch<any>({
-    query: RESEARCH_STUDY_BY_SLUG_QUERY,
-    params: { slug: articleSlug },
-  });
-}
-
-const clusterArticles = await sanityFetch<any[]>({
-  query: ARTICLES_IN_CLUSTER_QUERY,
-  params: { clusterSlug },
-});
-
-const siblingArticles = (clusterArticles || []).map((a) => ({
-  slug: a.slug,
-  title: a.title,
-  href: `/learn/${clusterSlug}/${a.slug}`,
-}));
-
-const title = contentData?.title || "Article";
-const description = contentData?.excerpt || "";
-const clusterTitle = contentData?.primaryCluster?.title || clusterSlug;
+const title = articleEntry?.data?.title || "Article";
+const description = articleEntry?.data?.excerpt || articleEntry?.data?.description || "";
+const seoTitle = articleEntry?.data?.seo?.title || `${title} | PhantomRank`;
+const seoDescription = articleEntry?.data?.seo?.description || description;
+const clusterTitle = clusterSlug.charAt(0).toUpperCase() + clusterSlug.slice(1);
 
 const breadcrumbs = [
   { name: "Home", href: "/" },
@@ -49,11 +46,13 @@ const breadcrumbs = [
   { name: clusterTitle, href: `/learn/${clusterSlug}` },
   { name: title },
 ];
+
+const { Content } = articleEntry ? await articleEntry.render() : { Content: null };
 ---
 
 <ArticleLayout
-  title={contentData?.seo?.title || `${title} | PhantomRank`}
-  description={contentData?.seo?.description || description}
+  title={seoTitle}
+  description={seoDescription}
   breadcrumbs={breadcrumbs}
   hubTitle="Learn Hub"
   hubSlug="learn"
@@ -62,83 +61,28 @@ const breadcrumbs = [
   siblingArticles={siblingArticles}
   currentArticle={articleSlug}
   totalArticles={siblingArticles.length}
-  datePublished={contentData?.publishedAt}
-  dateModified={contentData?.lastSubstantiveUpdatedAt || contentData?._updatedAt}
-  featuredImage={urlForImage(contentData?.featuredImage)?.url()}
-  relatedLinks={contentData?.relatedArticles?.map((r: any) => ({
-    label: r.title,
-    href: `/learn/${r.clusterSlug || clusterSlug}/${r.slug}`,
-  }))}
+  datePublished={articleEntry?.data?.publishedDate}
+  dateModified={articleEntry?.data?.updatedDate}
+  featuredImage={articleEntry?.data?.featuredImage?.src}
 >
-  <!-- Answer Summary Box (Rendered Visibly Beneath H1 per Rule 4) -->
-  {contentData?.answerSummary && (
+  <!-- Answer Summary Box (Rendered Visibly Beneath H1) -->
+  {articleEntry?.data?.answerSummary && (
     <div class="my-6 rounded-2xl border border-primary/30 bg-primary/5 p-6 shadow-sm">
       <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-2">
         Answer Summary
       </h4>
       <p class="text-base font-medium leading-relaxed text-foreground">
-        {contentData.answerSummary}
+        {articleEntry.data.answerSummary}
       </p>
     </div>
   )}
 
-  <!-- Research Study Methodology Box (per Rule 5) -->
-  {contentData?.methodology && (
-    <div class="my-6 rounded-2xl border border-border bg-muted/30 p-6 shadow-sm">
-      <h4 class="text-xs font-bold uppercase tracking-widest text-foreground mb-2">
-        Research Methodology
-      </h4>
-      <p class="text-sm leading-relaxed text-muted-foreground">
-        {contentData.methodology}
-      </p>
-      {contentData.sampleSize && (
-        <div class="mt-3 text-xs font-semibold text-primary">
-          Sample Size: {contentData.sampleSize} {contentData.dateRange ? `• Period: ${contentData.dateRange}` : ""}
-        </div>
-      )}
+  <!-- MDX Article Body -->
+  {Content ? (
+    <div class="prose prose-lg max-w-none text-muted-foreground">
+      <Content />
     </div>
-  )}
-
-  <!-- Portable Text Body -->
-  {contentData?.body ? (
-    <PortableText value={contentData.body} />
   ) : (
-    <p class="text-muted-foreground">Article content placeholder.</p>
-  )}
-
-  <!-- Visible FAQ Section (per Rule 3) -->
-  {contentData?.faqSection && contentData.faqSection.length > 0 && (
-    <section class="mt-12 border-t border-border pt-8">
-      <h3 class="text-xl font-bold text-foreground mb-4">Frequently Asked Questions</h3>
-      <div class="space-y-4">
-        {contentData.faqSection.map((faq: any) => (
-          <div class="rounded-xl border border-border bg-card p-4">
-            <h4 class="font-semibold text-foreground text-base mb-1">{faq.question}</h4>
-            <p class="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  )}
-
-  <!-- Visible Sources / Methodology Section (per Rule 5) -->
-  {contentData?.sources && contentData.sources.length > 0 && (
-    <section class="mt-12 border-t border-border pt-8">
-      <h3 class="text-lg font-bold text-foreground mb-4">Sources & Methodology References</h3>
-      <div class="space-y-3">
-        {contentData.sources.map((s: any) => (
-          <div class="rounded-xl border border-border/80 bg-muted/20 p-4 text-xs text-muted-foreground">
-            <div class="font-semibold text-foreground text-sm">{s.sourceName}</div>
-            {s.publisher && <div>Publisher: {s.publisher}</div>}
-            {s.note && <div class="italic text-muted-foreground mt-1">{s.note}</div>}
-            {s.url && (
-              <a href={s.url} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline mt-1.5 inline-block font-medium">
-                View Source Document →
-              </a>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
+    <p class="text-muted-foreground">Article content is under editorial review.</p>
   )}
 </ArticleLayout>

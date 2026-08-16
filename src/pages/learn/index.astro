@@ -2,76 +2,46 @@
 // src/pages/learn/index.astro — Clean Editorial Resource Library for PhantomRank Learn
 import Layout from "../../layouts/Layout.astro";
 import Schema from "../../components/seo/Schema.astro";
-import PortableText from "../../components/sanity/PortableText.astro";
-import { sanityFetch } from "../../sanity/lib/client";
-import {
-  LEARN_HUB_SETTINGS_QUERY,
-  ALL_MAJOR_TOPICS_QUERY,
-  ALL_CLUSTERS_QUERY,
-  ALL_PUBLISHED_ARTICLES_QUERY,
-  PUBLISHED_RESEARCH_STUDIES_QUERY,
-} from "../../sanity/lib/queries";
+import DotBackground from "../../components/ui/DotBackground.astro";
+import { getCollection } from "astro:content";
 
-// Fetch Sanity data at build time
-const hubSettings = await sanityFetch<any>({
-  query: LEARN_HUB_SETTINGS_QUERY,
-});
-
-const clusters = await sanityFetch<any[]>({
-  query: ALL_CLUSTERS_QUERY,
-});
-
-const publishedArticles = await sanityFetch<any[]>({
-  query: ALL_PUBLISHED_ARTICLES_QUERY,
-});
-
-const publishedResearch = await sanityFetch<any[]>({
-  query: PUBLISHED_RESEARCH_STUDIES_QUERY,
-});
+// Fetch Astro Content Collection (MDX files)
+const mdxArticles = await getCollection("learn", (entry) => entry.data.pageType === "article" && !entry.data.draft);
 
 // Calculate reading time helper (200 Words Per Minute)
-function calculateReadingTime(body: any[] = []): number | null {
-  if (!body || body.length === 0) return null;
-  
-  let textContent = "";
-  for (const block of body) {
-    if (block._type === "block" && Array.isArray(block.children)) {
-      for (const child of block.children) {
-        if (child.text) textContent += " " + child.text;
-      }
-    }
-  }
-  
-  const words = textContent.trim().split(/\s+/).filter(Boolean).length;
-  if (words < 30) return null;
+function calculateMDXReadingTime(body: string = ""): number {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 200));
 }
 
+// Format MDX feed
+const formattedFeed = mdxArticles.map((a) => {
+  const clusterSlug = a.data.cluster || "foundations";
+  const clusterTitle = clusterSlug.charAt(0).toUpperCase() + clusterSlug.slice(1);
+  return {
+    id: a.slug,
+    title: a.data.title,
+    excerpt: a.data.excerpt || a.data.description || "",
+    href: `/learn/${clusterSlug}/${a.slug.split("/").pop()}`,
+    clusterTitle,
+    clusterSlug,
+    contentType: a.data.contentType || "guide",
+    readingTime: calculateMDXReadingTime(a.body),
+    publishedDate: a.data.publishedDate ? new Date(a.data.publishedDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "",
+    authorName: a.data.author || "PhantomRank Editorial Team",
+  };
+});
+
 // Restrained, editorial defaults
-const seoTitle = hubSettings?.seoTitle || "AI Search, AI Visibility & AI SEO | PhantomRank Learn";
-const seoDescription = hubSettings?.seoDescription || "Practical guides on how AI search finds, cites and describes brands.";
-const heroEyebrow = hubSettings?.heroEyebrow || "PhantomRank Learn";
-const heroH1 = hubSettings?.heroH1 || "AI Search, AI Visibility & AI SEO";
+const seoTitle = "AI Search, AI Visibility & AI SEO | PhantomRank Learn";
+const seoDescription = "Practical guides on how AI search finds, cites and describes brands.";
+const heroEyebrow = "PhantomRank Learn";
+const heroH1 = "AI Search, AI Visibility & AI SEO";
 
-const hasResearch = (publishedResearch || []).length > 0;
-const hasArticles = (publishedArticles || []).length > 0;
+const hasArticles = formattedFeed.length > 0;
 
-// Format articles feed
-const formattedFeed = (publishedArticles || []).map((a) => ({
-  id: a._id,
-  title: a.title,
-  excerpt: a.excerpt || "",
-  href: `/learn/${a.primaryCluster?.slug || "foundations"}/${a.slug}`,
-  clusterTitle: a.primaryCluster?.title || "Foundations",
-  clusterSlug: a.primaryCluster?.slug || "foundations",
-  contentType: a.contentType || "guide",
-  readingTime: calculateReadingTime(a.body),
-  publishedDate: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "",
-  authorName: a.author?.name || "PhantomRank",
-}));
-
-// Fallback clusters list if Sanity dataset query is empty
-const defaultClusters = [
+// Locked 6 Clusters list
+const clusterList = [
   { title: "Foundations", slug: "foundations" },
   { title: "Measurement", slug: "measurement" },
   { title: "Diagnosis", slug: "diagnosis" },
@@ -79,10 +49,6 @@ const defaultClusters = [
   { title: "Operations", slug: "operations" },
   { title: "Evidence", slug: "evidence" },
 ];
-
-const clusterList = (clusters && clusters.length > 0)
-  ? clusters.map((c) => ({ title: c.title, slug: c.slug }))
-  : defaultClusters;
 ---
 
 <Layout
@@ -113,37 +79,39 @@ const clusterList = (clusters && clusters.length > 0)
 
   <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
     <!-- ══════════════════════════════════════════════════════════════
-         1. HERO SECTION (Clean, Restrained Editorial Design)
+         1. HERO SECTION (Clean Editorial Design with Homepage Hero Styling)
     ══════════════════════════════════════════════════════════════ -->
-    <header class="border-b border-border pb-10">
-      <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        {heroEyebrow}
-      </p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-        {heroH1}
-      </h1>
-      <div class="mt-4 text-base text-muted-foreground max-w-2xl leading-relaxed">
-        {hubSettings?.heroIntro ? (
-          <PortableText value={hubSettings.heroIntro} />
-        ) : (
+    <header id="learn-hero" class="relative mx-auto max-w-7xl px-4 pt-24 pb-12 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-hidden text-center border-b border-border">
+      <DotBackground containerId="learn-hero" />
+      <div class="relative z-10 text-center">
+        <p class="text-sm text-muted-foreground/80 font-medium tracking-wide uppercase mb-3">
+          {heroEyebrow}
+        </p>
+        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-6xl mx-auto leading-tight">
+          AI Search, AI Visibility
+          <span class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2">
+            & AI SEO
+          </span>
+        </h1>
+        <div class="mt-6 text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
           <p>{seoDescription}</p>
-        )}
-      </div>
+        </div>
 
-      <!-- ── Major Topic Text Links ── -->
-      <div class="mt-8 flex flex-wrap items-center gap-6 text-sm font-semibold">
-        <a
-          href="/learn/ai-visibility/"
-          class="inline-flex items-center text-primary hover:underline"
-        >
-          Explore AI Visibility <span class="ml-1 text-xs">→</span>
-        </a>
-        <a
-          href="/learn/ai-seo/"
-          class="inline-flex items-center text-primary hover:underline"
-        >
-          Explore AI SEO <span class="ml-1 text-xs">→</span>
-        </a>
+        <!-- ── Major Topic Text Links ── -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm font-semibold">
+          <a
+            href="/learn/ai-visibility/"
+            class="btn-secondary"
+          >
+            Explore AI Visibility →
+          </a>
+          <a
+            href="/learn/ai-seo/"
+            class="btn-primary"
+          >
+            Explore AI SEO →
+          </a>
+        </div>
       </div>
     </header>
 
@@ -215,34 +183,5 @@ const clusterList = (clusters && clusters.length > 0)
       )}
     </main>
 
-    <!-- ══════════════════════════════════════════════════════════════
-         4. RESEARCH SECTION (Renders ONLY when real studies exist)
-    ══════════════════════════════════════════════════════════════ -->
-    {hasResearch && (
-      <section class="border-t border-border pt-12">
-        <h2 class="text-xl font-bold text-foreground mb-6">
-          Research & Empirical Studies
-        </h2>
-        <div class="grid gap-6 md:grid-cols-2">
-          {publishedResearch.map((study: any) => (
-            <article class="rounded-lg border border-border bg-card p-6 transition-all hover:border-primary/40">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-primary">
-                Research Study
-              </span>
-              <h3 class="mt-2 text-base font-bold text-foreground">
-                <a href={`/learn/evidence/${study.slug}`} class="hover:text-primary transition-colors">
-                  {study.title}
-                </a>
-              </h3>
-              {study.excerpt && (
-                <p class="mt-2 text-xs leading-relaxed text-muted-foreground line-clamp-3">
-                  {study.excerpt}
-                </p>
-              )}
-            </article>
-          ))}
-        </div>
-      </section>
-    )}
   </div>
 </Layout>

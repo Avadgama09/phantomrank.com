@@ -96,6 +96,8 @@ const agencyPlans = [
   },
 ];
 
+import DotBackground from "../ui/DotBackground.astro";
+
 interface Props {
   variant?: "preview" | "full";
 }
@@ -104,19 +106,24 @@ const { variant = "preview" } = Astro.props;
 const isPreview = variant === "preview";
 ---
 
-<section class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-  <div class="text-center mb-16">
+<section id="pricing-hero" class="relative mx-auto max-w-7xl px-4 pt-32 pb-16 sm:px-6 lg:px-8 flex flex-col items-center justify-center overflow-hidden text-center">
+  <DotBackground containerId="pricing-hero" />
+
+  <div class="text-center z-10 mb-12 reveal">
     <div
-      class="reveal inline-flex items-center gap-2 px-3 py-1 text-primary text-lg font-semibold"
+      class="text-sm text-muted-foreground/80 font-medium tracking-wide uppercase mb-3"
     >
       Pricing
     </div>
-    <h2
-      class="reveal text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4"
+    <h1
+      class="text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-6xl mx-auto leading-tight mb-4"
     >
-      {isPreview ? "Simple, transparent pricing" : "Plans for every scale"}
-    </h2>
-    <p class="reveal text-xl text-muted-foreground max-w-2xl mx-auto">
+      {isPreview ? "Simple, transparent" : "Plans for every"}
+      <span class="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2">
+        {isPreview ? "pricing" : "scale"}
+      </span>
+    </h1>
+    <p class="mt-6 text-xl text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
       {
         isPreview
           ? "Choose a plan that fits your needs. Pay as you go or scale with dedicated limits."

@@ -2,9 +2,7 @@
 // src/components/sanity/MajorTopicPageRenderer.astro
 // Shared Renderer for Major Topic / Pillar Pages (/learn/ai-seo/ & /learn/ai-visibility/)
 import PillarLayout from "../../layouts/PillarLayout.astro";
-import PortableText from "./PortableText.astro";
-import { sanityFetch } from "../../sanity/lib/client";
-import { MAJOR_TOPIC_BY_SLUG_QUERY, ALL_CLUSTERS_QUERY, ARTICLES_IN_MAJOR_TOPIC_QUERY } from "../../sanity/lib/queries";
+import { getCollection } from "astro:content";
 
 interface Props {
   topicSlug: string;
@@ -12,47 +10,64 @@ interface Props {
 
 const { topicSlug } = Astro.props;
 
-const topic = await sanityFetch<any>({
-  query: MAJOR_TOPIC_BY_SLUG_QUERY,
-  params: { slug: topicSlug },
-});
+const allMdx = await getCollection("learn", (entry) => !entry.data.draft);
 
-const clusters = await sanityFetch<any[]>({
-  query: ALL_CLUSTERS_QUERY,
-});
+// Fetch pillar MDX entry from content collection
+const pillarEntry = allMdx.find(
+  (entry) =>
+    entry.data.pageType === "pillar" &&
+    (entry.data.slug === topicSlug || entry.slug.includes(topicSlug))
+);
 
-const topicArticles = topic?._id
-  ? await sanityFetch<any[]>({
-      query: ARTICLES_IN_MAJOR_TOPIC_QUERY,
-      params: { topicId: topic._id },
-    })
-  : [];
+// Articles tagged with this topic
+const topicArticles = allMdx.filter(
+  (entry) =>
+    entry.data.pageType === "article" &&
+    Array.isArray(entry.data.topics) &&
+    entry.data.topics.includes(topicSlug)
+);
 
-const title = topic?.title || topicSlug.toUpperCase();
-const description = topic?.shortDescription || `Guide and resources for ${title}.`;
-const icon = topic?.icon || "🤖";
+const title = pillarEntry?.data?.title || (topicSlug === "ai-seo" ? "AI SEO" : "AI Visibility");
+const description = pillarEntry?.data?.description || pillarEntry?.data?.seo?.description || `Guide and resources for ${title}.`;
+const seoTitle = pillarEntry?.data?.seo?.title || `${title}: Major Topic Guide | PhantomRank`;
+const seoDescription = pillarEntry?.data?.seo?.description || description;
 
-const formattedClusters = (clusters || []).map((c) => ({
+const defaultClusters = [
+  { slug: "foundations", title: "Foundations" },
+  { slug: "measurement", title: "Measurement" },
+  { slug: "diagnosis", title: "Diagnosis" },
+  { slug: "optimisation", title: "Optimisation" },
+  { slug: "operations", title: "Operations" },
+  { slug: "evidence", title: "Evidence" },
+];
+
+const formattedClusters = defaultClusters.map((c) => ({
   slug: c.slug,
   title: c.title,
   href: `/learn/${c.slug}`,
-  description: c.shortDescription,
-  articleCount: c.articleCount || 0,
+  description: `Guide and frameworks for ${c.title}`,
+  articleCount: allMdx.filter((entry) => entry.data.cluster === c.slug).length,
 }));
 
-const formattedArticles = (topicArticles || []).map((a) => ({
-  title: a.title,
-  description: a.excerpt || "",
-  href: `/learn/${a.primaryCluster?.slug || "foundations"}/${a.slug}`,
-  clusterTitle: a.primaryCluster?.title || "Foundations",
-  clusterSlug: a.primaryCluster?.slug || "foundations",
-  publisheddate: a.publishedAt || "",
-}));
+const formattedArticles = topicArticles.map((a) => {
+  const clusterSlug = a.data.cluster || "foundations";
+  const articleSlug = a.slug.split("/").pop() || a.slug;
+  return {
+    title: a.data.title,
+    description: a.data.excerpt || a.data.description || "",
+    href: `/learn/${clusterSlug}/${articleSlug}`,
+    clusterTitle: clusterSlug.charAt(0).toUpperCase() + clusterSlug.slice(1),
+    clusterSlug,
+    publisheddate: a.data.publishedDate || "",
+  };
+});
+
+const { Content } = pillarEntry ? await pillarEntry.render() : { Content: null };
 ---
 
 <PillarLayout
-  title={topic?.seo?.title || `${title}: Major Topic Guide | PhantomRank`}
-  description={topic?.seo?.description || description}
+  title={seoTitle}
+  description={seoDescription}
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Learn", href: "/learn" },
@@ -60,14 +75,15 @@ const formattedArticles = (topicArticles || []).map((a) => ({
   ]}
   hubTitle={title}
   hubSlug={topicSlug}
-  hubIcon={icon}
   hubDescription={description}
   clusters={formattedClusters}
   totalArticleCount={formattedArticles.length}
   recentArticles={formattedArticles}
 >
-  {topic?.introduction ? (
-    <PortableText value={topic.introduction} />
+  {Content ? (
+    <div class="prose prose-lg max-w-none text-muted-foreground">
+      <Content />
+    </div>
   ) : (
     <div class="prose prose-lg max-w-none text-muted-foreground">
       <h1>{title}</h1>

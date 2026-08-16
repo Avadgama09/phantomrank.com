@@ -7,6 +7,10 @@ import { sourceCitation } from "./objects/sourceCitation";
 import { customTable } from "./objects/customTable";
 import { callout, verdictBox } from "./objects/callout";
 import { portableTextBody } from "./objects/portableTextBody";
+import { tableBlock } from "./objects/tableBlock";
+import { checklistBlock } from "./objects/checklistBlock";
+import { calloutBlock } from "./objects/calloutBlock";
+import { statsBlock } from "./objects/statsBlock";
 
 // Documents
 import { learnHubSettings } from "./documents/learnHubSettings";
@@ -26,6 +30,10 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   callout,
   verdictBox,
   portableTextBody,
+  tableBlock,
+  checklistBlock,
+  calloutBlock,
+  statsBlock,
 
   // Documents
   learnHubSettings,

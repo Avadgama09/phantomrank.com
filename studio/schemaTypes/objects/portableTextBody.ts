@@ -45,6 +45,7 @@ export const portableTextBody = defineType({
         ],
       },
     }),
+    // Native Image Embed with Alt Text & Caption
     defineArrayMember({
       type: "image",
       options: { hotspot: true },
@@ -52,15 +53,28 @@ export const portableTextBody = defineType({
         {
           name: "alt",
           type: "string",
-          title: "Alternative text",
+          title: "Alternative text (Required for SEO & Accessibility)",
           validation: (Rule) => Rule.required(),
         },
         {
           name: "caption",
           type: "string",
-          title: "Caption",
+          title: "Image Caption (Optional)",
         },
       ],
+    }),
+    // Custom Block Types
+    defineArrayMember({
+      type: "tableBlock",
+    }),
+    defineArrayMember({
+      type: "checklistBlock",
+    }),
+    defineArrayMember({
+      type: "calloutBlock",
+    }),
+    defineArrayMember({
+      type: "statsBlock",
     }),
     defineArrayMember({
       type: "callout",

@@ -19,6 +19,16 @@ function renderBlockText(children: any[] = []): string {
     })
     .join("");
 }
+
+function getCalloutClass(type = "tip") {
+  const map: Record<string, string> = {
+    tip: "border-l-4 border-l-blue-500 bg-blue-500/10 text-blue-200 border-y border-r border-border/40",
+    warning: "border-l-4 border-l-rose-500 bg-rose-500/10 text-rose-200 border-y border-r border-border/40",
+    insight: "border-l-4 border-l-emerald-500 bg-emerald-500/10 text-emerald-200 border-y border-r border-border/40",
+    "key-finding": "border-l-4 border-l-purple-500 bg-purple-500/10 text-purple-200 border-y border-r border-border/40",
+  };
+  return map[type] || map.tip;
+}
 ---
 
 <div class="sanity-portable-text space-y-6">
@@ -41,20 +51,128 @@ function renderBlockText(children: any[] = []): string {
       }
     }
 
-    // Callout Box
-    if (block._type === "callout") {
-      const typeClasses = {
-        note: "border-blue-500/40 bg-blue-500/10 text-blue-200",
-        tip: "border-emerald-500/40 bg-emerald-500/10 text-emerald-200",
-        warning: "border-amber-500/40 bg-amber-500/10 text-amber-200",
-        important: "border-rose-500/40 bg-rose-500/10 text-rose-200",
-      };
-      const cls = typeClasses[block.type as keyof typeof typeClasses] || typeClasses.note;
+    // Native Image Embed with Alt & Caption (Part 5)
+    if (block._type === "image") {
+      const imageUrl = block.asset?.url || block.asset?._ref || "";
+      return (
+        <figure class="my-8 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          {imageUrl && <img src={imageUrl} alt={block.alt || "Article illustration"} class="w-full h-auto object-cover max-h-[500px]" />}
+          {block.caption && (
+            <figcaption class="p-3 text-center text-xs text-muted-foreground border-t border-border bg-muted/20">
+              {block.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    }
+
+    // Block 1: Structured Data Table (tableBlock)
+    if (block._type === "tableBlock" || block._type === "customTable") {
+      const rows = block.rows || [];
+      const hasHeader = block.header !== false && rows.length > 0;
+      const headerRow = hasHeader ? rows[0] : null;
+      const bodyRows = hasHeader ? rows.slice(1) : rows;
 
       return (
-        <div class={`my-6 rounded-2xl border p-5 shadow-sm ${cls}`}>
-          {block.title && <h4 class="font-bold text-sm mb-1 uppercase tracking-wider">{block.title}</h4>}
-          <p class="text-sm leading-relaxed">{block.text}</p>
+        <div class="my-8 overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
+          <table class="w-full text-left text-sm text-muted-foreground border-collapse">
+            {block.caption && (
+              <caption class="p-4 text-xs font-bold text-foreground text-left border-b border-border bg-muted/30">
+                {block.caption}
+              </caption>
+            )}
+            {headerRow && (
+              <thead class="sticky top-0 bg-muted/80 text-xs uppercase font-semibold text-foreground border-b border-border backdrop-blur-xs">
+                <tr>
+                  {headerRow.cells?.map((c: string) => (
+                    <th class="px-4 py-3 font-semibold border-r border-border/50 last:border-r-0">{c}</th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody class="divide-y divide-border/60">
+              {bodyRows.map((r: any, idx: number) => (
+                <tr class={idx % 2 === 0 ? "bg-card hover:bg-muted/20 transition-colors" : "bg-muted/10 hover:bg-muted/20 transition-colors"}>
+                  {r.cells?.map((c: string) => (
+                    <td class="px-4 py-3 border-r border-border/40 last:border-r-0">{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
+
+    // Block 2: Actionable Checklist / List (checklistBlock)
+    if (block._type === "checklistBlock") {
+      const items = block.items || [];
+      return (
+        <div class="my-6 rounded-2xl border border-border bg-card p-6 shadow-sm">
+          {block.title && <h4 class="text-base font-bold text-foreground mb-4">{block.title}</h4>}
+          <div class="space-y-3">
+            {items.map((item: any) => {
+              const isDoDont = item.type === "do-dont";
+              const doDontClass = item.checked ? "border-emerald-500/30 bg-emerald-500/5 text-emerald-300" : "border-rose-500/30 bg-rose-500/5 text-rose-300";
+              const doDontLabel = item.checked ? "DO:" : "DON'T:";
+
+              if (isDoDont) {
+                return (
+                  <div class={`flex items-start gap-3 rounded-lg border p-3 text-sm ${doDontClass}`}>
+                    <span class="font-bold text-xs uppercase tracking-wider">{doDontLabel}</span>
+                    <span>{item.text}</span>
+                  </div>
+                );
+              }
+              return (
+                <div class="flex items-start gap-3 text-sm text-foreground">
+                  <input type="checkbox" checked={item.checked} readonly class="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary" />
+                  <span class={item.checked ? "line-through text-muted-foreground" : ""}>{item.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
+    // Block 3: Callout Box (calloutBlock)
+    if (block._type === "calloutBlock" || block._type === "callout") {
+      const type = block.type || "tip";
+      const cls = getCalloutClass(type);
+      const htmlContent = Array.isArray(block.content) ? renderBlockText(block.content[0]?.children || []) : (block.text || "");
+
+      return (
+        <div class={`my-6 rounded-2xl p-5 shadow-sm ${cls}`}>
+          <div class="flex items-center gap-2 mb-2 font-bold text-xs uppercase tracking-wider">
+            {block.icon && <span class="text-base">{block.icon}</span>}
+            <span>{type.replace("-", " ")}</span>
+          </div>
+          <div class="text-sm leading-relaxed" set:html={htmlContent || block.text || ""} />
+        </div>
+      );
+    }
+
+    // Block 4: Stat / Data Callout (statsBlock)
+    if (block._type === "statsBlock") {
+      return (
+        <div class="my-8 rounded-2xl border border-border bg-gradient-to-b from-card to-muted/20 p-8 text-center shadow-sm">
+          <div class="text-4xl sm:text-5xl font-extrabold tracking-tight text-primary">
+            {block.stat}
+          </div>
+          <div class="mt-2 text-base font-semibold text-foreground max-w-lg mx-auto">
+            {block.label}
+          </div>
+          {block.context && (
+            <div class="mt-2 text-xs text-muted-foreground italic">
+              {block.context}
+            </div>
+          )}
+          {block.source && (
+            <div class="mt-4 pt-3 border-t border-border/60 text-[11px] text-muted-foreground uppercase tracking-wider font-medium">
+              Source: {block.source}
+            </div>
+          )}
         </div>
       );
     }
@@ -73,40 +191,7 @@ function renderBlockText(children: any[] = []): string {
       );
     }
 
-    // Custom Data Table (Accessible Structured Table per Rule 10)
-    if (block._type === "customTable") {
-      return (
-        <div class="my-8 overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
-          <table class="w-full text-left text-sm text-muted-foreground">
-            {block.caption && (
-              <caption class="p-4 text-xs font-bold text-foreground text-left border-b border-border bg-muted/30">
-                {block.caption}
-              </caption>
-            )}
-            {block.headers?.length > 0 && (
-              <thead class="bg-muted/60 text-xs uppercase font-semibold text-foreground border-b border-border">
-                <tr>
-                  {block.headers.map((h: string) => (
-                    <th class="px-4 py-3 font-semibold">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-            )}
-            <tbody class="divide-y divide-border/60">
-              {block.rows?.map((r: any) => (
-                <tr class="hover:bg-muted/20 transition-colors">
-                  {r.cells?.map((c: string) => (
-                    <td class="px-4 py-3">{c}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      );
-    }
-
-    // Source Citation Box (Rule 5)
+    // Source Citation Box
     if (block._type === "sourceCitation") {
       return (
         <div class="my-4 rounded-xl border border-border/80 bg-muted/20 p-4 text-xs text-muted-foreground flex flex-col gap-1">
