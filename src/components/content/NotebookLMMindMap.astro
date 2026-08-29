@@ -1,0 +1,272 @@
+---
+// src/components/content/NotebookLMMindMap.astro
+import { Icon } from 'astro-icon/components';
+
+const data = {
+  title: "The New Reality of Digital Search",
+  branches: [
+    {
+      name: "Three Core Disciplines",
+      subbranches: [
+        {
+          name: "SEO (Search Engine Optimization)",
+          nodes: ["Technical Structure", "Keyword Targeting", "Link Building"]
+        },
+        {
+          name: "AEO (Answer Engine Optimization)",
+          nodes: ["Direct Answers", "Featured Snippets", "Zero-Click Presence"]
+        },
+        {
+          name: "GEO (Generative Engine Optimization)",
+          nodes: ["Synthesized Coverage", "Prompt Alignment", "Brand Citations"]
+        }
+      ]
+    },
+    {
+      name: "The Anatomy of AI Retrieval",
+      subbranches: [
+        {
+          name: "Structural Clarity",
+          nodes: ["Direct Answers", "Clear Hierarchy", "Focused Passages"]
+        },
+        {
+          name: "Fact-Dense Content",
+          nodes: ["Proprietary Research", "Summarized Data", "Extractable Tables"]
+        },
+        {
+          name: "Entity Authority",
+          nodes: ["Machine Knowledge Graphs", "Semantic Association", "Knowledge Graphs"]
+        }
+      ]
+    },
+    {
+      name: "The Sources AI Trusts",
+      subbranches: [
+        {
+          name: "Owned Brand Media",
+          nodes: ["Web Assets", "Knowledge Graphs"]
+        },
+        {
+          name: "Tier 1: High-Trust Communities",
+          nodes: ["Reddit & Forums", "Vertical Discussion"]
+        },
+        {
+          name: "Tier 2: Earned Media",
+          nodes: ["Technical Documentation", "Trade Press"]
+        }
+      ]
+    },
+    {
+      name: "Strategic Optimization Focus",
+      subbranches: [
+        {
+          name: "Technical Infrastructure",
+          nodes: ["MDX & Schema", "Crawlability", "Mobile Adjustability", "Structured Metadata"]
+        },
+        {
+          name: "Content Creation",
+          nodes: ["Answer-First Layout", "Intent-Based Formatting", "Fact Density", "Passage Gain"]
+        },
+        {
+          name: "Signal Building",
+          nodes: ["Off-Page PR", "Third-Party Validation", "Earned Media"]
+        }
+      ]
+    },
+    {
+      name: "Performance and Measurement",
+      subbranches: [
+        {
+          name: "Primary Metrics",
+          nodes: ["AI Visibility Score", "Citation Frequency", "Share of Synthesis"]
+        },
+        {
+          name: "Secondary Metrics",
+          nodes: ["Sentiment Score", "Referral Traffic", "Conversational Drift"]
+        }
+      ]
+    }
+  ]
+};
+---
+
+<div class="my-8 not-prose relative group">
+  <!-- NotebookLM Style Horizontal Tree Mind Map Container -->
+  <div 
+    id="notebook-tree-trigger"
+    class="relative w-full rounded-2xl border border-border/60 bg-[#0d1412] p-6 overflow-x-auto shadow-md cursor-pointer transition-all duration-300 hover:border-emerald-500/40"
+  >
+    <!-- Top-right Expand Icon Pill -->
+    <div class="absolute top-4 right-4 z-10">
+      <button 
+        type="button" 
+        class="inline-flex items-center gap-1.5 px-3 py-1.2 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-800/60 text-emerald-300 text-xs font-medium backdrop-blur-sm transition-all"
+        title="Expand full mind map"
+      >
+        <Icon name="lucide:maximize-2" class="w-3.5 h-3.5" />
+        <span>Expand</span>
+      </button>
+    </div>
+
+    <!-- Tree Flow Canvas -->
+    <div class="min-w-[920px] py-4 flex items-center gap-8 select-none">
+      
+      <!-- Root Node -->
+      <div class="shrink-0 z-10">
+        <div class="bg-[#1b342a] text-[#a7f3d0] border border-[#2d5846] font-semibold text-sm px-4 py-3 rounded-xl shadow-lg flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>{data.title}</span>
+        </div>
+      </div>
+
+      <!-- Main Branches Column -->
+      <div class="flex flex-col gap-10 relative flex-1">
+        {data.branches.map((branch) => (
+          <div class="flex items-center gap-6 relative">
+            
+            <!-- Category Node -->
+            <div class="shrink-0 z-10">
+              <div class="bg-[#162a22] text-[#6ee7b7] border border-[#26493b] font-medium text-xs px-3.5 py-2 rounded-lg shadow-sm">
+                {branch.name}
+              </div>
+            </div>
+
+            <!-- Subbranches Column -->
+            <div class="flex flex-col gap-4 flex-1">
+              {branch.subbranches.map((sub) => (
+                <div class="flex items-center gap-4">
+                  <!-- Subbranch Node -->
+                  <div class="shrink-0 z-10">
+                    <div class="bg-[#13221c] text-[#a7f3d0]/90 border border-[#213a2f] text-xs font-normal px-3 py-1.5 rounded-md">
+                      {sub.name}
+                    </div>
+                  </div>
+
+                  <!-- Leaf Nodes -->
+                  <div class="flex flex-wrap items-center gap-2">
+                    {sub.nodes.map((node) => (
+                      <span class="bg-[#0e1b16] text-[#6ee7b7]/80 border border-[#1b3228] text-[11px] px-2.5 py-1 rounded-md">
+                        {node}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Fullscreen Modal View -->
+  <dialog 
+    id="notebook-tree-modal"
+    class="fixed inset-0 z-50 w-full h-full max-w-none max-h-none p-0 m-0 bg-[#080d0b]/98 backdrop-blur-2xl border-none outline-none hidden flex-col select-none"
+  >
+    <!-- Modal Header Controls -->
+    <div class="w-full px-6 py-4 border-b border-[#1b3228] bg-[#0c1612] flex items-center justify-between z-20 shrink-0">
+      <div class="flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+        <h3 class="text-sm font-semibold text-emerald-200 m-0">{data.title} — NotebookLM Mind Map</h3>
+      </div>
+      <button 
+        type="button" 
+        id="close-tree-modal"
+        class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-950 hover:bg-emerald-900 text-emerald-300 transition-colors cursor-pointer"
+      >
+        <Icon name="lucide:x" class="w-5 h-5" />
+      </button>
+    </div>
+
+    <!-- Modal Scrollable Full Hierarchy Canvas -->
+    <div class="flex-1 w-full h-full overflow-auto p-8 sm:p-12 flex items-center justify-center">
+      <div class="min-w-[1100px] p-8 rounded-2xl bg-[#0b1310] border border-[#1b3228] shadow-2xl">
+        
+        <!-- Root Title in Modal -->
+        <div class="mb-10 text-center">
+          <span class="text-xs uppercase tracking-widest text-emerald-400/80 font-mono">NotebookLM Mind Map</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-emerald-100 mt-1 m-0">{data.title}</h2>
+        </div>
+
+        <!-- Full Horizontal Tree inside Modal -->
+        <div class="flex items-center gap-10">
+          <div class="shrink-0">
+            <div class="bg-[#1b342a] text-[#a7f3d0] border border-[#2d5846] font-semibold text-base px-5 py-4 rounded-xl shadow-xl">
+              {data.title}
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-10 flex-1">
+            {data.branches.map((branch) => (
+              <div class="flex items-center gap-8 border-l-2 border-emerald-800/40 pl-6 py-2">
+                <div class="shrink-0">
+                  <div class="bg-[#162a22] text-[#6ee7b7] border border-[#26493b] font-semibold text-xs px-4 py-2.5 rounded-lg shadow-sm">
+                    {branch.name}
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-4 flex-1">
+                  {branch.subbranches.map((sub) => (
+                    <div class="flex items-center gap-4">
+                      <div class="shrink-0">
+                        <div class="bg-[#13221c] text-[#a7f3d0]/90 border border-[#213a2f] text-xs font-medium px-3.5 py-1.5 rounded-md">
+                          {sub.name}
+                        </div>
+                      </div>
+
+                      <div class="flex flex-wrap items-center gap-2">
+                        {sub.nodes.map((node) => (
+                          <span class="bg-[#0e1b16] text-[#6ee7b7]/90 border border-[#1b3228] text-xs px-3 py-1 rounded-md shadow-2xs">
+                            {node}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const trigger = document.getElementById("notebook-tree-trigger");
+    const modal = document.getElementById("notebook-tree-modal");
+    const closeBtn = document.getElementById("close-tree-modal");
+
+    if (!trigger || !modal || !closeBtn) return;
+
+    function openModal() {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+
+    trigger.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        closeModal();
+      }
+    });
+  });
+</script>
