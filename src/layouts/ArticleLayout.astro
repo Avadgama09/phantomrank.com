@@ -52,8 +52,11 @@ const {
 const displayedArticles = siblingArticles.slice(0, 5);
 const hasMore = totalArticles > 5;
 
-const clusterUrl = `/learn/${hubSlug}/${clusterSlug}`;
-const pillarUrl = `/learn/${hubSlug}`;
+const cleanHubSlug = (hubSlug || "ai-seo").replace(/^learn\/?/, "");
+const clusterUrl = cleanHubSlug
+  ? `/learn/${cleanHubSlug}/${clusterSlug}`
+  : `/learn/${clusterSlug}`;
+const pillarUrl = cleanHubSlug ? `/learn/${cleanHubSlug}` : `/learn`;
 ---
 
 <Layout title={title} description={description} breadcrumbs={breadcrumbs}>
@@ -83,7 +86,7 @@ const pillarUrl = `/learn/${hubSlug}`;
 
   <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
     <a
-      href={`/learn/${hubSlug}/${clusterSlug}`}
+      href={clusterUrl}
       class="mb-8 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
     >
       <svg class="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -109,6 +112,36 @@ const pillarUrl = `/learn/${hubSlug}`;
           prose-img:rounded-xl prose-img:shadow-md
           prose-hr:border-border"
       >
+        <!-- Author Meta Header (Inline Top, Non-card layout) -->
+        <div class="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border/80 pb-4 text-xs text-muted-foreground not-prose">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-foreground">Ashish Vadgama</span>
+            <a
+              href="https://www.linkedin.com/in/ashishvadgama/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
+            >
+              <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.75a1.45 1.45 0 1 0 0 2.9 1.45 1.45 0 0 0 0-2.9Z" />
+              </svg>
+              LinkedIn
+            </a>
+          </div>
+          <span class="hidden sm:inline text-border">•</span>
+          <span class="font-normal text-muted-foreground">
+            13+ years managing alliances, partnerships, sales and marketing for SaaS platforms
+          </span>
+          {datePublished && (
+            <>
+              <span class="hidden sm:inline text-border">•</span>
+              <time datetime={datePublished} class="font-medium text-muted-foreground">
+                Published: {datePublished}
+              </time>
+            </>
+          )}
+        </div>
+
         <slot />
       </article>
 

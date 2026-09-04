@@ -184,6 +184,11 @@ export const pageMeta: Record<string, PageMeta> = {
     description:
       "PhantomRank shows where your brand is missing from search and AI answers. Studio turns those findings into websites, SEO, content, and authority work.",
   },
+  "chatgpt-ads": {
+    title: "ChatGPT Ads: Strategy, Setup & Management | PhantomRank",
+    description:
+      "ChatGPT Ads are now available in India. Learn how they work, how to target conversational intent, measure conversions and build a smarter AI advertising strategy.",
+  },
   resources: {
     title: "Resources",
     description:

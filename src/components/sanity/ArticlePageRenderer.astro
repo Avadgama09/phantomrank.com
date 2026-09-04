@@ -54,15 +54,16 @@ const { Content } = articleEntry ? await articleEntry.render() : { Content: null
   title={seoTitle}
   description={seoDescription}
   breadcrumbs={breadcrumbs}
-  hubTitle="Learn Hub"
-  hubSlug="learn"
+  hubTitle="AI SEO"
+  hubSlug="ai-seo"
   clusterTitle={clusterTitle}
   clusterSlug={clusterSlug}
   siblingArticles={siblingArticles}
   currentArticle={articleSlug}
   totalArticles={siblingArticles.length}
   datePublished={articleEntry?.data?.publishedDate}
-  dateModified={articleEntry?.data?.updatedDate}
+  dateModified={articleEntry?.data?.dateModified || articleEntry?.data?.updatedDate || articleEntry?.data?.publishedDate}
+  author={articleEntry?.data?.author || "Ashish Vadgama"}
   featuredImage={articleEntry?.data?.featuredImage?.src}
 >
   <!-- Answer Summary Box (Rendered Visibly Beneath H1) -->

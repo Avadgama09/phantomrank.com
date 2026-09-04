@@ -31,8 +31,9 @@ const learnCollection = defineCollection({
       canonicalUrl: z.string().optional(),
       targetDepth: z.number().optional(),
       order: z.number().optional(),
-      author: z.string().default('PhantomRank Editorial Team'),
+      author: z.string().default('Ashish Vadgama'),
       publishedDate: z.string().optional(),
+      dateModified: z.string().optional(),
       updatedDate: z.string().optional(),
       seo: z
         .object({

@@ -1,0 +1,1144 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Schema from "../components/seo/Schema.astro";
+import DotBackground from "../components/ui/DotBackground.astro";
+import { pageMeta } from "../utils/data";
+import { Icon } from "astro-icon/components";
+
+const meta = pageMeta["chatgpt-ads"] || {
+  title: "ChatGPT Ads: Strategy, Setup & Management | PhantomRank",
+  description:
+    "ChatGPT Ads are now available in India. Learn how they work, how to target conversational intent, measure conversions and build a smarter AI advertising strategy.",
+};
+
+const indiaStats = [
+  { value: "100M+", label: "Weekly ChatGPT users in India" },
+  { value: "₹725", label: "Current minimum daily campaign budget in India" },
+  { value: "40+", label: "Countries with ChatGPT Ads availability" },
+  { value: "$1B", label: "Annualized ChatGPT Ads revenue run rate reported by OpenAI" },
+];
+
+const frameworkSteps = [
+  { step: "01", title: "INTENT MAPPING", desc: "Map the questions, problems, comparisons and buying situations your customers have. Not just keywords. Customer situations." },
+  { step: "02", title: "AI VISIBILITY", desc: "Understand how AI engines currently describe your brand — mentioned, recommended, cited, compared, overlooked, or inaccurately described." },
+  { step: "03", title: "COMPETITIVE INTELLIGENCE", desc: "Understand which competitors appear for the same customer intents and what makes them visible." },
+  { step: "04", title: "CONTEXT STRATEGY", desc: "Translate valuable customer situations into focused ChatGPT Ads ad groups and context hints." },
+  { step: "05", title: "CREATIVE + LANDING PAGE", desc: "Build advertising and landing-page experiences that make sense for the context in which someone encounters the brand." },
+  { step: "06", title: "MEASUREMENT", desc: "Connect the ad interaction to meaningful business outcomes — clicks, conversions, and revenue." },
+  { step: "07", title: "OPTIMISATION", desc: "Improve the entire pipeline: Intent → Context → Creative → Landing Page → Conversion." },
+];
+
+const studioCapabilities = [
+  {
+    title: "STRATEGY",
+    items: [
+      "ChatGPT Ads opportunity assessment",
+      "Customer intent mapping",
+      "Buyer-situation research",
+      "Competitive intent analysis",
+      "Campaign planning",
+      "Channel-fit assessment",
+    ],
+  },
+  {
+    title: "CAMPAIGN",
+    items: [
+      "Campaign architecture",
+      "Ad group structure",
+      "Context hint strategy",
+      "Geographic targeting",
+      "Platform targeting",
+      "Audience strategy where applicable",
+    ],
+  },
+  {
+    title: "CREATIVE",
+    items: [
+      "Ad copy",
+      "Value propositions",
+      "Creative direction",
+      "Testing frameworks",
+      "Messaging variations",
+    ],
+  },
+  {
+    title: "LANDING PAGES",
+    items: [
+      "Landing page strategy",
+      "Dedicated campaign pages",
+      "Intent-aligned content",
+      "Conversion optimisation",
+      "Analytics implementation",
+    ],
+  },
+  {
+    title: "MEASUREMENT",
+    items: [
+      "OpenAI Pixel implementation",
+      "Conversions API setup",
+      "Conversion event configuration",
+      "UTM strategy",
+      "Analytics integration",
+      "CRM measurement",
+    ],
+  },
+  {
+    title: "OPTIMISATION",
+    items: [
+      "Campaign monitoring",
+      "Creative testing",
+      "Context testing",
+      "Conversion analysis",
+      "Landing-page optimisation",
+      "Performance reporting",
+    ],
+  },
+];
+
+const budgetFrameworks = [
+  { title: "₹725/day", subtitle: "Minimum-entry experiment", desc: "Base daily requirement to launch a controlled campaign test in Ads Manager India." },
+  { title: "₹1,500/day", subtitle: "Small structured test", desc: "Provides initial data density across 1–2 intent clusters." },
+  { title: "₹3,000/day", subtitle: "More room for experimentation", desc: "Allows testing multiple context hints, ad groups, and creative variations." },
+  { title: "₹5,000/day", subtitle: "High-volume testing", desc: "Useful when testing multiple variables with enough conversion volume to support optimization." },
+];
+
+const comparisonData = [
+  { signal: "Core signal", google: "Search query", chatgpt: "Conversation context", meta: "Audience / behaviour signals" },
+  { signal: "User mindset", google: '"I need this"', chatgpt: '"Help me figure this out"', meta: '"Show me something interesting"' },
+  { signal: "Primary environment", google: "Search results", chatgpt: "Conversation", meta: "Social feed" },
+  { signal: "Strongest opportunity", google: "Existing demand", chatgpt: "Exploration & consideration", meta: "Discovery" },
+  { signal: "Targeting model", google: "Keywords + audiences", chatgpt: "Context + campaign targeting", meta: "Audiences + behaviour" },
+  { signal: "Typical strength", google: "Bottom-funnel intent", chatgpt: "Decision context", meta: "Demand creation" },
+  { signal: "Platform maturity", google: "Mature", chatgpt: "Emerging", meta: "Mature" },
+  { signal: "Best approach", google: "Capture demand", chatgpt: "Understand & test context", meta: "Create / capture attention" },
+];
+
+const chatgptFaqs = [
+  {
+    question: "What are ChatGPT Ads?",
+    answer: "ChatGPT Ads are sponsored advertisements that can appear below ChatGPT responses. They allow businesses to reach users while they explore, compare and make decisions in a conversational environment.",
+  },
+  {
+    question: "Are ChatGPT Ads available in India?",
+    answer: "Yes. OpenAI currently lists India as available for self-service Ads Manager access.",
+  },
+  {
+    question: "How much do ChatGPT Ads cost in India?",
+    answer: "The current minimum daily campaign budget for India is ₹725. Your recommended test budget will depend on your objectives, CPC, conversion rate and acceptable acquisition cost.",
+  },
+  {
+    question: "Can I target keywords with ChatGPT Ads?",
+    answer: "Not in the same way you would with traditional search advertising. Advertisers can provide context hints that describe relevant conversations, topics and situations. These hints help guide ad matching but are not exact-match keywords and do not guarantee delivery for a specific query.",
+  },
+  {
+    question: "Do ChatGPT Ads influence ChatGPT's answers?",
+    answer: "No. OpenAI says ads are clearly separated from ChatGPT's answers and advertising does not influence the answers ChatGPT provides.",
+  },
+  {
+    question: "Can I pay to have ChatGPT recommend my company?",
+    answer: "No. Paid advertising does not buy an organic recommendation from ChatGPT. Paid placements and organic answers are separate.",
+  },
+  {
+    question: "How do you measure ChatGPT Ads?",
+    answer: "Advertisers can use Ads Manager reporting together with conversion measurement tools such as the OpenAI Pixel and Conversions API, as well as UTM parameters and existing analytics or CRM systems.",
+  },
+  {
+    question: "Are ChatGPT Ads better than Google Ads?",
+    answer: "Not automatically. They operate in different environments. Google is highly effective at capturing explicit search demand, while ChatGPT creates an emerging opportunity to reach people during conversational exploration and decision-making. The right answer depends on your business and your measured acquisition economics.",
+  },
+  {
+    question: "Should my business advertise on ChatGPT?",
+    answer: "It may be worth testing if your customers research, compare or ask for recommendations before buying. We recommend starting with a controlled experiment rather than assuming the channel will outperform your existing advertising.",
+  },
+  {
+    question: "Can PhantomRank help manage ChatGPT Ads?",
+    answer: "Yes. PhantomRank Studio can support the strategy, campaign architecture, context strategy, creative, landing pages, measurement and optimisation required to test ChatGPT Ads properly.",
+  },
+];
+---
+
+<Layout
+  metadata={{
+    title: meta.title,
+    description: meta.description,
+    canonical: "https://www.phantomrank.com/chatgpt-ads/",
+    ignoreTitleTemplate: true,
+  }}
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Studio", href: "/studio" },
+    { name: "ChatGPT Ads", href: "/chatgpt-ads" },
+  ]}
+>
+  <Fragment slot="head">
+    <Schema
+      type="Service"
+      data={{
+        service: {
+          name: "ChatGPT Ads Strategy, Setup & Management",
+          description:
+            "Strategy, campaign architecture, context hints, landing pages, and conversion tracking for ChatGPT Ads in India and globally.",
+          category: "AI Advertising & Search Marketing",
+        },
+      }}
+    />
+    <Schema
+      type="FAQPage"
+      data={{
+        faqs: chatgptFaqs,
+      }}
+    />
+  </Fragment>
+
+  {/* ── 1. HERO SECTION ── */}
+  <section
+    class="relative mx-auto max-w-7xl px-4 pt-28 pb-16 sm:px-6 lg:px-8 min-h-[80vh] flex flex-col items-center justify-center overflow-hidden border-b border-border/40"
+    id="chatgpt-ads-hero"
+  >
+    <DotBackground containerId="chatgpt-ads-hero" />
+
+    <div class="text-center z-10 max-w-5xl mx-auto">
+      <div class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs sm:text-sm font-medium text-primary uppercase tracking-wider">
+        <Icon name="lucide:sparkles" class="h-4 w-4" />
+        PHANTOMRANK STUDIO · CHATGPT ADS
+      </div>
+
+      <h1 class="reveal text-3xl sm:text-5xl lg:text-7xl font-medium tracking-tight text-foreground max-w-5xl mx-auto leading-tight">
+        <span>ChatGPT Ads: Strategy, Setup & Management</span>
+      </h1>
+
+      <h2 class="reveal mt-6 text-xl sm:text-2xl lg:text-3xl font-medium bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent max-w-3xl mx-auto">
+        Reach customers while they're exploring, comparing and deciding in ChatGPT.
+      </h2>
+
+      <p class="reveal mt-6 text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+        ChatGPT Ads introduce a new kind of advertising environment — one built around conversations, context and the problems people are trying to solve. PhantomRank helps brands understand where ChatGPT Ads fit, map customer intent, build the right campaign structure, develop context strategies, create the advertising experience and measure what happens after the click.
+      </p>
+
+      <div class="reveal mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/signup" class="btn-primary">
+          Talk to PhantomRank
+          <Icon name="lucide:arrow-right" class="w-4 h-4" />
+        </a>
+        <a href="#what-are-chatgpt-ads" class="btn-secondary">
+          See how ChatGPT Ads work ↓
+        </a>
+      </div>
+
+      <p class="reveal mt-6 text-xs text-muted-foreground/80 font-medium tracking-wider uppercase">
+        AI Visibility + AI Advertising + Conversion Intelligence
+      </p>
+
+      {/* ChatGPT Ads Showcase Image */}
+      <div class="reveal mt-12 max-w-4xl mx-auto rounded-2xl overflow-hidden border border-border/80 shadow-2xl">
+        <img
+          src="/images/image_compressed.webp"
+          alt="ChatGPT Ads Interface and Targeting Concept"
+          class="w-full h-auto object-cover"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ── 2. SECTION 01 — WHAT ARE CHATGPT ADS? ── */}
+  <section id="what-are-chatgpt-ads" class="py-20 border-b border-border/40 scroll-mt-24">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 01
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          Advertising inside the AI decision experience
+        </h2>
+
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-6">
+          People don't only use ChatGPT to find information. They use it to work through decisions.
+        </p>
+
+        <p class="text-sm text-foreground/90 font-medium mb-4">They ask:</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+          <blockquote class="p-4 rounded-xl bg-card border border-border text-xs text-foreground italic">
+            "Which CRM should I use for my startup?"
+          </blockquote>
+          <blockquote class="p-4 rounded-xl bg-card border border-border text-xs text-foreground italic">
+            "What's the best accounting software for a 20-person business?"
+          </blockquote>
+          <blockquote class="p-4 rounded-xl bg-card border border-border text-xs text-foreground italic">
+            "Which laptop should I buy for video editing?"
+          </blockquote>
+          <blockquote class="p-4 rounded-xl bg-card border border-border text-xs text-foreground italic">
+            "What should I consider before choosing a marketing agency?"
+          </blockquote>
+        </div>
+
+        <p class="text-sm text-muted-foreground leading-relaxed mb-6">
+          These conversations can contain much more context than a traditional search query. ChatGPT Ads give businesses an opportunity to appear as sponsored content while people are exploring those kinds of needs. Ads appear separately from ChatGPT's answers and are clearly labelled as sponsored.
+        </p>
+
+        <div class="p-6 rounded-2xl bg-primary/5 border border-primary/20 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          <h3 class="font-bold text-foreground mb-2 flex items-center gap-2">
+            <Icon name="lucide:info" class="w-4 h-4 text-primary" />
+            The important distinction:
+          </h3>
+          <p>
+            <strong class="text-foreground">You are not paying to influence what ChatGPT says.</strong> Advertising does not determine ChatGPT's organic answer. Instead, the advertising system evaluates whether an ad is relevant to the context in which someone is using ChatGPT. That creates a fundamentally different advertising environment from traditional search.
+          </p>
+        </div>
+      </div>
+
+      {/* ── VISUAL 01: FROM CONVERSATION TO CONVERSION ── */}
+      <div class="reveal mt-16 p-8 rounded-3xl bg-card border border-border shadow-sm text-center">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-primary mb-6">
+          VISUAL 01 · FROM CONVERSATION TO CONVERSION
+        </h3>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-foreground">
+          <div class="p-4 rounded-xl bg-muted/40 border border-border w-full md:w-auto flex-1">
+            USER CONVERSATION
+          </div>
+          <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary shrink-0 rotate-90 md:rotate-0" />
+          <div class="p-4 rounded-xl bg-muted/40 border border-border w-full md:w-auto flex-1">
+            CONTEXT + INTENT
+          </div>
+          <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary shrink-0 rotate-90 md:rotate-0" />
+          <div class="p-4 rounded-xl bg-primary/10 border border-primary/30 text-primary font-bold w-full md:w-auto flex-1">
+            RELEVANT SPONSORED AD
+          </div>
+          <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary shrink-0 rotate-90 md:rotate-0" />
+          <div class="p-4 rounded-xl bg-muted/40 border border-border w-full md:w-auto flex-1">
+            LANDING PAGE
+          </div>
+          <Icon name="lucide:arrow-right" class="w-4 h-4 text-emerald-500 shrink-0 rotate-90 md:rotate-0" />
+          <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-bold w-full md:w-auto flex-1">
+            CONVERSION
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 3. SECTION 02 — CHATGPT ADS IN INDIA ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 02
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          Why ChatGPT Ads are suddenly interesting in India
+        </h2>
+
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-6">
+          India is no longer a peripheral market for ChatGPT. OpenAI reported more than <strong class="text-foreground">100 million weekly ChatGPT users in India</strong> in February 2026. And as of September 2026, self-service ChatGPT Ads through Ads Manager is available in India.
+        </p>
+
+        <p class="text-sm text-muted-foreground leading-relaxed mb-6">
+          The current minimum daily campaign budget in India is <strong class="text-foreground">₹725</strong>. That doesn't mean every business should start spending ₹725 a day tomorrow. It means the barrier to running a controlled experiment is now relatively low.
+        </p>
+
+        <div class="p-6 rounded-2xl bg-card border border-border mb-10">
+          <h3 class="text-sm font-bold text-foreground mb-3">The bigger opportunity is the environment itself.</h3>
+          <p class="text-xs text-muted-foreground leading-relaxed">
+            ChatGPT users often explain: what they are trying to accomplish, what they are comparing, what constraints they have, what they already know, what they are unsure about, and what they are considering buying. That creates an advertising environment where <strong class="text-foreground">context can matter as much as the category itself.</strong>
+          </p>
+        </div>
+      </div>
+
+      {/* INDIA STATS VISUAL */}
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {indiaStats.map((stat) => (
+          <div class="bg-card border border-border p-6 rounded-2xl text-center shadow-sm">
+            <div class="text-3xl sm:text-4xl font-extrabold text-primary mb-2">
+              {stat.value}
+            </div>
+            <p class="text-xs text-muted-foreground font-medium leading-normal">
+              {stat.label}
+            </p>
+          </div>
+        ))}
+      </div>
+      <p class="reveal text-center text-[11px] text-muted-foreground/70 mt-4 italic">
+        *Platform figures and availability change quickly. Verify current Ads Manager requirements before launching a campaign.
+      </p>
+    </div>
+  </section>
+
+  {/* ── 4. SECTION 03 — CHATGPT ADS ARE NOT GOOGLE ADS INSIDE CHATGPT ── */}
+  <section class="py-20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 03
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          The biggest mistake marketers can make
+        </h2>
+
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-6">
+          If you approach ChatGPT Ads by simply copying your Google Ads strategy, you're missing the interesting part. Google primarily gives advertisers a way to respond to <strong class="text-foreground">search queries</strong>. ChatGPT creates an environment where people can explain the <strong class="text-foreground">problem behind the query.</strong>
+        </p>
+      </div>
+
+      {/* VISUAL 02: KEYWORDS -> CONVERSATIONS */}
+      <div class="reveal my-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Google Side */}
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-400 mb-4">
+            <Icon name="lucide:search" class="w-4 h-4" />
+            GOOGLE
+          </div>
+          <div class="p-3.5 rounded-xl bg-muted/40 text-xs font-mono text-foreground mb-4">
+            "best CRM for startups"
+          </div>
+          <p class="text-xs text-muted-foreground mb-3">A relatively compact search query. The advertiser thinks about:</p>
+          <ul class="space-y-1.5 text-xs text-muted-foreground">
+            <li>• Keywords</li>
+            <li>• Bids</li>
+            <li>• Match types</li>
+            <li>• Search intent</li>
+            <li>• Landing pages</li>
+          </ul>
+        </div>
+
+        {/* ChatGPT Side */}
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-4">
+            <Icon name="lucide:bot" class="w-4 h-4" />
+            CHATGPT
+          </div>
+          <div class="p-3.5 rounded-xl bg-muted/40 text-xs font-mono text-foreground mb-4 leading-relaxed">
+            "I'm running a 15-person startup. We're hiring salespeople and our spreadsheets are becoming a mess. What CRM should we use? We need something affordable and easy to implement."
+          </div>
+          <p class="text-xs text-muted-foreground mb-3">Now you have:</p>
+          <ul class="grid grid-cols-2 gap-1.5 text-xs text-muted-foreground">
+            <li>• Company size</li>
+            <li>• Business stage</li>
+            <li>• Problem</li>
+            <li>• Trigger</li>
+            <li>• Use case</li>
+            <li>• Constraints</li>
+            <li>• Buying intent</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="reveal p-6 rounded-2xl bg-card border border-border text-center">
+        <p class="text-sm font-semibold text-foreground">
+          The strategic unit is changing from the keyword to the customer situation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 5. SECTION 04 — HOW CHATGPT ADS WORK ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-12">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 04
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground">
+          From campaign to conversion
+        </h2>
+        <p class="mt-3 text-base text-muted-foreground font-light max-w-xl mx-auto">
+          The basic structure of a ChatGPT Ads campaign.
+        </p>
+      </div>
+
+      <div class="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <span class="text-xs font-bold text-primary block mb-2">01 — Campaign</span>
+          <p class="text-xs text-muted-foreground leading-relaxed">Define overall business objective, budget, dates, geography and other campaign-level settings.</p>
+        </div>
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <span class="text-xs font-bold text-primary block mb-2">02 — Ad Group</span>
+          <p class="text-xs text-muted-foreground leading-relaxed">Create focused themes around different products, use cases, value propositions or customer situations.</p>
+        </div>
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <span class="text-xs font-bold text-primary block mb-2">03 — Context Hints</span>
+          <p class="text-xs text-muted-foreground leading-relaxed">Describe the conversations, topics and situations where your product or service may be relevant.</p>
+        </div>
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <span class="text-xs font-bold text-primary block mb-2">04 — Ad</span>
+          <p class="text-xs text-muted-foreground leading-relaxed">Create headline, description, image/creative and landing page experience.</p>
+        </div>
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <span class="text-xs font-bold text-primary block mb-2">05 — Measurement</span>
+          <p class="text-xs text-muted-foreground leading-relaxed">Connect clicks and downstream conversion events through available measurement tools.</p>
+        </div>
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <span class="text-xs font-bold text-primary block mb-2">06 — Optimisation</span>
+          <p class="text-xs text-muted-foreground leading-relaxed">Use performance data to improve intent, context, creative and landing page combinations.</p>
+        </div>
+      </div>
+
+      {/* VISUAL 03: CAMPAIGN STRUCTURE */}
+      <div class="reveal p-8 rounded-3xl bg-card border border-border text-center shadow-sm mb-12">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-primary mb-6">
+          VISUAL 03 · CHATGPT ADS CAMPAIGN STRUCTURE
+        </h3>
+        <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-medium text-foreground">
+          <span class="px-4 py-2 rounded-xl bg-muted/40 border border-border">Campaign</span>
+          <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+          <span class="px-4 py-2 rounded-xl bg-muted/40 border border-border">Ad Group</span>
+          <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+          <span class="px-4 py-2 rounded-xl bg-primary/10 border border-primary/30 text-primary font-bold">Context Hints</span>
+          <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+          <span class="px-4 py-2 rounded-xl bg-muted/40 border border-border">Ads</span>
+          <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+          <span class="px-4 py-2 rounded-xl bg-muted/40 border border-border">Landing Page</span>
+          <Icon name="lucide:chevron-right" class="w-4 h-4 text-emerald-500" />
+          <span class="px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-bold">Conversion</span>
+        </div>
+      </div>
+
+      {/* Official YouTube Walkthrough Embed Section */}
+      <div class="reveal bg-card border border-border rounded-3xl p-6 sm:p-8 text-center">
+        <h3 class="text-lg font-bold text-foreground mb-2">See ChatGPT Ads Manager in action</h3>
+        <p class="text-xs text-muted-foreground mb-6 max-w-xl mx-auto">
+          Watch OpenAI's walkthrough of the Ads Manager interface, campaign setup, and context hints.
+        </p>
+        <div class="relative w-full max-w-3xl mx-auto overflow-hidden rounded-2xl aspect-video border border-border bg-black">
+          <iframe
+            class="absolute top-0 left-0 w-full h-full"
+            src="https://www.youtube-nocookie.com/embed/oIehXl9z9YY"
+            title="OpenAI ChatGPT Ads Manager Walkthrough"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 6. SECTION 05 — TARGETING ── */}
+  <section class="py-20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 05
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          The new targeting question: "When is my product relevant?"
+        </h2>
+
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-6">
+          ChatGPT Ads currently use multiple signals when selecting ads. These can include the context and intent of the current conversation, the ad's landing page, title and copy, advertiser-provided context hints and, when personalisation is enabled, selected signals from a user's broader ChatGPT experience.
+        </p>
+
+        <p class="text-sm text-muted-foreground leading-relaxed mb-8">
+          Context hints are particularly interesting. But they are <strong class="text-foreground">not traditional exact-match keywords</strong>. They help guide the system toward situations where an advertiser may be relevant. They do not guarantee that an ad will appear for a specific phrase or conversation.
+        </p>
+
+        {/* Weak vs Strong Context Example */}
+        <div class="bg-card border border-border p-6 rounded-3xl mb-8">
+          <div class="text-xs font-bold text-primary uppercase tracking-wider mb-4">Context Hint Example</div>
+          <div class="mb-4">
+            <span class="text-xs font-semibold text-muted-foreground block mb-1">PRODUCT:</span>
+            <span class="text-sm font-bold text-foreground">Accounting software for Indian SMEs</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-4 rounded-xl bg-red-500/5 border border-red-500/20">
+              <span class="text-xs font-bold text-red-500 uppercase tracking-wider block mb-2">WEAK APPROACH</span>
+              <ul class="space-y-1 text-xs font-mono text-muted-foreground">
+                <li>• "Accounting software"</li>
+                <li>• "Accounting software India"</li>
+                <li>• "Best accounting software"</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+              <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider block mb-2">STRONGER CONTEXT</span>
+              <p class="text-xs text-foreground leading-relaxed">
+                "Small Indian businesses looking for accounting software to manage GST compliance, invoicing, expenses and inventory without needing a large finance team."
+              </p>
+            </div>
+          </div>
+          <p class="text-xs text-muted-foreground mt-4 italic">
+            The second description gives the strategy clarity about who, why, when, what problem, and what outcome the product is relevant to.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 7. SECTION 06 — DON'T START WITH THE AD. START WITH THE INTENT. ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 06
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-4">
+          This is where PhantomRank comes in.
+        </h2>
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-8">
+          A common mistake is to start a ChatGPT Ads campaign by opening Ads Manager. We start somewhere else: with the customer.
+        </p>
+
+        {/* 6 Intent Stages */}
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-12">
+          <div class="p-3.5 rounded-xl bg-card border border-border text-center">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-primary block mb-1">DISCOVERING</span>
+            <span class="text-xs text-muted-foreground">"What options exist?"</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-card border border-border text-center">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-primary block mb-1">EXPLORING</span>
+            <span class="text-xs text-muted-foreground">"How does this work?"</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-card border border-border text-center">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-primary block mb-1">COMPARING</span>
+            <span class="text-xs text-muted-foreground">"Which one is better?"</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-card border border-border text-center">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-primary block mb-1">VALIDATING</span>
+            <span class="text-xs text-muted-foreground">"Is this credible?"</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-card border border-border text-center">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-primary block mb-1">DECIDING</span>
+            <span class="text-xs text-muted-foreground">"Which should I choose?"</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-card border border-border text-center">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-500 block mb-1">ACTING</span>
+            <span class="text-xs text-muted-foreground">"Where do I sign up?"</span>
+          </div>
+        </div>
+
+        {/* 7-Stage Framework */}
+        <h3 class="text-xl font-bold text-foreground mb-6">PhantomRank ChatGPT Ads Framework</h3>
+        <div class="space-y-4">
+          {frameworkSteps.map((step) => (
+            <div class="p-5 rounded-2xl bg-card border border-border flex items-start gap-4">
+              <span class="text-xl font-extrabold text-primary shrink-0">{step.step}</span>
+              <div>
+                <h4 class="text-sm font-bold text-foreground mb-1">{step.title}</h4>
+                <p class="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 8. SECTION 07 — PAID + ORGANIC AI VISIBILITY ── */}
+  <section class="py-20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 07
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          What happens when GSO meets ChatGPT Ads?
+        </h2>
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-8">
+          This is where the relationship between PhantomRank and Studio becomes particularly powerful. There are two ways a brand can become visible inside the emerging AI decision environment.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-blue-500" />
+              ORGANIC AI VISIBILITY (GSO & AI SEO)
+            </h3>
+            <ul class="space-y-1.5 text-xs text-muted-foreground">
+              <li>• Mentions & recommendations</li>
+              <li>• Citations & source domain authority</li>
+              <li>• Accurate brand information & entity clarity</li>
+              <li>• Competitive positioning</li>
+            </ul>
+          </div>
+
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500" />
+              PAID AI VISIBILITY (ChatGPT Ads)
+            </h3>
+            <ul class="space-y-1.5 text-xs text-muted-foreground">
+              <li>• Sponsored placements & contextual reach</li>
+              <li>• Campaign context hints & creative</li>
+              <li>• Dedicated landing page conversion flows</li>
+              <li>• Downstream ROI measurement</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* VISUAL 04: ORGANIC + PAID AI VISIBILITY */}
+        <div class="p-8 rounded-3xl bg-card border border-border text-center shadow-sm">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-primary mb-6">
+            VISUAL 04 · ORGANIC + PAID AI VISIBILITY
+          </h3>
+          <div class="max-w-2xl mx-auto space-y-4 text-xs font-medium text-foreground">
+            <div class="p-3 rounded-xl bg-muted/40 border border-border uppercase tracking-wider font-bold">
+              AI DECISION SPACE
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400">
+                <span class="font-bold block mb-1">ORGANIC AI VISIBILITY</span>
+                <span class="text-[11px] text-muted-foreground">GSO / AI SEO · Mentions · Citations · Authority</span>
+              </div>
+              <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                <span class="font-bold block mb-1">PAID AI VISIBILITY</span>
+                <span class="text-[11px] text-muted-foreground">ChatGPT Ads · Context Targeting · Paid Reach</span>
+              </div>
+            </div>
+            <Icon name="lucide:arrow-down" class="w-4 h-4 text-primary mx-auto" />
+            <div class="p-4 rounded-xl bg-primary/10 border border-primary/30 text-primary font-bold uppercase tracking-wider">
+              CONSIDERATION → ACTION
+            </div>
+          </div>
+          <p class="mt-6 text-xs font-bold text-foreground uppercase tracking-wider">
+            Earn visibility. Buy visibility. Understand both.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 9. SECTION 08 — THE PHANTOMRANK ADVANTAGE ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 08
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          We don't think advertising should exist in a silo.
+        </h2>
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-6">
+          Imagine PhantomRank discovers that your brand is almost invisible when customers ask AI: <em class="text-foreground">"What are the best project management tools for Indian startups?"</em> Your competitors are repeatedly recommended. Your brand isn't.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+          <div class="p-6 rounded-2xl bg-card border border-border">
+            <h3 class="text-sm font-bold text-foreground mb-2">Question 1: Can we improve our organic AI visibility?</h3>
+            <p class="text-xs text-muted-foreground leading-relaxed">That leads to GSO and structural web content work.</p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-card border border-border">
+            <h3 class="text-sm font-bold text-foreground mb-2">Question 2: Should we test paid visibility while we work on organic?</h3>
+            <p class="text-xs text-muted-foreground leading-relaxed">That leads to ChatGPT Ads testing to participate in decision context immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 10. SECTION 09 — WHAT PHANTOMRANK STUDIO DOES ── */}
+  <section class="py-20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-12">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 09
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground">
+          ChatGPT Ads Strategy & Execution
+        </h2>
+        <p class="mt-3 text-base text-muted-foreground font-light max-w-xl mx-auto">
+          PhantomRank Studio supports the full lifecycle from strategy to measurement.
+        </p>
+      </div>
+
+      <div class="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {studioCapabilities.map((cap) => (
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-3">{cap.title}</h3>
+            <ul class="space-y-1.5 text-xs text-muted-foreground">
+              {cap.items.map((item) => (
+                <li class="flex items-start gap-2">
+                  <span class="text-primary">•</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── 11. SECTION 10 — HOW MUCH DO CHATGPT ADS COST? ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 10
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          The answer is more complicated than "₹725/day."
+        </h2>
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-8">
+          India currently has a minimum daily campaign budget of <strong class="text-foreground">₹725</strong>. But the minimum budget is not the same thing as the budget you should spend.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          {budgetFrameworks.map((b) => (
+            <div class="bg-card border border-border p-6 rounded-2xl shadow-sm">
+              <div class="text-2xl font-extrabold text-primary mb-1">{b.title}</div>
+              <h3 class="text-xs font-bold text-foreground mb-2">{b.subtitle}</h3>
+              <p class="text-[11px] text-muted-foreground leading-relaxed">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+        <p class="text-center text-[11px] text-muted-foreground/70 italic">
+          These are PhantomRank testing frameworks, not OpenAI performance benchmarks. The objective is to buy enough evidence to decide whether the channel deserves more budget.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 12. SECTION 11 — HOW CHATGPT ADS ARE MEASURED ── */}
+  <section class="py-20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 11
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          Don't optimise for clicks. Optimise for business outcomes.
+        </h2>
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-8">
+          ChatGPT Ads currently provides reporting around metrics such as impressions, clicks, spend, CTR, CPC, CPM, and conversions. But those numbers only become commercially useful when connected to what happens after the click.
+        </p>
+
+        {/* VISUAL 05: CLICK TO CONVERSION */}
+        <div class="p-8 rounded-3xl bg-card border border-border text-center shadow-sm">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-primary mb-6">
+            VISUAL 05 · CLICK → CONVERSION
+          </h3>
+          <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-medium text-foreground">
+            <span class="px-4 py-2 rounded-xl bg-muted/40 border border-border">ChatGPT Ad Click</span>
+            <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+            <span class="px-4 py-2 rounded-xl bg-muted/40 border border-border">Website UTM Tracking</span>
+            <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+            <span class="px-4 py-2 rounded-xl bg-primary/10 border border-primary/30 text-primary font-bold">OpenAI Pixel + Conversions API</span>
+            <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+            <span class="px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">Conversion (Lead / Signup / Sale)</span>
+            <Icon name="lucide:chevron-right" class="w-4 h-4 text-primary" />
+            <span class="px-4 py-2 rounded-xl bg-muted/40 border border-border">Analytics / CRM Revenue</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 13. SECTION 12 — SHOULD YOU ACTUALLY RUN CHATGPT ADS? ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 12
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-4">
+          Should You Actually Run ChatGPT Ads?
+        </h2>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-6">
+          Our honest answer: maybe.
+        </div>
+
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-6">
+          ChatGPT Ads are interesting. That does not mean they are automatically right for your business. The platform is still young. Early advertiser experiences are mixed — some report promising traffic, others report expensive clicks or attribution challenges.
+        </p>
+
+        <div class="p-6 rounded-2xl bg-card border border-border text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          <h3 class="font-bold text-foreground mb-2">We recommend a controlled experiment:</h3>
+          <p>One product · One audience or intent cluster · One strong landing page · One clear conversion event · Clean measurement · A defined maximum acceptable acquisition cost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 14. SECTION 13 & 14 — WHO SHOULD TEST VS WAIT ── */}
+  <section class="py-20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Section 13: Who Should Test */}
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <div class="text-xs font-semibold uppercase tracking-wider text-emerald-500 mb-2">SECTION 13</div>
+          <h3 class="text-lg font-bold text-foreground mb-4">ChatGPT Ads may be particularly interesting if:</h3>
+          <ul class="space-y-3 text-xs text-muted-foreground leading-relaxed">
+            <li><strong class="text-foreground">Your customers research before buying:</strong> The more consideration involved, the more interesting conversational environments become.</li>
+            <li><strong class="text-foreground">Your product requires explanation:</strong> SaaS, tech, and professional services benefit when present during questions.</li>
+            <li><strong class="text-foreground">Customers compare alternatives:</strong> When users ask AI to compare products or vendors.</li>
+            <li><strong class="text-foreground">You have a clear conversion event:</strong> Measurable signups, leads, or purchases.</li>
+            <li><strong class="text-foreground">You already have strong landing pages:</strong> The landing page continues the conversation.</li>
+          </ul>
+        </div>
+
+        {/* Section 14: Who Should Wait */}
+        <div class="bg-card border border-border p-6 rounded-2xl">
+          <div class="text-xs font-semibold uppercase tracking-wider text-red-400 mb-2">SECTION 14</div>
+          <h3 class="text-lg font-bold text-foreground mb-4">ChatGPT Ads may not be the first channel to test if:</h3>
+          <ul class="space-y-2 text-xs text-muted-foreground leading-relaxed">
+            <li>• You need massive immediate search volume</li>
+            <li>• Your product has extremely thin margins</li>
+            <li>• You cannot track conversions reliably</li>
+            <li>• Your landing page is weak</li>
+            <li>• You don't know your acceptable CAC</li>
+            <li>• You cannot afford experimentation</li>
+            <li>• You expect ChatGPT Ads to behave exactly like Google Search Ads</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 15. SECTION 15 — COMPARISON TABLE ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 15
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-8 text-center">
+          Three different advertising environments
+        </h2>
+
+        {/* Responsive Table */}
+        <div class="bg-card border border-border rounded-2xl overflow-x-auto shadow-sm">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-muted/60 border-b border-border uppercase font-bold text-foreground text-[11px] tracking-wider">
+              <tr>
+                <th class="p-4">Criteria</th>
+                <th class="p-4 text-blue-400">Google Ads</th>
+                <th class="p-4 text-emerald-400">ChatGPT Ads</th>
+                <th class="p-4 text-purple-400">Meta Ads</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border/60 text-muted-foreground">
+              {comparisonData.map((row) => (
+                <tr class="hover:bg-muted/20">
+                  <td class="p-4 font-semibold text-foreground">{row.signal}</td>
+                  <td class="p-4">{row.google}</td>
+                  <td class="p-4 font-medium text-foreground bg-primary/5">{row.chatgpt}</td>
+                  <td class="p-4">{row.meta}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-6 p-4 rounded-xl bg-card border border-border text-center text-xs text-muted-foreground">
+          <strong class="text-foreground">The takeaway:</strong> Google captures existing demand. Meta creates and captures attention. ChatGPT participates in the conversation where people explore, compare and make decisions.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 16. SECTION 16 — THE BIGGER SHIFT ── */}
+  <section class="py-20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 16
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          Search is moving from keywords to conversations.
+        </h2>
+        <p class="text-base sm:text-lg text-muted-foreground font-light leading-relaxed max-w-3xl mb-6">
+          For two decades, digital advertising has largely trained marketers to think in terms of queries, keywords, audiences, and clicks. AI introduces another layer: <strong class="text-foreground">context.</strong>
+        </p>
+        <p class="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+          What is the person trying to accomplish? What are they comparing? What constraints do they have? What alternatives are they considering? What information do they still need? And what might they do next? That is why we believe AI advertising needs to be treated as more than another media-buying channel — it needs its own layer of intent intelligence.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 17. SECTION 17 — PHANTOMRANK MARKETING LOOP ── */}
+  <section class="py-20 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 17
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground mb-6">
+          From AI Visibility to AI Advertising
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-3">PhantomRank (Measure)</h3>
+            <ul class="space-y-1.5 text-xs text-muted-foreground">
+              <li>• Who recommends you?</li>
+              <li>• Who cites you?</li>
+              <li>• Where are competitors winning?</li>
+              <li>• What does AI say about your brand?</li>
+              <li>• Where are the information gaps?</li>
+            </ul>
+          </div>
+
+          <div class="bg-card border border-border p-6 rounded-2xl">
+            <h3 class="text-sm font-bold text-foreground mb-3">Studio (Act)</h3>
+            <ul class="space-y-1.5 text-xs text-muted-foreground">
+              <li>• Build the pages & content</li>
+              <li>• Strengthen authority & GSO</li>
+              <li>• Launch ChatGPT Ads campaigns</li>
+              <li>• Measure conversions & revenue</li>
+              <li>• Improve what works</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* VISUAL 06: PHANTOMRANK MARKETING LOOP */}
+        <div class="p-8 rounded-3xl bg-card border border-border text-center shadow-sm">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-primary mb-6">
+            VISUAL 06 · THE PHANTOMRANK AI MARKETING LOOP
+          </h3>
+          <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-medium text-foreground">
+            <span class="px-3.5 py-2 rounded-xl bg-primary/10 border border-primary/30 text-primary font-bold">PhantomRank Intelligence</span>
+            <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary" />
+            <span class="px-3.5 py-2 rounded-xl bg-muted/40 border border-border">AI Intent</span>
+            <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary" />
+            <span class="px-3.5 py-2 rounded-xl bg-muted/40 border border-border">AI Visibility</span>
+            <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary" />
+            <span class="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">GSO + ChatGPT Ads</span>
+            <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary" />
+            <span class="px-3.5 py-2 rounded-xl bg-muted/40 border border-border">Landing Page & Conversion</span>
+            <Icon name="lucide:arrow-right" class="w-4 h-4 text-primary" />
+            <span class="px-3.5 py-2 rounded-xl bg-muted/40 border border-border">Performance Data</span>
+            <Icon name="lucide:rotate-cw" class="w-4 h-4 text-primary" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 18. SECTION 18 — FREQUENTLY ASKED QUESTIONS ── */}
+  <section id="faq" class="py-20 border-b border-border/40 scroll-mt-24">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center mb-14">
+        <div class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+          SECTION 18
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-foreground">
+          Frequently Asked Questions About ChatGPT Ads
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {chatgptFaqs.map((faq) => (
+          <details class="reveal group/faq bg-card border border-border rounded-2xl overflow-hidden">
+            <summary class="p-5 text-sm sm:text-base font-medium text-foreground flex items-center justify-between cursor-pointer hover:bg-muted/20 select-none focus-visible:outline-2 focus-visible:outline-primary">
+              <span>{faq.question}</span>
+              <Icon name="lucide:chevron-down" class="w-4 h-4 text-muted-foreground group-open/faq:rotate-180 transition-transform shrink-0 ml-4" />
+            </summary>
+            <div class="px-5 pb-5 pt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed border-t border-border/40">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── 19. SECTION 19 — OFFICIAL SOURCES & REFERENCES ── */}
+  <section class="py-12 bg-muted/20 border-b border-border/40">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+        Official OpenAI Documentation & References
+      </h3>
+      <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-primary">
+        <a href="https://openai.com/index/expanding-access-to-ai-with-chatgpt-ads/" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+          <span>OpenAI Ads Announcement</span>
+          <Icon name="lucide:external-link" class="w-3 h-3" />
+        </a>
+        <span>·</span>
+        <a href="https://help.openai.com/en/articles/20001207" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+          <span>ChatGPT Ads Basics</span>
+          <Icon name="lucide:external-link" class="w-3 h-3" />
+        </a>
+        <span>·</span>
+        <a href="https://help.openai.com/en/articles/20001210" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+          <span>Campaign Setup Guide</span>
+          <Icon name="lucide:external-link" class="w-3 h-3" />
+        </a>
+        <span>·</span>
+        <a href="https://help.openai.com/en-us/articles/20001245-ads-manager-availability" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+          <span>Ads Manager Availability</span>
+          <Icon name="lucide:external-link" class="w-3 h-3" />
+        </a>
+        <span>·</span>
+        <a href="https://openai.com/index/openai-for-india/" target="_blank" rel="noopener noreferrer" class="hover:underline flex items-center gap-1">
+          <span>OpenAI for India</span>
+          <Icon name="lucide:external-link" class="w-3 h-3" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ── 20. FINAL CALL TO ACTION ── */}
+  <section class="py-20 md:py-28">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <div class="reveal bg-gradient-to-br from-blue-500/10 via-card to-card border border-primary/20 rounded-3xl p-8 md:p-14 shadow-sm">
+        <h2 class="text-3xl sm:text-5xl font-medium tracking-tight text-foreground mb-4">
+          Don't guess where AI advertising fits your business.
+        </h2>
+        <p class="text-base text-muted-foreground font-light max-w-2xl mx-auto mb-6 leading-relaxed">
+          ChatGPT Ads are new enough that nobody should pretend they have all the answers. But they're important enough that businesses should start learning what this channel can — and cannot — do.
+        </p>
+        <p class="text-sm font-semibold text-primary mb-8">
+          Let's find out if ChatGPT Ads make sense for you.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/signup" class="btn-primary">
+            Talk to PhantomRank
+            <Icon name="lucide:arrow-right" class="w-4 h-4" />
+          </a>
+          <a href="/studio" class="btn-secondary">
+            Explore PhantomRank Studio
+          </a>
+        </div>
+
+        <p class="mt-8 text-xs text-muted-foreground/80 font-medium">
+          AI visibility is changing. Your advertising strategy should understand why.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    function setupAnimations() {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (prefersReducedMotion) {
+        document.querySelectorAll(".reveal").forEach((elem) => {
+          elem.classList.add("active");
+        });
+        return;
+      }
+
+      gsap.utils.toArray(".reveal").forEach((elem: any) => {
+        gsap.fromTo(
+          elem,
+          { autoAlpha: 0, y: 20 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: elem,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    }
+
+    setupAnimations();
+    document.addEventListener("astro:page-load", setupAnimations);
+  </script>
+</Layout>
